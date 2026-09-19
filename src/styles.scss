@@ -1,5 +1,9 @@
+// Global styles use `@apply` and `theme()`, so they need Tailwind as a reference
+@use "sass:meta";
+@reference "./@ui/styles/tailwind.css";
+
 // App Core
-@use "./@ui/styles/core";
+@include meta.load-css("./@ui/styles/core");
 
 /*
   You can override any CSS Variable or style here

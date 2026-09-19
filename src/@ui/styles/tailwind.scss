@@ -1,6 +1,0 @@
-@use "sass:meta";
-
-@tailwind base;
-@include meta.load-css("partials/base");
-@tailwind components;
-@tailwind utilities;

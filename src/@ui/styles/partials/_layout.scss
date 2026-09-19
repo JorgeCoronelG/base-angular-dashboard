@@ -82,7 +82,7 @@
   .app-layout-content {
     margin-top: var(--app-toolbar-height);
 
-    @screen lg {
+    @media (min-width: theme("screens.lg")) {
       margin-top: calc(
         var(--app-toolbar-height) + var(--app-navigation-height)
       );

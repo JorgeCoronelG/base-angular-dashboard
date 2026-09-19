@@ -1,5 +1,5 @@
-import plugin from "tailwindcss/plugin";
-import { PluginAPI } from "tailwindcss/types/config";
+import type { PluginAPI } from "tailwindcss/plugin";
+import { plugin } from "../utils/plugin";
 
 export default plugin(({ addUtilities }: PluginAPI): void => {
   addUtilities({

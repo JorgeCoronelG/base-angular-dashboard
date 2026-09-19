@@ -1,3 +1,4 @@
+@reference "../../styles/tailwind.css";
 .secondary-toolbar {
   @apply backdrop-blur border-b shadow-b;
   background: var(--app-secondary-toolbar-background);
@@ -18,7 +19,7 @@
     @apply hidden;
   }
 
-  @screen sm {
+  @media (min-width: theme("screens.sm")) {
     app-breadcrumbs {
       @apply block;
     }

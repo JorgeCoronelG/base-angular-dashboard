@@ -1,10 +1,6 @@
-import plugin from "tailwindcss/plugin";
-import {
-  CSSRuleObject,
-  PluginAPI,
-  PluginCreator,
-} from "tailwindcss/types/config";
-import { Config } from "tailwindcss";
+import type { PluginAPI, PluginCreator } from "tailwindcss/plugin";
+import type { Config } from "tailwindcss";
+import { plugin } from "../utils/plugin";
 import chroma from "chroma-js";
 import { inheritDefaultTheme } from "../utils/inherit-default-theme";
 import {
@@ -15,6 +11,13 @@ import {
 } from "../utils/naming";
 // noinspection ES6PreferShortImport
 import { DeepPartial } from "../../interfaces/deep-partial.type";
+
+type CSSRuleObject = Record<string, string>;
+
+/** Tailwind 4 no longer passes the `e()` escape helper to plugins */
+function escapeSelector(value: string): string {
+  return value.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+}
 
 export interface AppThemeColorPalette {
   50: string;
@@ -111,7 +114,7 @@ export interface AppThemePluginOptions {
 
 export default plugin.withOptions(
   (options: AppThemePluginOptions): PluginCreator => {
-    return ({ e, addComponents }: PluginAPI): void => {
+    return ({ addComponents }: PluginAPI): void => {
       const themes = options.themes;
 
       for (const [themeName, partialThemeOptions] of Object.entries(themes)) {
@@ -165,7 +168,7 @@ export default plugin.withOptions(
           }
         }
 
-        const themeClassName = createThemeClassName(e(themeName));
+        const themeClassName = createThemeClassName(escapeSelector(themeName));
 
         addComponents({
           [themeClassName]: themeComponents,

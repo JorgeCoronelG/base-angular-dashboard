@@ -1,3 +1,4 @@
+@reference "../../../../@ui/styles/tailwind.css";
 .app-user-menu {
   @apply flex flex-col bg-foreground shadow-lg border border-divider rounded py-2 min-w-[240px];
 }

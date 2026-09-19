@@ -1,10 +1,9 @@
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 import colors from "tailwindcss/colors";
-import addThemesPlugin, { AppThemes } from "./src/@ui/tailwind/plugins/themes";
-import addIconsPlugin from "./src/@ui/tailwind/plugins/icons";
+import addThemesPlugin, { AppThemes } from "./plugins/themes";
+import addIconsPlugin from "./plugins/icons";
 import chroma from "chroma-js";
-import { PluginUtils } from "tailwindcss/types/config";
 import addTypographyPlugin from "@tailwindcss/typography";
 
 export const themes: AppThemes = {
@@ -260,25 +259,11 @@ export default {
       fontSize: {
         "2xs": "0.625rem",
       },
-      textColor: ({ colors }: PluginUtils) => ({
+      textColor: () => ({
         default: "rgb(var(--app-foreground-text-rgb) / <alpha-value>)",
         secondary:
           "rgb(var(--app-foreground-secondary-text-rgb) / <alpha-value>)",
         hint: "rgb(var(--app-foreground-hint-text-rgb) / <alpha-value>)",
-      }),
-      minWidth: ({ theme }: PluginUtils) => ({
-        ...theme("spacing"),
-      }),
-      maxWidth: ({ theme }: PluginUtils) => ({
-        ...theme("spacing"),
-        "3xs": "16rem",
-        "2xs": "18rem",
-      }),
-      minHeight: ({ theme }: PluginUtils) => ({
-        ...theme("spacing"),
-      }),
-      maxHeight: ({ theme }: PluginUtils) => ({
-        ...theme("spacing"),
       }),
       transitionDuration: {
         400: "400ms",

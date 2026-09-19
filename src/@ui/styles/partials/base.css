@@ -1,3 +1,12 @@
+/* Tailwind 3 gave every element the divider color as its default border color */
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  border-color: var(--app-foreground-divider);
+}
+
 html {
   box-sizing: border-box;
   font-size: 16px;

@@ -25,7 +25,7 @@ export default defineConfig({
   timeout: 60_000,
   expect: {
     timeout: 15_000,
-    toHaveScreenshot: { maxDiffPixelRatio: 0.005, animations: "disabled" },
+    toHaveScreenshot: { maxDiffPixelRatio: 0.001, animations: "disabled" },
   },
   use: {
     baseURL: process.env["E2E_BASE_URL"] ?? "http://localhost:4200",

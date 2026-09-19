@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Base de dashboard con Angular 22, Angular Material 3 y Tailwind CSS 3. Lee el [README](README.md) para la visión general; aquí están las reglas que hay que respetar al modificar el código.
+Base de dashboard con Angular 22, Angular Material 3 y Tailwind CSS 4. Lee el [README](README.md) para la visión general; aquí están las reglas que hay que respetar al modificar el código.
 
 ## Comandos
 
@@ -41,21 +41,28 @@ Node no siempre está instalado en la máquina: si falta, ejecuta los comandos d
 ## Estilos
 
 - Sass siempre con `@use` (o `meta.load-css`), **nunca `@import`**.
-- Los colores salen de `themes` en `tailwind.config.ts` → variables CSS (plugin `@ui/tailwind/plugins/themes.ts`) → tokens `--mat-sys-*` en `@ui/styles/_themes.scss`. No hardcodees colores en componentes: usa las clases de Tailwind (`bg-primary-600`, `text-default`) o las variables `--app-*`.
+- Los colores salen de `themes` en `src/@ui/tailwind/tailwind.config.ts` → variables CSS (plugin `@ui/tailwind/plugins/themes.ts`) → tokens `--mat-sys-*` en `@ui/styles/_themes.scss`. No hardcodees colores en componentes: usa las clases de Tailwind (`bg-primary-600`, `text-default`) o las variables `--app-*`.
 - Angular Material 3: solo `primary` viene de serie. `color="accent"` y `color="warn"` funcionan únicamente en botones y `mat-icon` (`partials/plugins/@angular/material/_button.scss` y `_icon.scss`).
 - Overrides de tokens de Material (`mat.*-overrides`) van dentro de `body`, no de `:root`: las variables que referencian a otras se resuelven donde se declaran.
-- En SCSS de componente se puede usar `@apply` y `theme()`, pero eso es lo que hace costosa la futura migración a Tailwind 4; prefiere clases en el HTML en código nuevo.
+- Tailwind 4 se usa con la config JS (`@config`). Un SCSS con `@apply` o `theme()` necesita `@reference` a `src/@ui/styles/tailwind.css` en su primera línea; prefiere clases en el HTML en código nuevo. No importes Tailwind con `layer()`: las utilidades deben quedar sin capa para ganar a Material.
+- Los plugins de Tailwind usan `plugin` de `@ui/tailwind/utils/plugin` (no `tailwindcss/plugin` directo) y no pueden usar `e()`.
 - Los estilos globales y de Material viven en `@ui/styles`; los de un componente, junto al componente.
 
 ## Verificar cambios de UI
 
-Los tests no cubren la UI. Para cambios visuales, construye la imagen de producción y recórrela con un navegador (Playwright en Docker funcionó bien): sidenav, panel de configuración, los seis layouts, modo oscuro, un tema alternativo y los overlays (menú, popover, diálogo). La consola del navegador debe quedar sin errores (ojo con violaciones de CSP).
+`npm run e2e:docker` levanta `ng serve` + la API mock + Playwright en Docker y corre: flujos (clientes, preferencias, 404), accesibilidad (axe, claro y oscuro) y regresión visual (`e2e/__screenshots__`). Tras un cambio visual **intencional** regenera con `sh scripts/e2e-docker.sh --update-snapshots=all` y revisa las imágenes en el diff (sin `=all`, Playwright solo reescribe las que superan la tolerancia). La versión de `@playwright/test` (en `e2e/package.json`) debe coincidir con la imagen de `docker-compose.e2e.yml`.
+
+## Datos, i18n y entornos
+
+- API: `SettingsService.api("/ruta")` compone la URL; `apiUrl` sale de `src/environments/*` y `config.json` lo sobrescribe en runtime. Lecturas con `httpResource`, escrituras con `HttpClient`. `errorInterceptor` muestra el snackbar (se evita con `SKIP_ERROR_NOTIFICATION`).
+- i18n con Transloco: textos en `src/assets/i18n/{en,es}.json`, pipe `| transloco`; las etiquetas de navegación y los `title` de las rutas son claves. Todo texto visible nuevo debe estar en ambos idiomas.
+- API mock: `npm run api` (o el servicio `api` de compose) sirve `mock/db.json`.
 
 ## Docker y seguridad
 
-- La imagen `prod` es `nginx-unprivileged` en el puerto 8080; la CSP está en `nginx/security-headers.inc` y se repite en cada `location`. Al llamar a una API hay que añadir su origen a `connect-src`.
+- La imagen `prod` es `nginx-unprivileged` en el puerto 8080. Al arrancar genera `/config.json` (`apiUrl`) y la CSP (`connect-src`) desde la variable `API_URL` (`nginx/40-runtime-config.sh`); la plantilla de cabeceras es `nginx/security-headers.inc.template`. `nginx/` y `mock/` están excluidos de Prettier a propósito.
 - El build de producción tiene `inlineCritical: false` a propósito: el CSS crítico inline necesita un `onload` inline que la CSP bloquea.
 
 ## Fuera de alcance (por ahora)
 
-Aún no hay entornos, capa HTTP, autenticación ni features de ejemplo, y Tailwind sigue en la versión 3. No los agregues sin que se pida; y no subas Tailwind a 4 ni Angular a una mayor nueva sin una migración planificada (Dependabot está configurado para ignorarlas).
+Aún no hay autenticación (hay entornos, capa HTTP y una feature de ejemplo con API mock). No la agregues sin que se pida, y no subas Angular a una mayor nueva sin una migración planificada (Dependabot ignora las mayores).
