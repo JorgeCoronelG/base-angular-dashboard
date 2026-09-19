@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   Component,
   ChangeDetectionStrategy,
@@ -23,6 +24,7 @@ import { NgTemplateOutlet } from "@angular/common";
   styleUrls: ["./navigation-item.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    TranslocoPipe,
     MatRippleModule,
     RouterLink,
     MatMenuModule,

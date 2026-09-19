@@ -15,7 +15,7 @@
     @if (level() === 0 && navItem.icon) {
       <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
     }
-    <span class="app-sidenav-item__label">{{ navItem.label }}</span>
+    <span class="app-sidenav-item__label">{{ navItem.label | transloco }}</span>
     @if (navItem.badge) {
       <span
         [class]="navItem.badge.bgClass + ' ' + navItem.badge.textClass"
@@ -37,7 +37,7 @@
     @if (level() === 0 && navItem.icon) {
       <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
     }
-    <span class="app-sidenav-item__label">{{ navItem.label }}</span>
+    <span class="app-sidenav-item__label">{{ navItem.label | transloco }}</span>
     @if (navItem.badge) {
       <span
         [class]="navItem.badge.bgClass + ' ' + navItem.badge.textClass"
@@ -62,7 +62,7 @@
     @if (level() === 0 && navItem.icon) {
       <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
     }
-    <span class="app-sidenav-item__label">{{ navItem.label }}</span>
+    <span class="app-sidenav-item__label">{{ navItem.label | transloco }}</span>
     @if (navItem.badge) {
       <span
         [class]="navItem.badge.bgClass + ' ' + navItem.badge.textClass"
@@ -89,7 +89,7 @@
 }
 
 @if (isSubheading(navItem)) {
-  <div class="app-sidenav-subheading">{{ navItem.label }}</div>
+  <div class="app-sidenav-subheading">{{ navItem.label | transloco }}</div>
   @for (subItem of navItem.children; track subItem) {
     <app-sidenav-item [item]="subItem" [level]="0" />
   }

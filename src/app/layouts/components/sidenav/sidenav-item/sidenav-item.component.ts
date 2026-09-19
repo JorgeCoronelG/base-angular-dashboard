@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -34,7 +35,13 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   host: {
     "[class]": "levelClass()",
   },
-  imports: [MatRippleModule, RouterLinkActive, RouterLink, MatIconModule],
+  imports: [
+    TranslocoPipe,
+    MatRippleModule,
+    RouterLinkActive,
+    RouterLink,
+    MatIconModule,
+  ],
 })
 export class SidenavItemComponent {
   private router = inject(Router);

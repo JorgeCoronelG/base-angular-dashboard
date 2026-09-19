@@ -11,7 +11,7 @@
     class="navigation-item"
     matRipple
   >
-    {{ navItem.label }}
+    {{ navItem.label | transloco }}
   </a>
 }
 
@@ -23,7 +23,7 @@
     matRipple
     type="button"
   >
-    {{ navItem.label }}
+    {{ navItem.label | transloco }}
   </button>
 }
 
@@ -41,7 +41,7 @@
     class="navigation-item"
     matRipple
   >
-    {{ navItem.label }}
+    {{ navItem.label | transloco }}
   </div>
   <mat-menu #menu="matMenu" yPosition="below">
     @for (child of navItem.children; track child) {
@@ -55,7 +55,7 @@
           @if (child.icon) {
             <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
-          <span>{{ child.label }}</span>
+          <span>{{ child.label | transloco }}</span>
         </a>
       }
       @if (isLink(child) && isFunction(child.route)) {
@@ -68,7 +68,7 @@
           @if (child.icon) {
             <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
-          <span>{{ child.label }}</span>
+          <span>{{ child.label | transloco }}</span>
         </button>
       }
       @if (isDropdown(child)) {
@@ -81,7 +81,7 @@
           @if (child.icon) {
             <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
-          <span>{{ child.label }}</span>
+          <span>{{ child.label | transloco }}</span>
         </button>
         <mat-menu #level1="matMenu" yPosition="below">
           @for (item of child.children; track item) {
@@ -96,7 +96,7 @@
                 class="navigation-menu-item"
                 mat-menu-item
               >
-                {{ item.label }}
+                {{ item.label | transloco }}
               </button>
               <mat-menu #level2="matMenu" yPosition="below">
                 @for (child of item.children; track child) {
@@ -111,7 +111,7 @@
                       class="navigation-menu-item"
                       mat-menu-item
                     >
-                      {{ child.label }}
+                      {{ child.label | transloco }}
                     </button>
                     <mat-menu #level3="matMenu" yPosition="below">
                       @for (item of child.children; track item) {
@@ -126,7 +126,7 @@
                             class="navigation-menu-item"
                             mat-menu-item
                           >
-                            {{ item.label }}
+                            {{ item.label | transloco }}
                           </button>
                           <mat-menu #level4="matMenu" yPosition="below">
                             @for (child of item.children; track child) {
@@ -141,7 +141,7 @@
                                   class="navigation-menu-item"
                                   mat-menu-item
                                 >
-                                  {{ child.label }}
+                                  {{ child.label | transloco }}
                                 </button>
                                 <mat-menu #level5="matMenu" yPosition="below">
                                   @for (item of child.children; track item) {
@@ -173,7 +173,7 @@
         [routerLink]="item.route"
         class="navigation-menu-item"
         mat-menu-item
-        >{{ item.label }}</a
+        >{{ item.label | transloco }}</a
       >
     }
     @if (isLink(item) && isFunction(item.route)) {
@@ -184,7 +184,7 @@
         mat-menu-item
         type="button"
       >
-        {{ item.label }}
+        {{ item.label | transloco }}
       </button>
     }
   </ng-template>

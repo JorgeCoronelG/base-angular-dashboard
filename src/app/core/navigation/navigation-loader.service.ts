@@ -11,17 +11,24 @@ export class NavigationLoaderService {
   }
 
   loadNavigation(): void {
+    // Labels are translation keys (see assets/i18n)
     this._items.set([
       {
         type: "subheading",
-        label: "Dashboards",
+        label: "nav.main",
         children: [
           {
             type: "link",
-            label: "Analytics",
+            label: "nav.dashboard",
             route: "/",
-            icon: "mat:insights",
+            icon: "mat:dashboard",
             routerLinkActiveOptions: { exact: true },
+          },
+          {
+            type: "link",
+            label: "nav.customers",
+            route: "/customers",
+            icon: "mat:people",
           },
         ],
       },
