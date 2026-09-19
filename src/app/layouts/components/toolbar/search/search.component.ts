@@ -25,17 +25,15 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   imports: [MatButtonModule, MatIconModule, ReactiveFormsModule, AsyncPipe],
 })
 export class SearchComponent implements OnInit, OnDestroy {
+  private layoutService = inject(VexLayoutService);
+  private searchService = inject(SearchService);
+
   show$ = this.layoutService.searchOpen$;
   searchCtrl = new UntypedFormControl();
 
   @ViewChild("searchInput", { static: true }) input?: ElementRef;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  constructor(
-    private layoutService: VexLayoutService,
-    private searchService: SearchService,
-  ) {}
 
   ngOnInit() {
     this.searchService.isOpenSubject.next(true);

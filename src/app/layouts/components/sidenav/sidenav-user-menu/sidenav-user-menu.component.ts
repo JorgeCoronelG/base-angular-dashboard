@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+} from "@angular/core";
 import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
 import { MatRippleModule } from "@angular/material/core";
 import { RouterLink } from "@angular/router";
@@ -12,7 +17,7 @@ import { MatIconModule } from "@angular/material/icon";
   imports: [MatRippleModule, RouterLink, MatIconModule],
 })
 export class SidenavUserMenuComponent implements OnInit {
-  constructor(private readonly popoverRef: VexPopoverRef) {}
+  private readonly popoverRef = inject(VexPopoverRef);
 
   ngOnInit(): void {}
 

@@ -1,4 +1,4 @@
-import { Component, Inject, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import {
   MatSlideToggleChange,
@@ -45,6 +45,9 @@ import { VEX_THEMES } from "@vex/config/config.token";
   ],
 })
 export class ConfigPanelComponent {
+  private readonly configService = inject(VexConfigService);
+  readonly themes = inject(VEX_THEMES);
+
   configs: VexConfig[] = this.configService.configs;
   config$: Observable<VexConfig> = this.configService.config$;
 
@@ -105,11 +108,6 @@ export class ConfigPanelComponent {
   ];
 
   roundedButtonValue: CSSValue = defaultRoundedButtonBorderRadius;
-
-  constructor(
-    private readonly configService: VexConfigService,
-    @Inject(VEX_THEMES) public readonly themes: VexThemeProvider[],
-  ) {}
 
   setConfig(layout: VexConfigName, colorScheme: VexColorScheme): void {
     this.configService.setConfig(layout);

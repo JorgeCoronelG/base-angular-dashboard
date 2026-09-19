@@ -45,6 +45,10 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   ],
 })
 export class SidenavItemComponent implements OnInit, OnChanges {
+  private router = inject(Router);
+  private cd = inject(ChangeDetectorRef);
+  private navigationService = inject(NavigationService);
+
   @Input({ required: true }) item!: NavigationItem;
   @Input({ required: true }) level!: number;
   isOpen: boolean = false;
@@ -55,12 +59,6 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   isSubheading = this.navigationService.isSubheading;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  constructor(
-    private router: Router,
-    private cd: ChangeDetectorRef,
-    private navigationService: NavigationService,
-  ) {}
 
   @HostBinding("class")
   get levelClass() {

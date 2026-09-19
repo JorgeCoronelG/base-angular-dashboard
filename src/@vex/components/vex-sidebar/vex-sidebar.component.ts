@@ -1,10 +1,10 @@
 import {
   Component,
-  Inject,
   Input,
   OnDestroy,
   DOCUMENT,
   ChangeDetectionStrategy,
+  inject,
 } from "@angular/core";
 
 @Component({
@@ -18,10 +18,10 @@ import {
   standalone: true,
 })
 export class VexSidebarComponent implements OnDestroy {
+  private document = inject<Document>(DOCUMENT);
+
   @Input() position: "left" | "right" = "left";
   @Input() invisibleBackdrop: boolean = false;
-
-  constructor(@Inject(DOCUMENT) private document: Document) {}
 
   private _opened: boolean = false;
 

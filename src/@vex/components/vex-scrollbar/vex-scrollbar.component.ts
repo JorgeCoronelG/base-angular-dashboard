@@ -6,6 +6,7 @@ import {
   NgZone,
   OnDestroy,
   ChangeDetectionStrategy,
+  inject,
 } from "@angular/core";
 import SimpleBar from "simplebar";
 
@@ -20,14 +21,12 @@ import SimpleBar from "simplebar";
   standalone: true,
 })
 export class VexScrollbarComponent implements AfterContentInit, OnDestroy {
+  private _element = inject(ElementRef);
+  private zone = inject(NgZone);
+
   @Input() options?: Partial<any>;
 
   scrollbarRef?: SimpleBar;
-
-  constructor(
-    private _element: ElementRef,
-    private zone: NgZone,
-  ) {}
 
   ngAfterContentInit() {
     this.zone.runOutsideAngular(() => {

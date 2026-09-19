@@ -1,22 +1,24 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from "@angular/core";
 import {
   VEX_HIGHLIGHT_OPTIONS,
   VexHighlightConfig,
   VexHighlightLanguage,
   VexHighlightOptions,
-  VexHighlightResult
-} from './vex-highlight.model';
-import hljs from 'highlight.js/lib/core';
+  VexHighlightResult,
+} from "./vex-highlight.model";
+import hljs from "highlight.js/lib/core";
 
 @Injectable()
 export class VexHighlightService {
-  constructor(@Inject(VEX_HIGHLIGHT_OPTIONS) options: VexHighlightOptions) {
+  constructor() {
+    const options = inject<VexHighlightOptions>(VEX_HIGHLIGHT_OPTIONS);
+
     if (options) {
       // Register HighlightJS languages
       options
         .languages?.()
         .map((language: VexHighlightLanguage) =>
-          this.registerLanguage(language.name, language.func)
+          this.registerLanguage(language.name, language.func),
         );
       if (options.config) {
         // Set global config if present
@@ -25,7 +27,7 @@ export class VexHighlightService {
     }
     // Throw an error if no languages were registered.
     if (this.listLanguages().length < 1) {
-      throw new Error('[HighlightJS]: No languages were registered!');
+      throw new Error("[HighlightJS]: No languages were registered!");
     }
   }
 
@@ -40,7 +42,7 @@ export class VexHighlightService {
   highlight(
     name: string,
     value: string,
-    ignoreIllegals: boolean
+    ignoreIllegals: boolean,
   ): VexHighlightResult {
     return hljs.highlight(name, value, ignoreIllegals);
   }

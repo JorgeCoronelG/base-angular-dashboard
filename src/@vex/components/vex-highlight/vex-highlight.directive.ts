@@ -5,20 +5,24 @@ import {
   NgZone,
   OnChanges,
   Output,
-  SimpleChanges
-} from '@angular/core';
-import { VexHighlightResult } from './vex-highlight.model';
-import { VexHighlightService } from './vex-highlight.service';
+  SimpleChanges,
+  inject,
+} from "@angular/core";
+import { VexHighlightResult } from "./vex-highlight.model";
+import { VexHighlightService } from "./vex-highlight.service";
 
 @Directive({
-  selector: '[vexHighlight]',
+  selector: "[vexHighlight]",
   host: {
-    '[class.hljs]': 'true',
-    '[innerHTML]': 'highlightedCode'
+    "[class.hljs]": "true",
+    "[innerHTML]": "highlightedCode",
   },
-  standalone: true
+  standalone: true,
 })
 export class VexHighlightDirective implements OnChanges {
+  private _highlightService = inject(VexHighlightService);
+  private _zone = inject(NgZone);
+
   /** Highlighted Code */
   highlightedCode?: string;
 
@@ -28,20 +32,15 @@ export class VexHighlightDirective implements OnChanges {
   @Input() languages: string[] = [];
 
   /** Highlight code input */
-  @Input('vexHighlight') code!: string;
+  @Input("vexHighlight") code!: string;
 
   /** Stream that emits when code string is highlighted */
   @Output() highlighted = new EventEmitter<VexHighlightResult>();
 
-  constructor(
-    private _highlightService: VexHighlightService,
-    private _zone: NgZone
-  ) {}
-
   ngOnChanges(changes: SimpleChanges) {
     if (
-      changes['code'] &&
-      changes['code'].currentValue !== changes['code'].previousValue
+      changes["code"] &&
+      changes["code"].currentValue !== changes["code"].previousValue
     ) {
       this.highlightElement(this.code, this.languages);
     }

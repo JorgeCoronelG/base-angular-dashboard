@@ -1,11 +1,13 @@
-import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-import { Settings } from 'luxon';
+import { Injectable, LOCALE_ID, inject } from "@angular/core";
+import { Settings } from "luxon";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class LuxonService {
-  constructor(@Inject(LOCALE_ID) private localeId: string) {
+  private localeId = inject(LOCALE_ID);
+
+  constructor() {
     Settings.defaultLocale = this.localeId;
   }
 }

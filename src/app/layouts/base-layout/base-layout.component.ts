@@ -4,7 +4,6 @@ import {
   ContentChild,
   DestroyRef,
   inject,
-  Inject,
   OnInit,
   DOCUMENT,
   ChangeDetectionStrategy,
@@ -47,6 +46,11 @@ import { VexConfig } from "@vex/config/vex-config.interface";
   ],
 })
 export class BaseLayoutComponent implements OnInit, AfterViewInit {
+  private readonly layoutService = inject(VexLayoutService);
+  private readonly configService = inject(VexConfigService);
+  private readonly router = inject(Router);
+  private readonly document = inject<Document>(DOCUMENT);
+
   config$: Observable<VexConfig> = this.configService.config$;
 
   /**
@@ -99,13 +103,6 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
   sidenavContainer!: MatSidenavContainer;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  constructor(
-    private readonly layoutService: VexLayoutService,
-    private readonly configService: VexConfigService,
-    private readonly router: Router,
-    @Inject(DOCUMENT) private readonly document: Document,
-  ) {}
 
   ngOnInit() {
     /**

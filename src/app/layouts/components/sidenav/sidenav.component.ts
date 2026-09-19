@@ -3,6 +3,7 @@ import {
   Input,
   OnInit,
   ChangeDetectionStrategy,
+  inject,
 } from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
@@ -36,6 +37,12 @@ import { AsyncPipe } from "@angular/common";
   ],
 })
 export class SidenavComponent implements OnInit {
+  private navigationService = inject(NavigationService);
+  private layoutService = inject(VexLayoutService);
+  private configService = inject(VexConfigService);
+  private readonly popoverService = inject(VexPopoverService);
+  private readonly dialog = inject(MatDialog);
+
   @Input() collapsed: boolean = false;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(
@@ -57,14 +64,6 @@ export class SidenavComponent implements OnInit {
   userMenuOpen$: Observable<boolean> = of(false);
 
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
-
-  constructor(
-    private navigationService: NavigationService,
-    private layoutService: VexLayoutService,
-    private configService: VexConfigService,
-    private readonly popoverService: VexPopoverService,
-    private readonly dialog: MatDialog,
-  ) {}
 
   ngOnInit() {}
 

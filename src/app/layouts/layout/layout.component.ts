@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -44,6 +44,9 @@ import { VexConfig } from "@vex/config/vex-config.interface";
   ],
 })
 export class LayoutComponent {
+  private readonly layoutService = inject(VexLayoutService);
+  private readonly configService = inject(VexConfigService);
+
   config$: Observable<VexConfig> = this.configService.config$;
   sidenavCollapsed$: Observable<boolean> = this.layoutService.sidenavCollapsed$;
   sidenavDisableClose$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -60,11 +63,6 @@ export class LayoutComponent {
   sidenavOpen$: Observable<boolean> = this.layoutService.sidenavOpen$;
   configPanelOpen$: Observable<boolean> = this.layoutService.configPanelOpen$;
   quickpanelOpen$: Observable<boolean> = this.layoutService.quickpanelOpen$;
-
-  constructor(
-    private readonly layoutService: VexLayoutService,
-    private readonly configService: VexConfigService,
-  ) {}
 
   onSidenavClosed(): void {
     this.layoutService.closeSidenav();

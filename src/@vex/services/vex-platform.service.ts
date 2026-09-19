@@ -1,20 +1,19 @@
-import { Inject, Injectable, RendererFactory2, DOCUMENT } from '@angular/core';
-import { Platform } from '@angular/cdk/platform';
-
+import { Injectable, RendererFactory2, DOCUMENT, inject } from "@angular/core";
+import { Platform } from "@angular/cdk/platform";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class VexPlatformService {
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private readonly rendererFactory2: RendererFactory2,
-    private readonly platform: Platform
-  ) {
+  private document = inject<Document>(DOCUMENT);
+  private readonly rendererFactory2 = inject(RendererFactory2);
+  private readonly platform = inject(Platform);
+
+  constructor() {
     const renderer = this.rendererFactory2.createRenderer(null, null);
 
     if (this.platform.BLINK) {
-      renderer.addClass(this.document.body, 'is-blink');
+      renderer.addClass(this.document.body, "is-blink");
     }
   }
 }

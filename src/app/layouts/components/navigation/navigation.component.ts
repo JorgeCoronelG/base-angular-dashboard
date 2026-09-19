@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { NavigationItemComponent } from "./navigation-item/navigation-item.component";
 import { AsyncPipe } from "@angular/common";
@@ -13,7 +13,7 @@ import { NavigationItem } from "../../../core/navigation/navigation-item.interfa
   imports: [NavigationItemComponent, AsyncPipe],
 })
 export class NavigationComponent {
-  items$: Observable<NavigationItem[]> = this.navigationService.items$;
+  private navigationService = inject(NavigationService);
 
-  constructor(private navigationService: NavigationService) {}
+  items$: Observable<NavigationItem[]> = this.navigationService.items$;
 }

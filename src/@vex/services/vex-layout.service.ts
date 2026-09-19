@@ -1,13 +1,15 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef, inject, Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { filter, map } from "rxjs/operators";
+import { BreakpointObserver } from "@angular/cdk/layout";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class VexLayoutService {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   private _quickpanelOpenSubject = new BehaviorSubject<boolean>(false);
   quickpanelOpen$ = this._quickpanelOpenSubject.asObservable();
 
@@ -50,14 +52,14 @@ export class VexLayoutService {
   isMobile = () => this.breakpointObserver.isMatched(`(max-width: 599px)`);
   configPanelOpen$ = this._configPanelOpenSubject.asObservable();
 
-  constructor(private readonly breakpointObserver: BreakpointObserver) {
+  constructor() {
     /**
      * Expand Sidenav when we switch from mobile to desktop view
      */
     this.isDesktop$
       .pipe(
         filter((matches) => !matches),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => this.expandSidenav());
   }

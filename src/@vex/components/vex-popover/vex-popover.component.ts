@@ -3,6 +3,7 @@ import {
   OnInit,
   TemplateRef,
   ChangeDetectionStrategy,
+  inject,
 } from "@angular/core";
 import { VexPopoverContent, VexPopoverRef } from "./vex-popover-ref";
 import { popoverAnimation } from "../../animations/popover.animation";
@@ -17,11 +18,11 @@ import { NgComponentOutlet, NgTemplateOutlet } from "@angular/common";
   imports: [NgTemplateOutlet, NgComponentOutlet],
 })
 export class VexPopoverComponent implements OnInit {
+  private popoverRef = inject(VexPopoverRef);
+
   renderMethod: "template" | "component" | "text" = "component";
   content: VexPopoverContent;
   context: any;
-
-  constructor(private popoverRef: VexPopoverRef) {}
 
   ngOnInit() {
     this.content = this.popoverRef.content;

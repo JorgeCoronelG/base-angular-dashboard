@@ -46,6 +46,12 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   ],
 })
 export class ToolbarComponent implements OnInit {
+  private readonly layoutService = inject(VexLayoutService);
+  private readonly configService = inject(VexConfigService);
+  private readonly navigationService = inject(NavigationService);
+  private readonly popoverService = inject(VexPopoverService);
+  private readonly router = inject(Router);
+
   @HostBinding("class.shadow-b")
   showShadow: boolean = false;
 
@@ -74,14 +80,6 @@ export class ToolbarComponent implements OnInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   megaMenuOpen$: Observable<boolean> = of(false);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  constructor(
-    private readonly layoutService: VexLayoutService,
-    private readonly configService: VexConfigService,
-    private readonly navigationService: NavigationService,
-    private readonly popoverService: VexPopoverService,
-    private readonly router: Router,
-  ) {}
 
   ngOnInit() {
     this.router.events

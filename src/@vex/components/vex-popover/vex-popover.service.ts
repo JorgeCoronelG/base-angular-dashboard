@@ -1,15 +1,15 @@
-import { ElementRef, Injectable, Injector } from '@angular/core';
+import { ElementRef, Injectable, Injector, inject } from "@angular/core";
 import {
   ConnectedPosition,
   ConnectionPositionPair,
   FlexibleConnectedPositionStrategyOrigin,
   Overlay,
   OverlayConfig,
-  PositionStrategy
-} from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { VexPopoverContent, VexPopoverRef } from './vex-popover-ref';
-import { VexPopoverComponent } from './vex-popover.component';
+  PositionStrategy,
+} from "@angular/cdk/overlay";
+import { ComponentPortal } from "@angular/cdk/portal";
+import { VexPopoverContent, VexPopoverRef } from "./vex-popover-ref";
+import { VexPopoverComponent } from "./vex-popover.component";
 
 export interface VexPopoverParams<T> {
   width?: string | number;
@@ -23,13 +23,11 @@ export interface VexPopoverParams<T> {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class VexPopoverService {
-  constructor(
-    private overlay: Overlay,
-    private injector: Injector
-  ) {}
+  private overlay = inject(Overlay);
+  private injector = inject(Injector);
 
   open<T>({
     origin,
@@ -39,7 +37,7 @@ export class VexPopoverService {
     height,
     position,
     offsetX,
-    offsetY
+    offsetY,
   }: VexPopoverParams<T>): VexPopoverRef<T> {
     const overlayRef = this.overlay.create(
       this.getOverlayConfig({
@@ -48,8 +46,8 @@ export class VexPopoverService {
         height,
         position,
         offsetX,
-        offsetY
-      })
+        offsetY,
+      }),
     );
     const popoverRef = new VexPopoverRef<T>(overlayRef, content, data);
 
@@ -62,17 +60,17 @@ export class VexPopoverService {
   private static getPositions(): ConnectionPositionPair[] {
     return [
       {
-        originX: 'center',
-        originY: 'top',
-        overlayX: 'center',
-        overlayY: 'bottom'
+        originX: "center",
+        originY: "top",
+        overlayX: "center",
+        overlayY: "bottom",
       },
       {
-        originX: 'center',
-        originY: 'bottom',
-        overlayX: 'center',
-        overlayY: 'top'
-      }
+        originX: "center",
+        originY: "bottom",
+        overlayX: "center",
+        overlayY: "top",
+      },
     ];
   }
 
@@ -81,10 +79,10 @@ export class VexPopoverService {
       providers: [
         {
           provide: VexPopoverRef,
-          useValue: popoverRef
-        }
+          useValue: popoverRef,
+        },
       ],
-      parent: injector
+      parent: injector,
     });
   }
 
@@ -94,7 +92,7 @@ export class VexPopoverService {
     height,
     position,
     offsetX,
-    offsetY
+    offsetY,
   }: {
     origin: FlexibleConnectedPositionStrategyOrigin;
     width?: string | number;
@@ -107,14 +105,14 @@ export class VexPopoverService {
       hasBackdrop: true,
       width,
       height,
-      backdropClass: 'vex-popover-backdrop',
+      backdropClass: "vex-popover-backdrop",
       positionStrategy: this.getOverlayPosition({
         origin,
         position,
         offsetX,
-        offsetY
+        offsetY,
       }),
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
   }
 
@@ -122,7 +120,7 @@ export class VexPopoverService {
     origin,
     position,
     offsetX,
-    offsetY
+    offsetY,
   }: {
     origin: FlexibleConnectedPositionStrategyOrigin;
     position?: ConnectedPosition[];
@@ -136,7 +134,7 @@ export class VexPopoverService {
       .withFlexibleDimensions(true)
       .withDefaultOffsetY(offsetY || 0)
       .withDefaultOffsetX(offsetX || 0)
-      .withTransformOriginOn('.vex-popover')
+      .withTransformOriginOn(".vex-popover")
       .withPush(true);
   }
 }

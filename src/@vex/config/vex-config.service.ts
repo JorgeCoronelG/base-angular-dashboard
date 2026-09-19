@@ -1,35 +1,35 @@
-import { Inject, Injectable, DOCUMENT } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, DOCUMENT, inject } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
 
-import { DeepPartial } from '../interfaces/deep-partial.type';
-import { mergeDeep } from '../utils/merge-deep';
-import { VexLayoutService } from '../services/vex-layout.service';
-import { vexConfigs } from './vex-configs';
+import { DeepPartial } from "../interfaces/deep-partial.type";
+import { mergeDeep } from "../utils/merge-deep";
+import { VexLayoutService } from "../services/vex-layout.service";
+import { vexConfigs } from "./vex-configs";
 import {
   VexColorScheme,
   VexConfig,
   VexConfigName,
   VexConfigs,
-  VexThemeProvider
-} from './vex-config.interface';
-import { CSSValue } from '../interfaces/css-value.type';
-import { map } from 'rxjs/operators';
-import { VEX_CONFIG, VEX_THEMES } from '@vex/config/config.token';
+  VexThemeProvider,
+} from "./vex-config.interface";
+import { CSSValue } from "../interfaces/css-value.type";
+import { map } from "rxjs/operators";
+import { VEX_CONFIG, VEX_THEMES } from "@vex/config/config.token";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class VexConfigService {
+  private readonly config = inject<VexConfig>(VEX_CONFIG);
+  private readonly themes = inject(VEX_THEMES);
+  private readonly document = inject<Document>(DOCUMENT);
+  private readonly layoutService = inject(VexLayoutService);
+
   readonly configMap: VexConfigs = vexConfigs;
   readonly configs: VexConfig[] = Object.values(this.configMap);
   private _configSubject = new BehaviorSubject<VexConfig>(this.config);
 
-  constructor(
-    @Inject(VEX_CONFIG) private readonly config: VexConfig,
-    @Inject(VEX_THEMES) private readonly themes: VexThemeProvider[],
-    @Inject(DOCUMENT) private readonly document: Document,
-    private readonly layoutService: VexLayoutService
-  ) {
+  constructor() {
     this.config$.subscribe((config) => this._updateConfig(config));
   }
 
@@ -53,7 +53,7 @@ export class VexConfigService {
 
   updateConfig(config: DeepPartial<VexConfig>) {
     this._configSubject.next(
-      mergeDeep({ ...this._configSubject.getValue() }, config)
+      mergeDeep({ ...this._configSubject.getValue() }, config),
     );
   }
 
@@ -66,7 +66,7 @@ export class VexConfigService {
     this._emitResize();
   }
 
-  private _setStyle(style: VexConfig['style']): void {
+  private _setStyle(style: VexConfig["style"]): void {
     /**
      * Set light/dark mode
      */
@@ -92,21 +92,21 @@ export class VexConfigService {
      * Border Radius
      */
     this.document.body.style.setProperty(
-      '--vex-border-radius',
-      `${style.borderRadius.value}${style.borderRadius.unit}`
+      "--vex-border-radius",
+      `${style.borderRadius.value}${style.borderRadius.unit}`,
     );
 
     const buttonBorderRadius: CSSValue =
       style.button.borderRadius ?? style.borderRadius;
     this.document.body.style.setProperty(
-      '--vex-button-border-radius',
-      `${buttonBorderRadius.value}${buttonBorderRadius.unit}`
+      "--vex-button-border-radius",
+      `${buttonBorderRadius.value}${buttonBorderRadius.unit}`,
     );
   }
 
   private _setDensity(): void {
-    if (!this.document.body.classList.contains('vex-mat-dense-default')) {
-      this.document.body.classList.add('vex-mat-dense-default');
+    if (!this.document.body.classList.contains("vex-mat-dense-default")) {
+      this.document.body.classList.add("vex-mat-dense-default");
     }
   }
 
@@ -116,17 +116,17 @@ export class VexConfigService {
    */
   private _emitResize(): void {
     if (window) {
-      window.dispatchEvent(new Event('resize'));
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 200);
+      window.dispatchEvent(new Event("resize"));
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 200);
     }
   }
 
-  private _setDirection(direction: 'ltr' | 'rtl') {
+  private _setDirection(direction: "ltr" | "rtl") {
     this.document.body.dir = direction;
   }
 
-  private _setSidenavState(sidenavState: 'expanded' | 'collapsed'): void {
-    sidenavState === 'expanded'
+  private _setSidenavState(sidenavState: "expanded" | "collapsed"): void {
+    sidenavState === "expanded"
       ? this.layoutService.expandSidenav()
       : this.layoutService.collapseSidenav();
   }

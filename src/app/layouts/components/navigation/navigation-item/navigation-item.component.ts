@@ -3,6 +3,7 @@ import {
   Input,
   OnInit,
   ChangeDetectionStrategy,
+  inject,
 } from "@angular/core";
 import {
   NavigationItem,
@@ -33,6 +34,9 @@ import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
   ],
 })
 export class NavigationItemComponent implements OnInit {
+  private navigationService = inject(NavigationService);
+  private router = inject(Router);
+
   @Input({ required: true }) item!: NavigationItem;
 
   isActive$ = this.router.events.pipe(
@@ -45,11 +49,6 @@ export class NavigationItemComponent implements OnInit {
   isDropdown = this.navigationService.isDropdown;
   isSubheading = this.navigationService.isSubheading;
   trackByRoute = trackByRoute;
-
-  constructor(
-    private navigationService: NavigationService,
-    private router: Router,
-  ) {}
 
   ngOnInit() {}
 
