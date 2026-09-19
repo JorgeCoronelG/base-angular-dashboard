@@ -1,0 +1,21 @@
+services:
+  # Desarrollo: docker compose up dev  -> http://localhost:4200
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    profiles: ["dev"]
+
+  # Producción: docker compose up --build prod  -> http://localhost:8080
+  prod:
+    build:
+      context: .
+      target: prod
+    ports:
+      - "8080:80"
+    profiles: ["prod"]
