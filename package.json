@@ -14,7 +14,8 @@
     "postbuild": "node scripts/prune-icons.mjs",
     "api": "node scripts/mock-api.mjs",
     "e2e": "cd e2e && npx playwright test",
-    "e2e:docker": "sh scripts/e2e-docker.sh"
+    "e2e:docker": "sh scripts/e2e-docker.sh",
+    "init": "node scripts/init.mjs"
   },
   "dependencies": {
     "@angular/cdk": "^22.1.7",
