@@ -1,38 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 import {
   NavigationItem,
-  NavigationLink
-} from '../../../../core/navigation/navigation-item.interface';
-import { filter, map, startWith } from 'rxjs/operators';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { NavigationService } from '../../../../core/navigation/navigation.service';
-import { trackByRoute } from '@vex/utils/track-by';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRippleModule } from '@angular/material/core';
-import {
-  AsyncPipe,
-  NgClass,
-  NgFor,
-  NgIf,
-  NgTemplateOutlet
-} from '@angular/common';
+  NavigationLink,
+} from "../../../../core/navigation/navigation-item.interface";
+import { filter, map, startWith } from "rxjs/operators";
+import { NavigationEnd, Router, RouterLink } from "@angular/router";
+import { NavigationService } from "../../../../core/navigation/navigation.service";
+import { trackByRoute } from "@vex/utils/track-by";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatRippleModule } from "@angular/material/core";
+import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
 
 @Component({
-    selector: 'vex-navigation-item',
-    templateUrl: './navigation-item.component.html',
-    styleUrls: ['./navigation-item.component.scss'],
-    imports: [
-        NgIf,
-        MatRippleModule,
-        NgClass,
-        RouterLink,
-        MatMenuModule,
-        NgFor,
-        MatIconModule,
-        NgTemplateOutlet,
-        AsyncPipe
-    ]
+  selector: "vex-navigation-item",
+  templateUrl: "./navigation-item.component.html",
+  styleUrls: ["./navigation-item.component.scss"],
+  imports: [
+    MatRippleModule,
+    NgClass,
+    RouterLink,
+    MatMenuModule,
+    MatIconModule,
+    NgTemplateOutlet,
+    AsyncPipe,
+  ],
 })
 export class NavigationItemComponent implements OnInit {
   @Input({ required: true }) item!: NavigationItem;
@@ -40,7 +32,7 @@ export class NavigationItemComponent implements OnInit {
   isActive$ = this.router.events.pipe(
     filter((event) => event instanceof NavigationEnd),
     startWith(null),
-    map(() => (item: NavigationItem) => this.hasActiveChilds(item))
+    map(() => (item: NavigationItem) => this.hasActiveChilds(item)),
   );
 
   isLink = this.navigationService.isLink;
@@ -50,7 +42,7 @@ export class NavigationItemComponent implements OnInit {
 
   constructor(
     private navigationService: NavigationService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {}
@@ -77,7 +69,7 @@ export class NavigationItemComponent implements OnInit {
     return false;
   }
 
-  isFunction(prop: NavigationLink['route']) {
+  isFunction(prop: NavigationLink["route"]) {
     return prop instanceof Function;
   }
 }

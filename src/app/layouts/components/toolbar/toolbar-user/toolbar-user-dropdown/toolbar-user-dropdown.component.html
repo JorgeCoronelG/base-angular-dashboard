@@ -12,32 +12,38 @@
       mat-icon-button
       matTooltip="Settings"
       matTooltipPosition="before"
-      type="button">
+      type="button"
+    >
       <mat-icon
         class="notifications-header-icon"
-        svgIcon="mat:settings"></mat-icon>
+        svgIcon="mat:settings"
+      ></mat-icon>
     </button>
   </div>
 
   <div class="dropdown-content">
-    <a
-      (click)="close()"
-      *ngFor="let item of items; trackBy: trackById"
-      [routerLink]="item.route"
-      class="notification flex items-center"
-      matRipple>
-      <mat-icon
-        [ngClass]="item.colorClass"
-        [svgIcon]="item.icon"
-        class="notification-icon flex-none"></mat-icon>
-      <div class="flex-auto">
-        <div class="notification-label">{{ item.label }}</div>
-        <div class="notification-description">{{ item.description }}</div>
-      </div>
-      <mat-icon
-        class="notification-chevron flex-none"
-        svgIcon="mat:chevron_right"></mat-icon>
-    </a>
+    @for (item of items; track trackById($index, item)) {
+      <a
+        (click)="close()"
+        [routerLink]="item.route"
+        class="notification flex items-center"
+        matRipple
+      >
+        <mat-icon
+          [ngClass]="item.colorClass"
+          [svgIcon]="item.icon"
+          class="notification-icon flex-none"
+        ></mat-icon>
+        <div class="flex-auto">
+          <div class="notification-label">{{ item.label }}</div>
+          <div class="notification-description">{{ item.description }}</div>
+        </div>
+        <mat-icon
+          class="notification-chevron flex-none"
+          svgIcon="mat:chevron_right"
+        ></mat-icon>
+      </a>
+    }
   </div>
 
   <div class="dropdown-footer flex items-center justify-between">
@@ -45,33 +51,40 @@
       [matMenuTriggerFor]="statusMenu"
       class="dropdown-footer-select"
       mat-button
-      type="button">
-      <ng-container *ngFor="let status of statuses; trackBy: trackById">
-        <span *ngIf="status === activeStatus">
-          <mat-icon
-            [ngClass]="status.colorClass"
-            [svgIcon]="status.icon"></mat-icon>
-          <span>{{ status.label }}</span>
-          <mat-icon
-            class="dropdown-footer-select-caret"
-            svgIcon="mat:arrow_drop_down"></mat-icon>
-        </span>
-      </ng-container>
+      type="button"
+    >
+      @for (status of statuses; track trackById($index, status)) {
+        @if (status === activeStatus) {
+          <span>
+            <mat-icon
+              [ngClass]="status.colorClass"
+              [svgIcon]="status.icon"
+            ></mat-icon>
+            <span>{{ status.label }}</span>
+            <mat-icon
+              class="dropdown-footer-select-caret"
+              svgIcon="mat:arrow_drop_down"
+            ></mat-icon>
+          </span>
+        }
+      }
     </button>
     <a (click)="close()" [routerLink]="['/login']" color="primary" mat-button
-    >Logout</a
+      >Logout</a
     >
   </div>
 </div>
 
 <mat-menu #statusMenu="matMenu" xPosition="before" yPosition="below">
-  <button
-    (click)="setStatus(status)"
-    *ngFor="let status of statuses; trackBy: trackById"
-    mat-menu-item>
-    <mat-icon [ngClass]="status.colorClass" [svgIcon]="status.icon"></mat-icon>
-    <span>{{ status.label }}</span>
-  </button>
+  @for (status of statuses; track trackById($index, status)) {
+    <button (click)="setStatus(status)" mat-menu-item>
+      <mat-icon
+        [ngClass]="status.colorClass"
+        [svgIcon]="status.icon"
+      ></mat-icon>
+      <span>{{ status.label }}</span>
+    </button>
+  }
 </mat-menu>
 
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">

@@ -8,43 +8,41 @@ import {
   Input,
   OnChanges,
   OnInit,
-  SimpleChanges
-} from '@angular/core';
+  SimpleChanges,
+} from "@angular/core";
 import {
   NavigationDropdown,
   NavigationItem,
-  NavigationLink
-} from '../../../../core/navigation/navigation-item.interface';
-import { dropdownAnimation } from '@vex/animations/dropdown.animation';
+  NavigationLink,
+} from "../../../../core/navigation/navigation-item.interface";
+import { dropdownAnimation } from "@vex/animations/dropdown.animation";
 import {
   NavigationEnd,
   Router,
   RouterLink,
-  RouterLinkActive
-} from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { NavigationService } from '../../../../core/navigation/navigation.service';
+  RouterLinkActive,
+} from "@angular/router";
+import { filter } from "rxjs/operators";
+import { NavigationService } from "../../../../core/navigation/navigation.service";
 
-import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatIconModule } from "@angular/material/icon";
+import { MatRippleModule } from "@angular/material/core";
+import { NgClass } from "@angular/common";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
-    selector: 'vex-sidenav-item',
-    templateUrl: './sidenav-item.component.html',
-    styleUrls: ['./sidenav-item.component.scss'],
-    animations: [dropdownAnimation],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        NgIf,
-        MatRippleModule,
-        RouterLinkActive,
-        RouterLink,
-        MatIconModule,
-        NgClass,
-        NgFor
-    ]
+  selector: "vex-sidenav-item",
+  templateUrl: "./sidenav-item.component.html",
+  styleUrls: ["./sidenav-item.component.scss"],
+  animations: [dropdownAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatRippleModule,
+    RouterLinkActive,
+    RouterLink,
+    MatIconModule,
+    NgClass,
+  ],
 })
 export class SidenavItemComponent implements OnInit, OnChanges {
   @Input({ required: true }) item!: NavigationItem;
@@ -61,10 +59,10 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private cd: ChangeDetectorRef,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
   ) {}
 
-  @HostBinding('class')
+  @HostBinding("class")
   get levelClass() {
     return `item-level-${this.level}`;
   }
@@ -74,14 +72,14 @@ export class SidenavItemComponent implements OnInit, OnChanges {
       .pipe(
         filter((event) => event instanceof NavigationEnd),
         filter(() => this.isDropdown(this.item)),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => this.onRouteChange());
 
     this.navigationService.openChange$
       .pipe(
         filter(() => this.isDropdown(this.item)),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((item) => this.onOpenChange(item));
   }
@@ -89,7 +87,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes &&
-      changes.hasOwnProperty('item') &&
+      changes.hasOwnProperty("item") &&
       this.isDropdown(this.item)
     ) {
       this.onRouteChange();
@@ -153,7 +151,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
     });
   }
 
-  isFunction(prop: NavigationLink['route']): boolean {
+  isFunction(prop: NavigationLink["route"]): boolean {
     return prop instanceof Function;
   }
 }

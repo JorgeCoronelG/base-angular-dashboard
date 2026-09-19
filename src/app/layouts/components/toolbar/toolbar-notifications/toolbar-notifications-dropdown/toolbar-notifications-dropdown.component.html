@@ -10,31 +10,39 @@
     <button [matMenuTriggerFor]="settingsMenu" mat-icon-button type="button">
       <mat-icon
         class="notifications-header-icon"
-        svgIcon="mat:settings"></mat-icon>
+        svgIcon="mat:settings"
+      ></mat-icon>
     </button>
   </div>
 
   <div class="dropdown-content">
-    <a
-      *ngFor="let notification of notifications; trackBy: trackById"
-      [class.read]="notification.read"
-      [routerLink]="[]"
-      class="notification flex items-center"
-      matRipple>
-      <mat-icon
-        [ngClass]="notification.colorClass"
-        [svgIcon]="notification.icon"
-        class="notification-icon flex-none"></mat-icon>
-      <div class="flex-auto">
-        <div class="notification-label">{{ notification.label }}</div>
-        <div class="notification-description">
-          {{ notification.datetime | vexDateFormatRelative }}
+    @for (
+      notification of notifications;
+      track trackById($index, notification)
+    ) {
+      <a
+        [class.read]="notification.read"
+        [routerLink]="[]"
+        class="notification flex items-center"
+        matRipple
+      >
+        <mat-icon
+          [ngClass]="notification.colorClass"
+          [svgIcon]="notification.icon"
+          class="notification-icon flex-none"
+        ></mat-icon>
+        <div class="flex-auto">
+          <div class="notification-label">{{ notification.label }}</div>
+          <div class="notification-description">
+            {{ notification.datetime | vexDateFormatRelative }}
+          </div>
         </div>
-      </div>
-      <mat-icon
-        class="notification-chevron flex-none"
-        svgIcon="mat:chevron_right"></mat-icon>
-    </a>
+        <mat-icon
+          class="notification-chevron flex-none"
+          svgIcon="mat:chevron_right"
+        ></mat-icon>
+      </a>
+    }
   </div>
 
   <div class="dropdown-footer flex items-center justify-center">

@@ -1,15 +1,14 @@
 import {
-  ENVIRONMENT_INITIALIZER,
   EnvironmentProviders,
   importProvidersFrom,
   inject,
+  provideEnvironmentInitializer,
   Provider
 } from '@angular/core';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
   MatFormFieldDefaultOptions
 } from '@angular/material/form-field';
-import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
 import { VexSplashScreenService } from '@vex/services/vex-splash-screen.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { VexDemoService } from '@vex/services/vex-demo.service';
@@ -33,38 +32,22 @@ export function provideVex(options: {
       useValue: options.availableThemes
     },
     {
-      provide: MATERIAL_SANITY_CHECKS,
-      useValue: {
-        doctype: true,
-        theme: false,
-        version: true
-      }
-    },
-    {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
         appearance: 'outline'
       } satisfies MatFormFieldDefaultOptions
     },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(VexSplashScreenService),
-      multi: true
-    },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(VexLayoutService),
-      multi: true
-    },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(VexPlatformService),
-      multi: true
-    },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(VexDemoService),
-      multi: true
-    }
+    provideEnvironmentInitializer(() => {
+      inject(VexSplashScreenService);
+    }),
+    provideEnvironmentInitializer(() => {
+      inject(VexLayoutService);
+    }),
+    provideEnvironmentInitializer(() => {
+      inject(VexPlatformService);
+    }),
+    provideEnvironmentInitializer(() => {
+      inject(VexDemoService);
+    })
   ];
 }
