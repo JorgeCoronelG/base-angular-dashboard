@@ -6,7 +6,7 @@ import {
 } from "tailwindcss/types/config";
 import { Config } from "tailwindcss";
 import chroma from "chroma-js";
-import generateScss, { inheritDefaultTheme } from "../utils/generate-scss";
+import { inheritDefaultTheme } from "../utils/inherit-default-theme";
 import {
   createAngularMaterialComponentColorVariableName,
   createColorSchemeClassName,
@@ -146,6 +146,23 @@ export default plugin.withOptions(
               .rgb()
               .join(" ");
           }
+
+          /**
+           * Expose the default/lighter/darker shades as `--app-color-<name>-<role>`.
+           * `on-<name>` colors reuse the shades chosen for `<name>`.
+           */
+          const shadeSource = colorName.startsWith("on-")
+            ? themeOptions.colors[
+                colorName.slice(3) as keyof AppThemeOptions["colors"]
+              ]
+            : colorOptions;
+
+          if ("defaults" in shadeSource) {
+            for (const [role, shade] of Object.entries(shadeSource.defaults)) {
+              themeComponents[createColorVariableName(colorName, role)] =
+                chroma(colorOptions.palette[shade]).rgb().join(" ");
+            }
+          }
         }
 
         const themeClassName = createThemeClassName(e(themeName));
@@ -194,8 +211,6 @@ export default plugin.withOptions(
           });
         }
       }
-
-      generateScss(options);
     };
   },
   (options: AppThemePluginOptions): Partial<Config> => {
