@@ -45,7 +45,9 @@ export class VexLayoutService {
 
   private observeQuery(query: string) {
     return toSignal(
-      this.breakpointObserver.observe(query).pipe(map((state) => state.matches)),
+      this.breakpointObserver
+        .observe(query)
+        .pipe(map((state) => state.matches)),
       { initialValue: this.breakpointObserver.isMatched(query) },
     );
   }

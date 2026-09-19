@@ -1,11 +1,11 @@
-import { ActivatedRouteSnapshot } from '@angular/router';
-import { VexRouteData } from '../interfaces/vex-route.interface';
+import { ActivatedRouteSnapshot } from "@angular/router";
+import { VexRouteData } from "../interfaces/vex-route.interface";
 
 export function checkRouterChildsData(
   route: ActivatedRouteSnapshot & {
     data?: VexRouteData;
   },
-  compareWith: (data: VexRouteData) => boolean
+  compareWith: (data: VexRouteData) => boolean,
 ): boolean {
   if (compareWith(route.data)) {
     return true;
@@ -25,7 +25,7 @@ export function getAllParams(
   route: ActivatedRouteSnapshot & {
     data?: VexRouteData;
   },
-  result = new Map<string, string>()
+  result = new Map<string, string>(),
 ): Map<string, string> {
   if (route.params) {
     for (const key of Object.keys(route.params)) {

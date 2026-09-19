@@ -1,20 +1,20 @@
-import plugin from 'tailwindcss/plugin';
+import plugin from "tailwindcss/plugin";
 import {
   CSSRuleObject,
   PluginAPI,
-  PluginCreator
-} from 'tailwindcss/types/config';
-import { Config } from 'tailwindcss';
-import chroma from 'chroma-js';
-import generateScss, { inheritDefaultTheme } from '../utils/generate-scss';
+  PluginCreator,
+} from "tailwindcss/types/config";
+import { Config } from "tailwindcss";
+import chroma from "chroma-js";
+import generateScss, { inheritDefaultTheme } from "../utils/generate-scss";
 import {
   createAngularMaterialComponentColorVariableName,
   createColorSchemeClassName,
   createColorVariableName,
-  createThemeClassName
-} from '../utils/naming';
+  createThemeClassName,
+} from "../utils/naming";
 // noinspection ES6PreferShortImport
-import { DeepPartial } from '../../interfaces/deep-partial.type';
+import { DeepPartial } from "../../interfaces/deep-partial.type";
 
 export interface VexThemeColorPalette {
   50: string;
@@ -45,45 +45,45 @@ export interface VexThemeAngularMaterialColorForeground {
   divider: string;
   dividers: string;
   disabled: string;
-  'disabled-button': string;
-  'disabled-text': string;
+  "disabled-button": string;
+  "disabled-text": string;
   elevation: string;
-  'hint-text': string;
-  'secondary-text': string;
+  "hint-text": string;
+  "secondary-text": string;
   icon: string;
   icons: string;
   text: string;
-  'slider-min': string;
-  'slider-off': string;
-  'slider-off-active': string;
+  "slider-min": string;
+  "slider-off": string;
+  "slider-off-active": string;
 }
 
 export interface VexThemeAngularMaterialColorBackground {
-  'status-bar': string;
-  'app-bar': string;
+  "status-bar": string;
+  "app-bar": string;
   background: string;
   hover: string;
   card: string;
   dialog: string;
-  'disabled-button': string;
-  'raised-button': string;
-  'focused-button': string;
-  'selected-button': string;
-  'selected-disabled-button': string;
-  'disabled-button-toggle': string;
-  'unselected-chip': string;
-  'disabled-list-option': string;
+  "disabled-button": string;
+  "raised-button": string;
+  "focused-button": string;
+  "selected-button": string;
+  "selected-disabled-button": string;
+  "disabled-button-toggle": string;
+  "unselected-chip": string;
+  "disabled-list-option": string;
   tooltip: string;
 }
 
 export interface VexThemeOptions {
   colors: {
     primary: VexThemeColorOptions;
-    'on-primary': Omit<VexThemeColorOptions, 'defaults'>;
+    "on-primary": Omit<VexThemeColorOptions, "defaults">;
     accent: VexThemeColorOptions;
-    'on-accent': Omit<VexThemeColorOptions, 'defaults'>;
+    "on-accent": Omit<VexThemeColorOptions, "defaults">;
     warn: VexThemeColorOptions;
-    'on-warn': Omit<VexThemeColorOptions, 'defaults'>;
+    "on-warn": Omit<VexThemeColorOptions, "defaults">;
   };
   angularMaterial: {
     colors: {
@@ -111,19 +111,19 @@ export interface VexThemePluginOptions {
 
 export default plugin.withOptions(
   (options: VexThemePluginOptions): PluginCreator => {
-    return ({ theme, e, addComponents }: PluginAPI): void => {
+    return ({ e, addComponents }: PluginAPI): void => {
       const themes = options.themes;
 
-      for (let [themeName, partialThemeOptions] of Object.entries(themes)) {
+      for (const [themeName, partialThemeOptions] of Object.entries(themes)) {
         let themeOptions: VexThemeOptions;
 
         /**
          * Inherit default theme
          */
-        if (themeName !== 'default') {
+        if (themeName !== "default") {
           themeOptions = inheritDefaultTheme(
             partialThemeOptions,
-            themes.default
+            themes.default,
           );
         } else {
           themeOptions = partialThemeOptions as VexThemeOptions;
@@ -132,65 +132,65 @@ export default plugin.withOptions(
         const themeComponents: CSSRuleObject = {};
 
         for (const [colorName, colorOptions] of Object.entries(
-          themeOptions.colors
+          themeOptions.colors,
         )) {
           for (const [colorShade, colorValue] of Object.entries(
-            colorOptions.palette
+            colorOptions.palette,
           )) {
             const colorVariableName = createColorVariableName(
               colorName,
-              colorShade
+              colorShade,
             );
 
             themeComponents[colorVariableName] = chroma(colorValue)
               .rgb()
-              .join(' ');
+              .join(" ");
           }
         }
 
         const themeClassName = createThemeClassName(e(themeName));
 
         addComponents({
-          [themeClassName]: themeComponents
+          [themeClassName]: themeComponents,
         });
 
         /**
          * Generate color schemes for Angular Material
          */
         for (const [colorSchemeName, colorSchemeOptions] of Object.entries(
-          themeOptions.angularMaterial.colors
+          themeOptions.angularMaterial.colors,
         )) {
           const colorSchemeClassName = createColorSchemeClassName(
-            colorSchemeName as 'light' | 'dark'
+            colorSchemeName as "light" | "dark",
           );
           const angularMaterialColorSchemes: CSSRuleObject = {};
 
           for (const [
             colorSchemeSectionName,
-            colorSchemeSectionOptions
+            colorSchemeSectionOptions,
           ] of Object.entries(colorSchemeOptions)) {
             for (const [
               colorSchemeComponentName,
-              colorSchemeComponentColor
+              colorSchemeComponentColor,
             ] of Object.entries(colorSchemeSectionOptions)) {
               const colorVariableName =
                 createAngularMaterialComponentColorVariableName(
                   colorSchemeSectionName,
-                  colorSchemeComponentName
+                  colorSchemeComponentName,
                 );
               angularMaterialColorSchemes[colorVariableName] =
                 colorSchemeComponentColor;
-              angularMaterialColorSchemes[colorVariableName + '-rgb'] = chroma(
-                colorSchemeComponentColor
+              angularMaterialColorSchemes[colorVariableName + "-rgb"] = chroma(
+                colorSchemeComponentColor,
               )
                 .rgb()
-                .join(' ');
+                .join(" ");
             }
           }
 
           addComponents({
             [`${themeClassName}${colorSchemeClassName}, ${themeClassName} ${colorSchemeClassName}`]:
-              angularMaterialColorSchemes
+              angularMaterialColorSchemes,
           });
         }
       }
@@ -201,33 +201,30 @@ export default plugin.withOptions(
   (options: VexThemePluginOptions): Partial<Config> => {
     const defaultTheme = options.themes.default;
 
-    const colors: {
-      [colorName: string]: VexThemeColorPalette;
-    } = {};
+    const colors: Record<string, VexThemeColorPalette> = {};
 
     for (const [colorName, colorOptions] of Object.entries(
-      defaultTheme.colors
+      defaultTheme.colors,
     )) {
       colors[colorName] = {} as any;
 
       for (const colorShade of Object.keys(colorOptions.palette)) {
         const colorVariableName = createColorVariableName(
           colorName,
-          colorShade
+          colorShade,
         );
 
-        colors[colorName][
-          colorShade
-        ] = `rgb(var(${colorVariableName}) / <alpha-value>)`;
+        colors[colorName][colorShade] =
+          `rgb(var(${colorVariableName}) / <alpha-value>)`;
       }
     }
 
     return {
       theme: {
         extend: {
-          colors: colors
-        }
-      }
+          colors: colors,
+        },
+      },
     };
-  }
+  },
 );

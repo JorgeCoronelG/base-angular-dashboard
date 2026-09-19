@@ -27,14 +27,14 @@ docker compose --profile prod up --build   # http://localhost:8080
 
 ## Scripts
 
-| Comando | Descripción |
-| --- | --- |
-| `npm start` | Servidor de desarrollo |
-| `npm run build` | Build de producción en `dist/base-angular-dashboard` |
-| `npm test` | Tests unitarios (Vitest) |
-| `npm run lint` | ESLint |
-| `npm run format` | Formatea con Prettier |
-| `npm run format:check` | Verifica el formato |
+| Comando                | Descripción                                          |
+| ---------------------- | ---------------------------------------------------- |
+| `npm start`            | Servidor de desarrollo                               |
+| `npm run build`        | Build de producción en `dist/base-angular-dashboard` |
+| `npm test`             | Tests unitarios (Vitest)                             |
+| `npm run lint`         | ESLint                                               |
+| `npm run format`       | Formatea con Prettier                                |
+| `npm run format:check` | Verifica el formato                                  |
 
 ## Estructura
 

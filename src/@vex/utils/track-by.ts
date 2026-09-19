@@ -1,15 +1,15 @@
-import { KeyValue } from '@angular/common';
+import { KeyValue } from "@angular/common";
 
 export function trackByRoute<T extends { route: string | string[] }>(
   index: number,
-  item: T
+  item: T,
 ) {
   return item.route;
 }
 
 export function trackById<T extends { id: string | number }>(
   index: number,
-  item: T
+  item: T,
 ) {
   return item.id;
 }
@@ -24,7 +24,7 @@ export function trackByValue(index: number, value: string) {
 
 export function trackByLabel<T extends { label: string }>(
   index: number,
-  value: T
+  value: T,
 ) {
   return value.label;
 }

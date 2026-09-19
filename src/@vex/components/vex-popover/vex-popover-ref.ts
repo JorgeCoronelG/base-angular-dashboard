@@ -1,9 +1,9 @@
-import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject } from 'rxjs';
-import { TemplateRef, Type } from '@angular/core';
+import { OverlayRef } from "@angular/cdk/overlay";
+import { Subject } from "rxjs";
+import { TemplateRef, Type } from "@angular/core";
 
 export interface VexPopoverCloseEvent<T = any> {
-  type: 'backdropClick' | 'close';
+  type: "backdropClick" | "close";
   data: T | undefined;
 }
 
@@ -16,22 +16,22 @@ export class VexPopoverRef<T = any> {
   constructor(
     public overlay: OverlayRef,
     public content: VexPopoverContent,
-    public data: T | undefined
+    public data: T | undefined,
   ) {
     overlay.backdropClick().subscribe(() => {
-      this._close('backdropClick', undefined);
+      this._close("backdropClick", undefined);
     });
   }
 
   close(data?: T) {
-    this._close('close', data);
+    this._close("close", data);
   }
 
-  private _close(type: VexPopoverCloseEvent['type'], data?: T) {
+  private _close(type: VexPopoverCloseEvent["type"], data?: T) {
     this.overlay.dispose();
     this.afterClosed.next({
       type,
-      data
+      data,
     });
     this.afterClosed.complete();
   }

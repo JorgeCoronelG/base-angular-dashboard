@@ -9,13 +9,17 @@ $transition-delay: 200ms;
   top: 0;
   visibility: hidden;
   z-index: 99999;
-  transition: opacity $transition-duration theme("transitionTimingFunction.out-swift") $transition-delay,
-  visibility 0ms theme("transitionTimingFunction.out-swift") ($transition-duration + $transition-delay);
+  transition:
+    opacity $transition-duration theme("transitionTimingFunction.out-swift")
+      $transition-delay,
+    visibility 0ms theme("transitionTimingFunction.out-swift")
+      ($transition-duration + $transition-delay);
 
   &.visible {
     opacity: 1;
     visibility: visible;
-    transition: opacity $transition-duration theme("transitionTimingFunction.out-swift"),
-    visibility 0ms theme("transitionTimingFunction.out-swift") 0ms;
+    transition:
+      opacity $transition-duration theme("transitionTimingFunction.out-swift"),
+      visibility 0ms theme("transitionTimingFunction.out-swift") 0ms;
   }
 }

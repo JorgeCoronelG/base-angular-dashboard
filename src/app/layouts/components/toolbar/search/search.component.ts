@@ -30,7 +30,8 @@ export class SearchComponent implements OnDestroy {
   private readonly model = signal({ query: "" });
   readonly searchForm = form(this.model);
 
-  readonly input = viewChild.required<ElementRef<HTMLInputElement>>("searchInput");
+  readonly input =
+    viewChild.required<ElementRef<HTMLInputElement>>("searchInput");
 
   constructor() {
     this.searchService.isOpen.set(true);

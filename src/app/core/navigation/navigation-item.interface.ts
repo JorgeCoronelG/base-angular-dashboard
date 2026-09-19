@@ -1,11 +1,9 @@
 export type NavigationItem =
-  | NavigationLink
-  | NavigationDropdown
-  | NavigationSubheading;
+  NavigationLink | NavigationDropdown | NavigationSubheading;
 
 export interface NavigationLink {
-  type: 'link';
-  route: string | any;
+  type: "link";
+  route: string | (() => void);
   fragment?: string;
   label: string;
   icon?: string;
@@ -18,7 +16,7 @@ export interface NavigationLink {
 }
 
 export interface NavigationDropdown {
-  type: 'dropdown';
+  type: "dropdown";
   label: string;
   icon?: string;
   children: Array<NavigationLink | NavigationDropdown>;
@@ -30,7 +28,7 @@ export interface NavigationDropdown {
 }
 
 export interface NavigationSubheading {
-  type: 'subheading';
+  type: "subheading";
   label: string;
   children: Array<NavigationLink | NavigationDropdown>;
 }

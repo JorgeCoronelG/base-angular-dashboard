@@ -10,7 +10,7 @@
   --vex-sidenav-item-color-hover: theme("textColor.default");
   --vex-sidenav-item-color-active: theme("textColor.default");
   --vex-sidenav-item-dropdown-color-active: var(
-      --vex-sidenav-item-color-active
+    --vex-sidenav-item-color-active
   );
   --vex-sidenav-item-dropdown-background-active: var(--vex-background-hover);
 
@@ -54,7 +54,10 @@
     }
   }
 
-  .vex-layout-sidenav-collapsed .vex-sidenav vex-sidenav-item .vex-sidenav-item {
+  .vex-layout-sidenav-collapsed
+    .vex-sidenav
+    vex-sidenav-item
+    .vex-sidenav-item {
     @apply mx-0;
   }
 

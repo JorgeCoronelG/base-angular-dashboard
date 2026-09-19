@@ -2,36 +2,36 @@ import {
   EnvironmentProviders,
   inject,
   provideEnvironmentInitializer,
-  Provider
-} from '@angular/core';
+  Provider,
+} from "@angular/core";
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormFieldDefaultOptions
-} from '@angular/material/form-field';
-import { VexSplashScreenService } from '@vex/services/vex-splash-screen.service';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { VexPlatformService } from '@vex/services/vex-platform.service';
-import { VexConfig, VexThemeProvider } from '@vex/config/vex-config.interface';
-import { VEX_CONFIG, VEX_THEMES } from '@vex/config/config.token';
+  MatFormFieldDefaultOptions,
+} from "@angular/material/form-field";
+import { VexSplashScreenService } from "@vex/services/vex-splash-screen.service";
+import { VexLayoutService } from "@vex/services/vex-layout.service";
+import { VexPlatformService } from "@vex/services/vex-platform.service";
+import { VexConfig, VexThemeProvider } from "@vex/config/vex-config.interface";
+import { VEX_CONFIG, VEX_THEMES } from "@vex/config/config.token";
 
 export function provideVex(options: {
   config: VexConfig;
   availableThemes: VexThemeProvider[];
-}): (Provider | EnvironmentProviders)[] {
+}): Array<Provider | EnvironmentProviders> {
   return [
     {
       provide: VEX_CONFIG,
-      useValue: options.config
+      useValue: options.config,
     },
     {
       provide: VEX_THEMES,
-      useValue: options.availableThemes
+      useValue: options.availableThemes,
     },
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
-        appearance: 'outline'
-      } satisfies MatFormFieldDefaultOptions
+        appearance: "outline",
+      } satisfies MatFormFieldDefaultOptions,
     },
     provideEnvironmentInitializer(() => {
       inject(VexSplashScreenService);

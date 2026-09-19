@@ -75,7 +75,7 @@ export class NavigationItemComponent {
     return false;
   }
 
-  isFunction(prop: NavigationLink["route"]) {
+  isFunction(prop: NavigationLink["route"]): prop is () => void {
     return prop instanceof Function;
   }
 }

@@ -66,9 +66,11 @@ export class LayoutComponent {
   }
 
   onConfigPanelChange(opened: boolean): void {
-    opened
-      ? this.layoutService.openConfigpanel()
-      : this.layoutService.closeConfigpanel();
+    if (opened) {
+      this.layoutService.openConfigpanel();
+    } else {
+      this.layoutService.closeConfigpanel();
+    }
   }
 
   onQuickpanelClosed(): void {

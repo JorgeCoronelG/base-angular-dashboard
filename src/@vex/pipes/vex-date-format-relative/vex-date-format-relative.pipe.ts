@@ -1,12 +1,14 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { DateTime } from 'luxon';
+import { Pipe, PipeTransform } from "@angular/core";
+import { DateTime } from "luxon";
 
 @Pipe({
-  name: 'vexDateFormatRelative',
-  standalone: true
+  name: "vexDateFormatRelative",
+  standalone: true,
 })
 export class VexDateFormatRelativePipe implements PipeTransform {
-  transform(value: DateTime | null | undefined | string, ...args: any[]): any {
+  transform(
+    value: DateTime | null | undefined | string,
+  ): string | null | undefined {
     if (!value) {
       return;
     }

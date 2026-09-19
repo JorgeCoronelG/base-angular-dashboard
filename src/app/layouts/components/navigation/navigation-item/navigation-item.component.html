@@ -5,7 +5,7 @@
     [class.hover:bg-hover]="!isActive(navItem)"
     [class]="{
       'bg-primary-600 text-on-primary-600': isActive(navItem),
-      'navigation-color': !isActive(navItem)
+      'navigation-color': !isActive(navItem),
     }"
     [routerLink]="navItem.route"
     class="navigation-item"
@@ -27,14 +27,15 @@
 }
 
 @if (
-  (isSubheading(navItem) && (navItem.children?.length ?? 0) > 0) || isDropdown(navItem)
+  (isSubheading(navItem) && (navItem.children?.length ?? 0) > 0) ||
+  isDropdown(navItem)
 ) {
   <div
     [class.hover:bg-hover]="!isActive(navItem)"
     [matMenuTriggerFor]="menu"
     [class]="{
       'bg-primary-600 text-on-primary-600': isActive(navItem),
-      'navigation-color': !isActive(navItem)
+      'navigation-color': !isActive(navItem),
     }"
     class="navigation-item"
     matRipple
@@ -45,9 +46,7 @@
     @for (child of navItem.children; track child) {
       @if (isLink(child) && !isFunction(child.route)) {
         <a
-          [class.text-primary-600]="
-            isActive(child)
-          "
+          [class.text-primary-600]="isActive(child)"
           [routerLink]="child.route"
           class="navigation-menu-item"
           mat-menu-item
@@ -69,9 +68,7 @@
       @if (isDropdown(child)) {
         <button
           [matMenuTriggerFor]="level1"
-          [class.text-primary-600]="
-            isActive(child)
-          "
+          [class.text-primary-600]="isActive(child)"
           class="navigation-menu-item"
           mat-menu-item
         >
@@ -89,9 +86,7 @@
             @if (isDropdown(item)) {
               <button
                 [matMenuTriggerFor]="level2"
-                [class.text-primary-600]="
-                  isActive(item)
-                "
+                [class.text-primary-600]="isActive(item)"
                 class="navigation-menu-item"
                 mat-menu-item
               >
@@ -106,9 +101,7 @@
                   @if (isDropdown(child)) {
                     <button
                       [matMenuTriggerFor]="level3"
-                      [class.text-primary-600]="
-                        isActive(child)
-                      "
+                      [class.text-primary-600]="isActive(child)"
                       class="navigation-menu-item"
                       mat-menu-item
                     >
@@ -123,9 +116,7 @@
                         @if (isDropdown(item)) {
                           <button
                             [matMenuTriggerFor]="level4"
-                            [class.text-primary-600]="
-                              isActive(item)
-                            "
+                            [class.text-primary-600]="isActive(item)"
                             class="navigation-menu-item"
                             mat-menu-item
                           >
@@ -140,9 +131,7 @@
                               @if (isDropdown(child)) {
                                 <button
                                   [matMenuTriggerFor]="level5"
-                                  [class.text-primary-600]="
-                                    isActive(child)
-                                  "
+                                  [class.text-primary-600]="isActive(child)"
                                   class="navigation-menu-item"
                                   mat-menu-item
                                 >
@@ -174,9 +163,7 @@
   <ng-template #linkTemplate let-item="item">
     @if (isLink(item) && !isFunction(item.route)) {
       <a
-        [class.text-primary-600]="
-          isActive(item)
-        "
+        [class.text-primary-600]="isActive(item)"
         [routerLink]="item.route"
         class="navigation-menu-item"
         mat-menu-item
@@ -186,9 +173,7 @@
     @if (isLink(item) && isFunction(item.route)) {
       <div
         (click)="item.route()"
-        [class.text-primary-600]="
-          isActive(item)
-        "
+        [class.text-primary-600]="isActive(item)"
         class="navigation-menu-item"
         mat-menu-item
       >

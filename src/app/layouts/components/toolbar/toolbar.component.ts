@@ -1,10 +1,8 @@
 import {
   Component,
-  ElementRef,
   inject,
   ChangeDetectionStrategy,
   computed,
-  signal,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { VexConfigService } from "@vex/config/vex-config.service";

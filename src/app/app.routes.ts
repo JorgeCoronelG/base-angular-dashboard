@@ -1,10 +1,10 @@
-import { LayoutComponent } from './layouts/layout/layout.component';
-import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { LayoutComponent } from "./layouts/layout/layout.component";
+import { VexRoutes } from "@vex/interfaces/vex-route.interface";
 
 export const appRoutes: VexRoutes = [
   {
-    path: '',
+    path: "",
     component: LayoutComponent,
-    children: []
-  }
+    children: [],
+  },
 ];

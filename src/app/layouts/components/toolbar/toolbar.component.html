@@ -23,11 +23,8 @@
     </a>
   }
 
-  @if ((isVerticalLayout()) && (isNavbarInToolbar())) {
-    <div
-      [class.hidden]="!(isDesktop())"
-      class="px-6 flex-none flex items-center"
-    >
+  @if (isVerticalLayout() && isNavbarInToolbar()) {
+    <div [class.hidden]="!isDesktop()" class="px-6 flex-none flex items-center">
       @for (item of navigationItems(); track item) {
         <vex-navigation-item [item]="item" />
       }
@@ -84,6 +81,6 @@
   </div>
 </div>
 
-@if ((isVerticalLayout()) && (isNavbarBelowToolbar())) {
-  <vex-navigation [class.hidden]="!(isDesktop())" />
+@if (isVerticalLayout() && isNavbarBelowToolbar()) {
+  <vex-navigation [class.hidden]="!isDesktop()" />
 }

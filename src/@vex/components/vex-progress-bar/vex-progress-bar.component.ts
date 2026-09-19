@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
 import {
   LOADING_BAR_CONFIG,
@@ -15,11 +20,7 @@ import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
   templateUrl: "./vex-progress-bar.component.html",
   styleUrls: ["./vex-progress-bar.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    MatProgressBarModule,
-    LoadingBarModule,
-    LoadingBarRouterModule,
-  ],
+  imports: [MatProgressBarModule, LoadingBarModule, LoadingBarRouterModule],
   providers: [
     {
       provide: LOADING_BAR_CONFIG,

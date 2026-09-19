@@ -1,29 +1,29 @@
 import {
   VexThemeColorOptions,
   VexThemeOptions,
-  VexThemePluginOptions
-} from '../plugins/themes';
-import * as fs from 'fs';
-import * as path from 'path';
-import { createThemeClassName } from '../utils/naming';
-import { DeepPartial } from '../../interfaces/deep-partial.type';
-import { mergeDeep } from '../../utils/merge-deep';
-import deepClone from '../../utils/deep-clone';
+  VexThemePluginOptions,
+} from "../plugins/themes";
+import * as fs from "fs";
+import * as path from "path";
+import { createThemeClassName } from "../utils/naming";
+import { DeepPartial } from "../../interfaces/deep-partial.type";
+import { mergeDeep } from "../../utils/merge-deep";
+import deepClone from "../../utils/deep-clone";
 
 const scssFilePath = path.resolve(
   __dirname,
-  '../../styles/_generated-themes.scss'
+  "../../styles/_generated-themes.scss",
 );
 
 export function inheritDefaultTheme(
   theme: DeepPartial<VexThemeOptions>,
-  defaultTheme: VexThemeOptions
+  defaultTheme: VexThemeOptions,
 ): VexThemeOptions {
   return mergeDeep(deepClone(defaultTheme), theme);
 }
 
 function isThemeColorOptions(
-  options: VexThemeColorOptions | Omit<VexThemeColorOptions, 'defaults'>
+  options: VexThemeColorOptions | Omit<VexThemeColorOptions, "defaults">,
 ): options is VexThemeColorOptions {
   return (options as VexThemeColorOptions).defaults !== undefined;
 }
@@ -37,7 +37,7 @@ function buildScss(options: VexThemePluginOptions): string {
   /**
    * Add themes to the theme map
    */
-  for (let [themeName, partialThemeOptions] of Object.entries(themes)) {
+  for (const [themeName, partialThemeOptions] of Object.entries(themes)) {
     scss += `${themeName}: (`;
     scss += `selector: "${createThemeClassName(themeName)}", `;
 
@@ -45,7 +45,7 @@ function buildScss(options: VexThemePluginOptions): string {
      * Inherit default theme
      */
     let themeOptions: VexThemeOptions;
-    if (themeName !== 'default') {
+    if (themeName !== "default") {
       themeOptions = inheritDefaultTheme(partialThemeOptions, themes.default);
     } else {
       themeOptions = partialThemeOptions as VexThemeOptions;
@@ -55,14 +55,14 @@ function buildScss(options: VexThemePluginOptions): string {
      * Add colors to the theme map
      */
     for (const [colorName, colorOptions] of Object.entries(
-      themeOptions.colors
+      themeOptions.colors,
     )) {
       /**
        * Add default shades for Angular Material to the theme map
        */
       if (isThemeColorOptions(colorOptions)) {
         for (const [defaultShadeName, defaultShadeValue] of Object.entries(
-          colorOptions.defaults
+          colorOptions.defaults,
         )) {
           scss += `${colorName}-${defaultShadeName}-shade: ${defaultShadeValue}, `;
         }
@@ -74,7 +74,7 @@ function buildScss(options: VexThemePluginOptions): string {
        * Add palette to the theme map
        */
       for (const [colorShade, colorValue] of Object.entries(
-        colorOptions.palette
+        colorOptions.palette,
       )) {
         scss += `${colorShade}: ${colorValue},`;
       }
@@ -85,9 +85,9 @@ function buildScss(options: VexThemePluginOptions): string {
     /**
      * Add Angular Material colors to the theme map
      */
-    scss += 'angular-material: (';
+    scss += "angular-material: (";
     for (const [sectionName, sectionValue] of Object.entries(
-      themeOptions.angularMaterial
+      themeOptions.angularMaterial,
     )) {
       scss += `${sectionName}: (`;
 
@@ -109,13 +109,13 @@ function buildScss(options: VexThemePluginOptions): string {
 
       scss += `), `;
     }
-    scss += ')';
+    scss += ")";
 
     /** Close theme map */
     scss += `), `;
   }
 
-  scss += ');';
+  scss += ");";
 
   return scss;
 }
@@ -125,11 +125,11 @@ export default function generateScss(options: VexThemePluginOptions): void {
 
   let fileContent: string | undefined;
   try {
-    fileContent = fs.readFileSync(scssFilePath, { encoding: 'utf8' });
+    fileContent = fs.readFileSync(scssFilePath, { encoding: "utf8" });
   } catch (error) {
     console.error(
       `[VexTailwindThemePlugin] Error reading file ${scssFilePath}`,
-      error
+      error,
     );
   }
 
@@ -139,7 +139,7 @@ export default function generateScss(options: VexThemePluginOptions): void {
     } catch (error) {
       console.error(
         `[VexTailwindThemePlugin] Error writing file ${scssFilePath}`,
-        error
+        error,
       );
     }
   }

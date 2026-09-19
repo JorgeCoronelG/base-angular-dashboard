@@ -128,7 +128,7 @@ export class SidenavItemComponent {
     });
   }
 
-  isFunction(prop: NavigationLink["route"]): boolean {
+  isFunction(prop: NavigationLink["route"]): prop is () => void {
     return prop instanceof Function;
   }
 }

@@ -63,9 +63,11 @@ export class SidenavComponent {
   }
 
   toggleCollapse() {
-    this.collapsed()
-      ? this.layoutService.expandSidenav()
-      : this.layoutService.collapseSidenav();
+    if (this.collapsed()) {
+      this.layoutService.expandSidenav();
+    } else {
+      this.layoutService.collapseSidenav();
+    }
   }
 
   trackByRoute(item: NavigationItem): string {
@@ -95,5 +97,4 @@ export class SidenavComponent {
     this.userMenuOpen.set(true);
     popoverRef.afterClosed$.subscribe(() => this.userMenuOpen.set(false));
   }
-
 }

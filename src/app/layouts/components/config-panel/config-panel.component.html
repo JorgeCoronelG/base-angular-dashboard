@@ -1,187 +1,181 @@
 @let setting = config();
 
-  <div class="config-panel">
-    <h2 class="headline mb-4">
-      <mat-icon class="mr-3" svgIcon="mat:settings" />
-      <span>Configuration</span>
-    </h2>
-    <div class="section">
-      <h5 class="subheading">THEME BASE</h5>
-      @let colorScheme = this.colorScheme();
-      @if (colorScheme) {
-        <div
-          (click)="isDark(colorScheme) ? disableDarkMode() : enableDarkMode()"
-          class="rounded-full mt-2 flex items-center cursor-pointer relative bg-black text-white select-none"
-          matRipple
-        >
-          <div class="m-2 h-6 w-6 rounded-full">
-            @if (isDark(colorScheme)) {
-              <mat-icon svgIcon="mat:check" />
-            }
-            @if (!isDark(colorScheme)) {
-              <mat-icon svgIcon="mat:close" />
-            }
-          </div>
-          <p class="ml-1 font-medium text-sm">DARK MODE</p>
+<div class="config-panel">
+  <h2 class="headline mb-4">
+    <mat-icon class="mr-3" svgIcon="mat:settings" />
+    <span>Configuration</span>
+  </h2>
+  <div class="section">
+    <h5 class="subheading">THEME BASE</h5>
+    @let colorScheme = this.colorScheme();
+    @if (colorScheme) {
+      <div
+        (click)="isDark(colorScheme) ? disableDarkMode() : enableDarkMode()"
+        class="rounded-full mt-2 flex items-center cursor-pointer relative bg-black text-white select-none"
+        matRipple
+      >
+        <div class="m-2 h-6 w-6 rounded-full">
+          @if (isDark(colorScheme)) {
+            <mat-icon svgIcon="mat:check" />
+          }
+          @if (!isDark(colorScheme)) {
+            <mat-icon svgIcon="mat:close" />
+          }
         </div>
-      }
-    </div>
-    <div class="section">
-      <h5 class="subheading">THEME COLORS</h5>
-      @for (theme of themes; track theme) {
+        <p class="ml-1 font-medium text-sm">DARK MODE</p>
+      </div>
+    }
+  </div>
+  <div class="section">
+    <h5 class="subheading">THEME COLORS</h5>
+    @for (theme of themes; track theme) {
+      <div (click)="selectTheme(theme)" [class]="themeClass(theme)" matRipple>
         <div
-          (click)="selectTheme(theme)"
-          [class]="themeClass(theme)"
-          matRipple
+          class="m-2 h-6 w-6 rounded-full text-on-primary-600 bg-primary-600"
+        >
+          @if (selectedTheme() === theme.className) {
+            <mat-icon svgIcon="mat:check" />
+          }
+        </div>
+        <p class="ml-1 font-medium text-sm">{{ theme.name | uppercase }}</p>
+      </div>
+    }
+  </div>
+  <div class="section">
+    <h5 class="subheading">PRE-BUILT LAYOUTS</h5>
+    @for (layout of configs; track layout; let first = $first) {
+      <div [class.mt-4]="!first" class="flex items-center gap-2">
+        <div class="flex-auto body-2 font-medium">{{ layout.name }}</div>
+        <button
+          (click)="setConfig(layout.id, ColorSchemeName.LIGHT)"
+          class="flex-none"
+          mat-stroked-button
+          type="button"
+        >
+          LIGHT
+        </button>
+        <button
+          (click)="setConfig(layout.id, ColorSchemeName.DARK)"
+          class="flex-none"
+          mat-stroked-button
+          type="button"
+        >
+          DARK
+        </button>
+      </div>
+    }
+  </div>
+  <div class="section">
+    <h5 class="subheading">ROUNDED CORNERS</h5>
+    <div class="grid grid-cols-4 gap-4">
+      @for (borderRadius of roundedCornerValues; track borderRadius) {
+        <div
+          (click)="selectBorderRadius(borderRadius)"
+          [class.border-gray-300]=""
+          [class]="{
+            'border-gray-300': isSelectedBorderRadius(borderRadius, setting),
+            'border-transparent': !isSelectedBorderRadius(
+              borderRadius,
+              setting
+            ),
+          }"
+          class="aspect-square bgbg-primary-60010 flex justify-end items-end cursor-pointer border-2 hover:border-gray-200 group transition duration-400 ease-out-swift rounded-tl"
         >
           <div
-            class="m-2 h-6 w-6 rounded-full text-on-primary-600 bg-primary-600"
-          >
-            @if (selectedTheme() === theme.className) {
-              <mat-icon svgIcon="mat:check" />
-            }
-          </div>
-          <p class="ml-1 font-medium text-sm">{{ theme.name | uppercase }}</p>
-        </div>
-      }
-    </div>
-    <div class="section">
-      <h5 class="subheading">PRE-BUILT LAYOUTS</h5>
-      @for (layout of configs; track layout; let first = $first) {
-        <div [class.mt-4]="!first" class="flex items-center gap-2">
-          <div class="flex-auto body-2 font-medium">{{ layout.name }}</div>
-          <button
-            (click)="setConfig(layout.id, ColorSchemeName.LIGHT)"
-            class="flex-none"
-            mat-stroked-button
-            type="button"
-          >
-            LIGHT
-          </button>
-          <button
-            (click)="setConfig(layout.id, ColorSchemeName.DARK)"
-            class="flex-none"
-            mat-flat-button
-            type="button"
-          >
-            DARK
-          </button>
-        </div>
-      }
-    </div>
-    <div class="section">
-      <h5 class="subheading">ROUNDED CORNERS</h5>
-      <div class="grid grid-cols-4 gap-4">
-        @for (borderRadius of roundedCornerValues; track borderRadius) {
-          <div
-            (click)="selectBorderRadius(borderRadius)"
-            [class.border-gray-300]=""
             [class]="{
-              'border-gray-300': isSelectedBorderRadius(borderRadius, setting),
-              'border-transparent': !isSelectedBorderRadius(
+              'bg-primary-600 border-primary-600': isSelectedBorderRadius(
                 borderRadius,
                 setting
-              )
+              ),
+              'bg-foreground border-gray-500 group-hover:bg-app-bar':
+                !isSelectedBorderRadius(borderRadius, setting),
             }"
-            class="aspect-square bgbg-primary-60010 flex justify-end items-end cursor-pointer border-2 hover:border-gray-200 group transition duration-400 ease-out-swift rounded-tl"
-          >
-            <div
-              [class]="{
-                'bg-primary-600 border-primary-600': isSelectedBorderRadius(
-                  borderRadius,
-                  setting
-                ),
-                'bg-foreground border-gray-500 group-hover:bg-app-bar':
-                  !isSelectedBorderRadius(borderRadius, setting)
-              }"
-              [style.border-top-left-radius]="
-                borderRadius.value + borderRadius.unit
-              "
-              class="h-7 w-7 border-2 transition duration-400 ease-out-swift"
-              style="margin-bottom: -2px; margin-right: -2px"
-            ></div>
-          </div>
-        }
-      </div>
-    </div>
-    <div class="section">
-      <h5 class="subheading">BUTTON STYLE</h5>
-      <div class="flex justify-between gap-4">
-        <button
-          (click)="selectButtonStyle(undefined)"
-          [class]="{
-            '!bg-transparent !border-solid !border-primary-600 !text-primary-600':
-              !isSelectedButtonStyle(undefined, setting),
-            '!border-transparent': isSelectedButtonStyle(undefined, setting)
-          }"
-          class="rounded flex-1 border-2 border-solid"
-          color="primary"
-          mat-flat-button
-          type="button"
-        >
-          INHERIT
-        </button>
-        <button
-          (click)="selectButtonStyle(roundedButtonValue)"
-          [class]="{
-            '!bg-transparent !border-solid !border-primary-600 !text-primary-600':
-              !isSelectedButtonStyle(roundedButtonValue, setting),
-            '!border-transparent': isSelectedButtonStyle(
-              roundedButtonValue,
-              setting
-            )
-          }"
-          class="rounded-full flex-1 border-2 border-solid"
-          color="primary"
-          mat-flat-button
-          type="button"
-        >
-          ROUNDED
-        </button>
-      </div>
-    </div>
-    <div class="section">
-      <h5 class="subheading">Layout</h5>
-      <div class="section-content">
-        <h5 class="subheading">Orientation</h5>
-        <mat-slide-toggle
-          (change)="layoutRTLChange($event)"
-          [checked]="isRTL()"
-          >RTL
-        </mat-slide-toggle>
-      </div>
-    </div>
-    <div class="section">
-      <h5 class="subheading">Toolbar</h5>
-      <div class="section-content">
-        <h5 class="subheading">Position</h5>
-        <mat-radio-group
-          (change)="toolbarPositionChange($event)"
-          [value]="setting.toolbar.fixed ? 'fixed' : 'static'"
-          class="flex flex-col gap-3"
-        >
-          <mat-radio-button value="fixed">Fixed</mat-radio-button>
-          <mat-radio-button value="static">Static</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-    <div class="section">
-      <h5 class="subheading">Footer</h5>
-      <div class="section-content">
-        <mat-slide-toggle
-          (change)="footerVisibleChange($event)"
-          [checked]="setting.footer.visible"
-          >Visible
-        </mat-slide-toggle>
-        <h5 class="subheading">Position</h5>
-        <mat-radio-group
-          (change)="footerPositionChange($event)"
-          [value]="setting.footer.fixed ? 'fixed' : 'static'"
-          class="flex flex-col gap-3"
-        >
-          <mat-radio-button value="fixed">Fixed</mat-radio-button>
-          <mat-radio-button value="static">Static</mat-radio-button>
-        </mat-radio-group>
-      </div>
+            [style.border-top-left-radius]="
+              borderRadius.value + borderRadius.unit
+            "
+            class="h-7 w-7 border-2 transition duration-400 ease-out-swift"
+            style="margin-bottom: -2px; margin-right: -2px"
+          ></div>
+        </div>
+      }
     </div>
   </div>
+  <div class="section">
+    <h5 class="subheading">BUTTON STYLE</h5>
+    <div class="flex justify-between gap-4">
+      <button
+        (click)="selectButtonStyle(undefined)"
+        [class]="{
+          '!bg-transparent !border-solid !border-primary-600 !text-primary-600':
+            !isSelectedButtonStyle(undefined, setting),
+          '!border-transparent': isSelectedButtonStyle(undefined, setting),
+        }"
+        class="rounded flex-1 border-2 border-solid"
+        color="primary"
+        mat-flat-button
+        type="button"
+      >
+        INHERIT
+      </button>
+      <button
+        (click)="selectButtonStyle(roundedButtonValue)"
+        [class]="{
+          '!bg-transparent !border-solid !border-primary-600 !text-primary-600':
+            !isSelectedButtonStyle(roundedButtonValue, setting),
+          '!border-transparent': isSelectedButtonStyle(
+            roundedButtonValue,
+            setting
+          ),
+        }"
+        class="rounded-full flex-1 border-2 border-solid"
+        color="primary"
+        mat-flat-button
+        type="button"
+      >
+        ROUNDED
+      </button>
+    </div>
+  </div>
+  <div class="section">
+    <h5 class="subheading">Layout</h5>
+    <div class="section-content">
+      <h5 class="subheading">Orientation</h5>
+      <mat-slide-toggle (change)="layoutRTLChange($event)" [checked]="isRTL()"
+        >RTL
+      </mat-slide-toggle>
+    </div>
+  </div>
+  <div class="section">
+    <h5 class="subheading">Toolbar</h5>
+    <div class="section-content">
+      <h5 class="subheading">Position</h5>
+      <mat-radio-group
+        (change)="toolbarPositionChange($event)"
+        [value]="setting.toolbar.fixed ? 'fixed' : 'static'"
+        class="flex flex-col gap-3"
+      >
+        <mat-radio-button value="fixed">Fixed</mat-radio-button>
+        <mat-radio-button value="static">Static</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="section">
+    <h5 class="subheading">Footer</h5>
+    <div class="section-content">
+      <mat-slide-toggle
+        (change)="footerVisibleChange($event)"
+        [checked]="setting.footer.visible"
+        >Visible
+      </mat-slide-toggle>
+      <h5 class="subheading">Position</h5>
+      <mat-radio-group
+        (change)="footerPositionChange($event)"
+        [value]="setting.footer.fixed ? 'fixed' : 'static'"
+        class="flex flex-col gap-3"
+      >
+        <mat-radio-button value="fixed">Fixed</mat-radio-button>
+        <mat-radio-button value="static">Static</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+</div>

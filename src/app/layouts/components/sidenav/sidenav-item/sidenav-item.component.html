@@ -3,7 +3,9 @@
 @if (isLink(navItem) && !isFunction(navItem.route)) {
   <a
     [fragment]="navItem.fragment"
-    [routerLinkActiveOptions]="navItem.routerLinkActiveOptions || { exact: false }"
+    [routerLinkActiveOptions]="
+      navItem.routerLinkActiveOptions || { exact: false }
+    "
     [routerLink]="navItem.route"
     class="vex-sidenav-item"
     matRipple

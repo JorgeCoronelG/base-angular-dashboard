@@ -1,5 +1,6 @@
 :root {
-  .cdk-overlay-pane:not(.mat-mdc-autocomplete-panel-above) div.mat-mdc-autocomplete-panel {
+  .cdk-overlay-pane:not(.mat-mdc-autocomplete-panel-above)
+    div.mat-mdc-autocomplete-panel {
     @apply mt-1 rounded-t;
   }
 

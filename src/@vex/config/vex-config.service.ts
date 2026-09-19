@@ -9,7 +9,6 @@ import {
   VexConfig,
   VexConfigName,
   VexConfigs,
-  VexThemeProvider,
 } from "./vex-config.interface";
 import { CSSValue } from "../interfaces/css-value.type";
 import { VEX_CONFIG, VEX_THEMES } from "@vex/config/config.token";
@@ -113,9 +112,11 @@ export class VexConfigService {
   }
 
   private _setSidenavState(sidenavState: "expanded" | "collapsed"): void {
-    sidenavState === "expanded"
-      ? this.layoutService.expandSidenav()
-      : this.layoutService.collapseSidenav();
+    if (sidenavState === "expanded") {
+      this.layoutService.expandSidenav();
+    } else {
+      this.layoutService.collapseSidenav();
+    }
   }
 
   private _setLayoutClass(bodyClass: string): void {

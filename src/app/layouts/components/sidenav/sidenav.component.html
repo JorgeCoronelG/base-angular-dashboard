@@ -2,16 +2,12 @@
   (mouseenter)="collapseOpenSidenav()"
   (mouseleave)="collapseCloseSidenav()"
   [class.collapsed]="collapsed()"
-  [class.open]="collapsed() && (collapsedOpen())"
+  [class.open]="collapsed() && collapsedOpen()"
   class="vex-sidenav flex flex-col"
 >
   <div class="vex-sidenav-toolbar__container">
     <div class="sidenav-toolbar flex-none flex items-center">
-      <img
-        [src]="imageUrl()"
-        alt="Logo"
-        class="w-6 select-none flex-none"
-      />
+      <img [src]="imageUrl()" alt="Logo" class="w-6 select-none flex-none" />
       <h2 class="vex-sidenav-toolbar__headline flex-auto">
         {{ title() }}
       </h2>
@@ -31,7 +27,6 @@
         </button>
       }
     </div>
-
 
     <div class="vex-sidenav-toolbar__divider"></div>
   </div>

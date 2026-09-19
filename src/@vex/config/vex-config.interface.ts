@@ -1,29 +1,29 @@
-import { CSSValue } from '../interfaces/css-value.type';
+import { CSSValue } from "../interfaces/css-value.type";
 
 export enum VexTheme {
-  DEFAULT = 'vex-theme-default',
-  TEAL = 'vex-theme-teal'
+  DEFAULT = "vex-theme-default",
+  TEAL = "vex-theme-teal",
 }
 
 export enum VexConfigName {
-  apollo = 'apollo',
-  zeus = 'zeus',
-  hermes = 'hermes',
-  poseidon = 'poseidon',
-  ares = 'ares',
-  ikaros = 'ikaros'
+  apollo = "apollo",
+  zeus = "zeus",
+  hermes = "hermes",
+  poseidon = "poseidon",
+  ares = "ares",
+  ikaros = "ikaros",
 }
 
 export enum VexColorScheme {
-  LIGHT = 'light',
-  DARK = 'dark'
+  LIGHT = "light",
+  DARK = "dark",
 }
 
 export interface VexConfig {
   id: VexConfigName;
   name: string;
   bodyClass: string;
-  direction: 'ltr' | 'rtl';
+  direction: "ltr" | "rtl";
   style: {
     themeClassName: string;
     colorScheme: VexColorScheme;
@@ -32,7 +32,7 @@ export interface VexConfig {
       borderRadius: CSSValue | undefined;
     };
   };
-  layout: 'vertical' | 'horizontal';
+  layout: "vertical" | "horizontal";
   boxed: boolean;
   sidenav: {
     title: string;
@@ -41,7 +41,7 @@ export interface VexConfig {
     user: {
       visible: boolean;
     };
-    state: 'expanded' | 'collapsed';
+    state: "expanded" | "collapsed";
   };
   toolbar: {
     fixed: boolean;
@@ -50,7 +50,7 @@ export interface VexConfig {
     };
   };
   navbar: {
-    position: 'below-toolbar' | 'in-toolbar';
+    position: "below-toolbar" | "in-toolbar";
   };
   footer: {
     visible: boolean;

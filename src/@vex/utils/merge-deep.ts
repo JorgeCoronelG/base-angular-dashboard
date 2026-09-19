@@ -5,7 +5,7 @@
  * @author inspired by [jhildenbiddle](https://stackoverflow.com/a/48218209).
  */
 export function mergeDeep<T, P>(target: T, source: P): T & P {
-  const isObject = (obj: any) => obj && typeof obj === 'object';
+  const isObject = (obj: any) => obj && typeof obj === "object";
 
   if (!isObject(target) || !isObject(source)) {
     return source as T & P;
@@ -20,7 +20,7 @@ export function mergeDeep<T, P>(target: T, source: P): T & P {
     } else if (isObject(targetValue) && isObject(sourceValue)) {
       (target as any)[key] = mergeDeep(
         Object.assign({}, targetValue),
-        sourceValue
+        sourceValue,
       );
     } else {
       (target as any)[key] = sourceValue;
