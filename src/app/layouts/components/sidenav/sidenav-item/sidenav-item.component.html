@@ -27,12 +27,12 @@
 }
 
 @if (isLink(navItem) && isFunction(navItem.route)) {
-  <div
+  <button
     (click)="navItem.route()"
     class="app-sidenav-item"
     matRipple
     matRippleColor="var(--app-sidenav-item-ripple-color)"
-    routerLinkActive="app-sidenav-item--active"
+    type="button"
   >
     @if (level() === 0 && navItem.icon) {
       <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
@@ -45,17 +45,19 @@
         >{{ navItem.badge.value }}</span
       >
     }
-  </div>
+  </button>
 }
 
 @if (isDropdown(navItem)) {
-  <div
+  <button
     (click)="toggleOpen()"
+    [attr.aria-expanded]="isOpen()"
     [class.app-sidenav-item--active]="isOpen() || isActive()"
     [class.app-sidenav-item--open]="isOpen()"
     class="app-sidenav-item"
     matRipple
     matRippleColor="var(--app-sidenav-item-ripple-color)"
+    type="button"
   >
     @if (level() === 0 && navItem.icon) {
       <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
@@ -72,7 +74,7 @@
       class="app-sidenav-item__dropdown-icon"
       svgIcon="mat:keyboard_arrow_right"
     />
-  </div>
+  </button>
   <div
     [class.app-sidenav-item__dropdown--open]="isOpen()"
     [attr.inert]="isOpen() ? null : ''"

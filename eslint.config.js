@@ -1,10 +1,11 @@
 // @ts-check
 const eslint = require("@eslint/js");
-const { defineConfig } = require("eslint/config");
+const { defineConfig, globalIgnores } = require("eslint/config");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
 
 module.exports = defineConfig([
+  globalIgnores(["dist/**", ".angular/**", "coverage/**"]),
   {
     files: ["**/*.ts"],
     extends: [
@@ -15,8 +16,6 @@ module.exports = defineConfig([
     ],
     processor: angular.processInlineTemplates,
     rules: {
-      // Generic utilities and overlay wrappers still rely on `any`
-      "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/array-type": ["error", { default: "array-simple" }],
       "@angular-eslint/directive-selector": [
         "error",
@@ -42,10 +41,6 @@ module.exports = defineConfig([
       angular.configs.templateRecommended,
       angular.configs.templateAccessibility,
     ],
-    rules: {
-      // Clickable non-native elements: tracked as accessibility debt
-      "@angular-eslint/template/click-events-have-key-events": "warn",
-      "@angular-eslint/template/interactive-supports-focus": "warn",
-    },
+    rules: {},
   },
 ]);

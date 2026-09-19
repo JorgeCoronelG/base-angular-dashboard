@@ -9,10 +9,11 @@
     <h5 class="subheading">THEME BASE</h5>
     @let colorScheme = this.colorScheme();
     @if (colorScheme) {
-      <div
+      <button
         (click)="isDark(colorScheme) ? disableDarkMode() : enableDarkMode()"
-        class="rounded-full mt-2 flex items-center cursor-pointer relative bg-black text-white select-none"
+        class="w-full text-start rounded-full mt-2 flex items-center cursor-pointer relative bg-black text-white select-none"
         matRipple
+        type="button"
       >
         <div class="m-2 h-6 w-6 rounded-full">
           @if (isDark(colorScheme)) {
@@ -23,13 +24,18 @@
           }
         </div>
         <p class="ml-1 font-medium text-sm">DARK MODE</p>
-      </div>
+      </button>
     }
   </div>
   <div class="section">
     <h5 class="subheading">THEME COLORS</h5>
     @for (theme of themes; track theme) {
-      <div (click)="selectTheme(theme)" [class]="themeClass(theme)" matRipple>
+      <button
+        (click)="selectTheme(theme)"
+        [class]="themeClass(theme)"
+        matRipple
+        type="button"
+      >
         <div
           class="m-2 h-6 w-6 rounded-full text-on-primary-600 bg-primary-600"
         >
@@ -38,7 +44,7 @@
           }
         </div>
         <p class="ml-1 font-medium text-sm">{{ theme.name | uppercase }}</p>
-      </div>
+      </button>
     }
   </div>
   <div class="section">
@@ -69,9 +75,12 @@
     <h5 class="subheading">ROUNDED CORNERS</h5>
     <div class="grid grid-cols-4 gap-4">
       @for (borderRadius of roundedCornerValues; track borderRadius) {
-        <div
+        <button
           (click)="selectBorderRadius(borderRadius)"
-          [class.border-gray-300]=""
+          [attr.aria-label]="
+            'Border radius ' + borderRadius.value + borderRadius.unit
+          "
+          [attr.aria-pressed]="isSelectedBorderRadius(borderRadius, setting)"
           [class]="{
             'border-gray-300': isSelectedBorderRadius(borderRadius, setting),
             'border-transparent': !isSelectedBorderRadius(
@@ -79,7 +88,8 @@
               setting
             ),
           }"
-          class="aspect-square bgbg-primary-60010 flex justify-end items-end cursor-pointer border-2 hover:border-gray-200 group transition duration-400 ease-out-swift rounded-tl"
+          type="button"
+          class="aspect-square flex justify-end items-end cursor-pointer border-2 hover:border-gray-200 group transition duration-400 ease-out-swift rounded-tl"
         >
           <div
             [class]="{
@@ -96,7 +106,7 @@
             class="h-7 w-7 border-2 transition duration-400 ease-out-swift"
             style="margin-bottom: -2px; margin-right: -2px"
           ></div>
-        </div>
+        </button>
       }
     </div>
   </div>

@@ -5,7 +5,7 @@ export interface AppRouteData {
   toolbarShadowEnabled?: boolean;
   footerVisible?: boolean;
 
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface AppRoute extends Route {

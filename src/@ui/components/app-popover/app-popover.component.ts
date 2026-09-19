@@ -1,11 +1,10 @@
 import {
   Component,
-  OnInit,
   TemplateRef,
   ChangeDetectionStrategy,
   inject,
 } from "@angular/core";
-import { AppPopoverContent, AppPopoverRef } from "./app-popover-ref";
+import { AppPopoverRef } from "./app-popover-ref";
 import { NgComponentOutlet, NgTemplateOutlet } from "@angular/common";
 
 @Component({
@@ -15,25 +14,15 @@ import { NgComponentOutlet, NgTemplateOutlet } from "@angular/common";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet, NgComponentOutlet],
 })
-export class AppPopoverComponent implements OnInit {
+export class AppPopoverComponent {
   private popoverRef = inject(AppPopoverRef);
 
-  renderMethod: "template" | "component" | "text" = "component";
-  content: AppPopoverContent;
-  context: any;
+  private readonly content = this.popoverRef.content;
 
-  ngOnInit() {
-    this.content = this.popoverRef.content;
-
-    if (typeof this.content === "string") {
-      this.renderMethod = "text";
-    }
-
-    if (this.content instanceof TemplateRef) {
-      this.renderMethod = "template";
-      this.context = {
-        close: this.popoverRef.close.bind(this.popoverRef),
-      };
-    }
-  }
+  readonly text = typeof this.content === "string" ? this.content : null;
+  readonly template = this.content instanceof TemplateRef ? this.content : null;
+  readonly component = typeof this.content === "function" ? this.content : null;
+  readonly context = {
+    close: this.popoverRef.close.bind(this.popoverRef),
+  };
 }

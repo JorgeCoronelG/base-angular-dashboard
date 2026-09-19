@@ -13,14 +13,6 @@
         @apply bg-gray-100 text-gray-900;
       }
     }
-
-    .app-sidenav-search {
-      @apply bg-gray-100 text-gray-600;
-
-      &:hover {
-        @apply bg-gray-200 text-gray-900;
-      }
-    }
   }
 
   .app-sidenav-user--open {

@@ -1,5 +1,13 @@
+// Buttons do not stretch to their container like anchors do; keep margins working
+button.app-sidenav-item {
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
+}
+
 .app-sidenav-item {
   align-items: center;
+  text-align: start;
   box-sizing: border-box;
   color: var(--app-sidenav-item-color);
   cursor: pointer;

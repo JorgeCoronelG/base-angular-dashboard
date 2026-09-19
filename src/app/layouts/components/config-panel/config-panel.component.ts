@@ -96,7 +96,7 @@ export class ConfigPanelComponent {
         ? "bg-primary-600 text-on-primary-600"
         : "bg-primary-600/10 dark:bg-primary-500/20 text-primary-600 dark:text-primary-500";
 
-    return `${theme.className} app-color-picker rounded-full mt-2 flex items-center cursor-pointer relative hover:bg-primary-600 hover:text-on-primary-600 dark:hover:bg-primary-600 dark:hover:text-on-primary-600 ${state}`;
+    return `${theme.className} app-color-picker rounded-full mt-2 flex items-center cursor-pointer relative hover:bg-primary-600 hover:text-on-primary-600 dark:hover:bg-primary-600 dark:hover:text-on-primary-600 w-full text-start ${state}`;
   }
 
   setConfig(layout: AppConfigName, colorScheme: AppColorScheme): void {

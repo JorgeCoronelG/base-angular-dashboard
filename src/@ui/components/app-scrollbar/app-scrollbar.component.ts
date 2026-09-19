@@ -10,6 +10,8 @@ import {
 } from "@angular/core";
 import SimpleBar from "simplebar";
 
+type SimpleBarOptions = ConstructorParameters<typeof SimpleBar>[1];
+
 @Component({
   selector: "app-scrollbar",
   template: ` <ng-content />`,
@@ -24,7 +26,7 @@ export class AppScrollbarComponent implements AfterContentInit, OnDestroy {
   private _element = inject(ElementRef);
   private zone = inject(NgZone);
 
-  readonly options = input<Partial<any>>();
+  readonly options = input<SimpleBarOptions>();
 
   scrollbarRef?: SimpleBar;
 
@@ -42,8 +44,6 @@ export class AppScrollbarComponent implements AfterContentInit, OnDestroy {
      * Exists, but not typed in the type definition
      * https://github.com/Grsmto/simplebar/blob/master/packages/simplebar/src/simplebar.js#L903
      */
-    if (this.scrollbarRef && (this.scrollbarRef as any).unMount) {
-      (this.scrollbarRef as any).unMount();
-    }
+    this.scrollbarRef?.unMount();
   }
 }

@@ -72,7 +72,7 @@ export class AppPopoverService {
     ];
   }
 
-  createInjector(popoverRef: AppPopoverRef, injector: Injector) {
+  createInjector<T>(popoverRef: AppPopoverRef<T>, injector: Injector) {
     return Injector.create({
       providers: [
         {

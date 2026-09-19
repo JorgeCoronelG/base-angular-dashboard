@@ -78,7 +78,7 @@ export class SidenavComponent {
     return item.label;
   }
 
-  openProfileMenu(origin: HTMLDivElement): void {
+  openProfileMenu(origin: HTMLElement): void {
     const popoverRef = this.popoverService.open({
       content: SidenavUserMenuComponent,
       origin,

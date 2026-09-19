@@ -16,6 +16,7 @@ import {
   styleUrls: ["./app-sidebar.component.scss"],
   host: {
     class: "app-sidebar",
+    "(document:keydown.escape)": "opened() && close()",
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

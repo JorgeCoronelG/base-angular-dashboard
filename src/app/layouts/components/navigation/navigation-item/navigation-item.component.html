@@ -16,14 +16,15 @@
 }
 
 @if (isLink(navItem) && isFunction(navItem.route)) {
-  <div
+  <button
     (click)="navItem.route()"
     [class.hover:bg-hover]="!isActive(navItem)"
     class="navigation-item navigation-color"
     matRipple
+    type="button"
   >
     {{ navItem.label }}
-  </div>
+  </button>
 }
 
 @if (
@@ -58,12 +59,17 @@
         </a>
       }
       @if (isLink(child) && isFunction(child.route)) {
-        <div (click)="child.route()" class="navigation-menu-item" mat-menu-item>
+        <button
+          (click)="child.route()"
+          class="navigation-menu-item"
+          mat-menu-item
+          type="button"
+        >
           @if (child.icon) {
             <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
           <span>{{ child.label }}</span>
-        </div>
+        </button>
       }
       @if (isDropdown(child)) {
         <button
@@ -171,14 +177,15 @@
       >
     }
     @if (isLink(item) && isFunction(item.route)) {
-      <div
+      <button
         (click)="item.route()"
         [class.text-primary-600]="isActive(item)"
         class="navigation-menu-item"
         mat-menu-item
+        type="button"
       >
         {{ item.label }}
-      </div>
+      </button>
     }
   </ng-template>
 }

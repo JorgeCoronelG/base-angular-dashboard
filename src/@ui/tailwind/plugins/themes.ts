@@ -206,7 +206,7 @@ export default plugin.withOptions(
     for (const [colorName, colorOptions] of Object.entries(
       defaultTheme.colors,
     )) {
-      colors[colorName] = {} as any;
+      colors[colorName] = {} as AppThemeColorPalette;
 
       for (const colorShade of Object.keys(colorOptions.palette)) {
         const colorVariableName = createColorVariableName(

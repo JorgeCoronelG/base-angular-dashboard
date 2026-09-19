@@ -25,9 +25,7 @@
         .app-sidenav-item__label,
         .app-sidenav-user__title,
         .app-sidenav-user__subtitle,
-        .app-sidenav-user__dropdown-icon,
-        .app-sidenav-search__placeholder,
-        .app-sidenav-search__keybind {
+        .app-sidenav-user__dropdown-icon {
           opacity: 0;
         }
 
@@ -145,28 +143,4 @@
 
 .app-sidenav-user--open {
   @apply bg-white/10;
-}
-
-/** APP SIDENAV SEARCH */
-.app-sidenav-search__container {
-  background: var(--app-sidenav-toolbar-background);
-  @apply px-3 pb-3 z-10;
-}
-
-.app-sidenav-search {
-  @apply rounded bg-white/10 text-white/30 hover:bg-white/20 hover:text-white/60 cursor-pointer transition duration-300 ease-out flex items-center select-none p-1 pl-3;
-}
-
-.app-sidenav-search__icon {
-  @apply icon-sm;
-  width: var(--app-sidenav-item-icon-size);
-}
-
-.app-sidenav-search__placeholder {
-  @apply text-xs font-medium whitespace-nowrap transition duration-300 ease-out;
-  margin-left: var(--app-sidenav-item-icon-gap);
-}
-
-.app-sidenav-search__keybind {
-  @apply bg-white/10 rounded text-2xs px-2 py-1 font-semibold transition duration-300 ease-out;
 }

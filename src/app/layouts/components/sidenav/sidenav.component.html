@@ -47,13 +47,15 @@
 
   @if (userVisible()) {
     <div class="app-sidenav-user__container flex-none">
-      <div
+      <button
         #userProfileMenuOriginRef
         (click)="openProfileMenu(userProfileMenuOriginRef)"
+        [attr.aria-expanded]="userMenuOpen()"
         [class.app-sidenav-user--open]="userMenuOpen()"
-        class="app-sidenav-user flex items-center"
+        class="app-sidenav-user flex items-center w-full text-start"
         matRipple
         matRippleColor="var(--app-sidenav-item-ripple-color)"
+        type="button"
       >
         <img
           alt="User Avatar"
@@ -68,7 +70,7 @@
           class="app-sidenav-user__dropdown-icon flex-none"
           svgIcon="mat:arrow_drop_down"
         />
-      </div>
+      </button>
     </div>
   }
 </div>

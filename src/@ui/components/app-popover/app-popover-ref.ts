@@ -2,14 +2,14 @@ import { OverlayRef } from "@angular/cdk/overlay";
 import { Subject } from "rxjs";
 import { TemplateRef, Type } from "@angular/core";
 
-export interface AppPopoverCloseEvent<T = any> {
+export interface AppPopoverCloseEvent<T = unknown> {
   type: "backdropClick" | "close";
   data: T | undefined;
 }
 
-export type AppPopoverContent = TemplateRef<any> | Type<any> | string | any;
+export type AppPopoverContent = TemplateRef<unknown> | Type<unknown> | string;
 
-export class AppPopoverRef<T = any> {
+export class AppPopoverRef<T = unknown> {
   private afterClosed = new Subject<AppPopoverCloseEvent<T>>();
   afterClosed$ = this.afterClosed.asObservable();
 

@@ -1,50 +1,26 @@
-// TS does not allow for circular types, but there is a trick with interfaces:
-// https://github.com/Microsoft/TypeScript/issues/3496#issuecomment-128553540
-
-type DeepCloneSupportedType =
-  | boolean
-  | number
-  | bigint
-  | string
-  | undefined
-  | null
-  | Date
-  | object
-  | IDeepCloneSupportedTypeArray;
-
-// the part of the trick above
-
-// Recursive type alias trick: an empty interface is required to self-reference
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface IDeepCloneSupportedTypeArray extends Array<DeepCloneSupportedType> {}
-
-function deepClone<T extends DeepCloneSupportedType>(obj: T): T;
-function deepClone(obj: DeepCloneSupportedType): DeepCloneSupportedType {
-  if (obj == null || typeof obj !== "object") {
-    return obj;
+/**
+ * Recursively clones plain objects, arrays and dates.
+ */
+function deepClone<T>(value: T): T {
+  if (value === null || typeof value !== "object") {
+    return value;
   }
 
-  if (obj instanceof Date) {
-    const copy = new Date();
-    copy.setTime(obj.getTime());
-    return copy;
+  if (value instanceof Date) {
+    return new Date(value.getTime()) as T;
   }
 
-  if (obj instanceof Array) {
-    const copy: IDeepCloneSupportedTypeArray = [];
-    for (let i = 0, len = obj.length; i < len; i++) {
-      copy[i] = deepClone(obj[i]);
-    }
-    return copy;
+  if (Array.isArray(value)) {
+    return value.map((item) => deepClone(item)) as T;
   }
 
-  const copy: typeof obj = {};
+  const copy: Record<string, unknown> = {};
 
-  Object.keys(obj).forEach((key) => {
-    (copy as any)[key] = deepClone((obj as any)[key]);
-  });
+  for (const [key, item] of Object.entries(value)) {
+    copy[key] = deepClone(item);
+  }
 
-  return copy;
+  return copy as T;
 }
 
 export default deepClone;

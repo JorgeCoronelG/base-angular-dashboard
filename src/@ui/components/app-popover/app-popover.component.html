@@ -1,13 +1,9 @@
 <div class="app-popover">
-  @switch (renderMethod) {
-    @case ("text") {
-      <div [innerHTML]="content"></div>
-    }
-    @case ("template") {
-      <ng-container *ngTemplateOutlet="content; context: context" />
-    }
-    @case ("component") {
-      <ng-container *ngComponentOutlet="content" />
-    }
+  @if (text !== null) {
+    <div [innerHTML]="text"></div>
+  } @else if (template) {
+    <ng-container *ngTemplateOutlet="template; context: context" />
+  } @else if (component) {
+    <ng-container *ngComponentOutlet="component" />
   }
 </div>
