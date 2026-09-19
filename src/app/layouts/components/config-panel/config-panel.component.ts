@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   Component,
   ChangeDetectionStrategy,
@@ -31,6 +32,7 @@ import { APP_THEMES } from "@ui/config/config.token";
   styleUrls: ["./config-panel.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    TranslocoPipe,
     MatIconModule,
     MatRippleModule,
     MatButtonModule,

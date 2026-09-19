@@ -88,25 +88,25 @@ body {
   &.dark {
     color-scheme: dark;
 
-    --mat-sys-primary: #{rgb-var(primary-500)};
-    --mat-sys-on-primary: #{rgb-var(on-primary-500)};
+    --mat-sys-primary: #{rgb-var(primary-400)};
+    --mat-sys-on-primary: #{rgb-var(on-primary-400)};
     --mat-sys-primary-container: #{rgb-var(primary-900)};
     --mat-sys-on-primary-container: #{rgb-var(primary-100)};
     --mat-sys-inverse-primary: #{rgb-var(primary-700)};
-    --mat-sys-surface-tint: #{rgb-var(primary-500)};
+    --mat-sys-surface-tint: #{rgb-var(primary-400)};
 
-    --mat-sys-secondary: #{rgb-var(primary-500)};
-    --mat-sys-on-secondary: #{rgb-var(on-primary-500)};
+    --mat-sys-secondary: #{rgb-var(primary-400)};
+    --mat-sys-on-secondary: #{rgb-var(on-primary-400)};
     --mat-sys-secondary-container: #{rgb-var(primary-900)};
     --mat-sys-on-secondary-container: #{rgb-var(primary-100)};
 
-    --mat-sys-tertiary: #{rgb-var(accent-500)};
-    --mat-sys-on-tertiary: #{rgb-var(on-accent-500)};
+    --mat-sys-tertiary: #{rgb-var(accent-400)};
+    --mat-sys-on-tertiary: #{rgb-var(on-accent-400)};
     --mat-sys-tertiary-container: #{rgb-var(accent-900)};
     --mat-sys-on-tertiary-container: #{rgb-var(accent-100)};
 
-    --mat-sys-error: #{rgb-var(warn-500)};
-    --mat-sys-on-error: #{rgb-var(on-warn-500)};
+    --mat-sys-error: #{rgb-var(warn-400)};
+    --mat-sys-on-error: #{rgb-var(on-warn-400)};
     --mat-sys-error-container: #{rgb-var(warn-900)};
     --mat-sys-on-error-container: #{rgb-var(warn-100)};
 

@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { AppDateFormatRelativePipe } from "@ui/pipes/app-date-format-relative/app-date-format-relative.pipe";
 import { MatRippleModule } from "@angular/material/core";
@@ -11,6 +12,7 @@ import { NotificationsService } from "../../../../../core/notifications/notifica
   styleUrls: ["./toolbar-notifications-dropdown.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    TranslocoPipe,
     MatButtonModule,
     MatIconModule,
     MatRippleModule,

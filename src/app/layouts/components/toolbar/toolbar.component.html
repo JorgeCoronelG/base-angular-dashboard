@@ -4,6 +4,7 @@
 >
   <button
     (click)="openSidenav()"
+    [attr.aria-label]="'toolbar.openMenu' | transloco"
     [class.hidden]="isDesktop()"
     mat-icon-button
     type="button"
@@ -35,7 +36,12 @@
 
   <div class="-mx-1 flex items-center">
     <div class="px-1">
-      <button (click)="openSearch()" mat-icon-button type="button">
+      <button
+        (click)="openSearch()"
+        [attr.aria-label]="'toolbar.search' | transloco"
+        mat-icon-button
+        type="button"
+      >
         <mat-icon color="primary" svgIcon="mat:search" />
       </button>
     </div>
@@ -45,8 +51,13 @@
     </div>
 
     <div class="px-1">
-      <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
-        <mat-icon svgIcon="flag:united-states" />
+      <button
+        [attr.aria-label]="'toolbar.language' | transloco"
+        [matMenuTriggerFor]="languageMenu"
+        mat-icon-button
+        type="button"
+      >
+        <mat-icon color="primary" svgIcon="mat:translate" />
       </button>
     </div>
 
@@ -62,15 +73,21 @@
       xPosition="before"
       yPosition="below"
     >
-      <button mat-menu-item>
-        <mat-icon svgIcon="flag:united-states" />
-        <span>English</span>
-      </button>
-
-      <button mat-menu-item>
-        <mat-icon svgIcon="flag:germany" />
-        <span>German</span>
-      </button>
+      @for (language of languages; track language.code) {
+        <button
+          (click)="setLanguage(language.code)"
+          [attr.aria-current]="
+            language.code === currentLanguage() ? 'true' : null
+          "
+          mat-menu-item
+          type="button"
+        >
+          <mat-icon
+            [svgIcon]="language.code === currentLanguage() ? 'mat:check' : ''"
+          />
+          <span>{{ language.label }}</span>
+        </button>
+      }
     </mat-menu>
   </div>
 </div>

@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   Component,
   ElementRef,
@@ -19,7 +20,7 @@ import { MatButtonModule } from "@angular/material/button";
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule, FormField],
+  imports: [TranslocoPipe, MatButtonModule, MatIconModule, FormField],
 })
 export class SearchComponent implements OnDestroy {
   private layoutService = inject(AppLayoutService);

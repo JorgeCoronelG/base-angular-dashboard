@@ -1,5 +1,5 @@
 <app-secondary-toolbar [current]="'dashboard.title' | transloco">
-  <app-breadcrumbs [crumbs]="crumbs()" />
+  <app-breadcrumbs [crumbs]="crumbs()" [homeLabel]="'nav.home' | transloco" />
 </app-secondary-toolbar>
 
 <app-page-layout>
@@ -37,7 +37,7 @@
           >
             <a
               [routerLink]="['/customers', customer.id]"
-              class="flex-auto font-medium text-primary-600 hover:underline"
+              class="flex-auto font-medium text-primary-600 dark:text-primary-400 hover:underline"
               >{{ customer.name }}</a
             >
             <span class="text-secondary text-sm hidden sm:inline">{{

@@ -6,7 +6,9 @@
       class="w-10 h-10 rounded-full flex-none"
     />
     <div class="min-w-0">
-      <div class="font-medium truncate">{{ user().name }}</div>
+      <div class="font-medium truncate">
+        {{ user().name || ("user.guest" | transloco) }}
+      </div>
       @if (user().role) {
         <div class="text-xs text-secondary truncate">{{ user().role }}</div>
       }
@@ -23,6 +25,8 @@
     type="button"
   >
     <mat-icon class="app-user-menu-item__icon icon-sm" svgIcon="mat:settings" />
-    <span class="app-user-menu-item__label text-start">Preferences</span>
+    <span class="app-user-menu-item__label text-start">{{
+      "user.preferences" | transloco
+    }}</span>
   </button>
 </div>

@@ -22,7 +22,7 @@ export class CustomerStatusChipComponent {
 
   readonly classes = computed(() =>
     this.status() === "active"
-      ? "bg-green-600/10 text-green-700 dark:text-green-400"
+      ? "bg-green-600/10 text-green-800 dark:text-green-400"
       : "bg-gray-500/10 text-gray-600 dark:text-gray-400",
   );
 }

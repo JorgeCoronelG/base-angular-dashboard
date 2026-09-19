@@ -51,6 +51,15 @@ updates:
           - minor
           - patch
 
+  # Playwright is pinned to the version of the Docker image used to run it
+  # (see docker-compose.e2e.yml); bump both together by hand.
+  - package-ecosystem: npm
+    directory: /e2e
+    schedule:
+      interval: monthly
+    ignore:
+      - dependency-name: "@playwright/test"
+
   - package-ecosystem: docker
     directory: /
     schedule:

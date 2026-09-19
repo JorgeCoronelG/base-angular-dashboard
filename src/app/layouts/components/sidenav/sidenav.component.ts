@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   Component,
   ChangeDetectionStrategy,
@@ -25,6 +26,7 @@ import { MatButtonModule } from "@angular/material/button";
   styleUrls: ["./sidenav.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    TranslocoPipe,
     MatButtonModule,
     MatIconModule,
     MatRippleModule,

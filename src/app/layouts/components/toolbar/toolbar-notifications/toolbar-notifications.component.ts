@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,7 +19,7 @@ import { MatBadgeModule } from "@angular/material/badge";
   templateUrl: "./toolbar-notifications.component.html",
   styleUrls: ["./toolbar-notifications.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule, MatBadgeModule],
+  imports: [TranslocoPipe, MatButtonModule, MatIconModule, MatBadgeModule],
 })
 export class ToolbarNotificationsComponent {
   private popover = inject(AppPopoverService);

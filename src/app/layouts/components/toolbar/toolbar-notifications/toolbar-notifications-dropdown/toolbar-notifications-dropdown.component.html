@@ -1,11 +1,11 @@
 <div class="dropdown">
   <div class="dropdown-header">
-    <div class="dropdown-heading">Notifications</div>
+    <div class="dropdown-heading">{{ "notifications.title" | transloco }}</div>
     <div class="dropdown-subheading">
       @if (unreadCount() > 0) {
-        You have {{ unreadCount() }} unread notifications.
+        {{ "notifications.unread" | transloco: { count: unreadCount() } }}
       } @else {
-        You are all caught up.
+        {{ "notifications.caughtUp" | transloco }}
       }
     </div>
   </div>
@@ -30,7 +30,7 @@
       </div>
     } @empty {
       <div class="py-8 px-6 text-center text-secondary text-sm">
-        No notifications
+        {{ "notifications.none" | transloco }}
       </div>
     }
   </div>
@@ -43,7 +43,7 @@
       mat-button
       type="button"
     >
-      Mark all as read
+      {{ "notifications.markAllRead" | transloco }}
     </button>
   </div>
 </div>

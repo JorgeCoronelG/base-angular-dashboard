@@ -8,7 +8,7 @@ import { MatIconModule } from "@angular/material/icon";
   template: `
     <div class="flex items-center gap-2">
       <app-breadcrumb>
-        <a [routerLink]="['/']">
+        <a [attr.aria-label]="homeLabel()" [routerLink]="['/']">
           <mat-icon svgIcon="mat:home" class="icon-sm" />
         </a>
       </app-breadcrumb>
@@ -25,4 +25,6 @@ import { MatIconModule } from "@angular/material/icon";
 })
 export class AppBreadcrumbsComponent {
   readonly crumbs = input<string[]>([]);
+  /** Accessible name of the home icon link */
+  readonly homeLabel = input("Home");
 }

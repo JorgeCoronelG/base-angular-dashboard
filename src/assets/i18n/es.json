@@ -20,7 +20,8 @@
   "nav": {
     "main": "Principal",
     "dashboard": "Panel",
-    "customers": "Clientes"
+    "customers": "Clientes",
+    "home": "Inicio"
   },
   "dashboard": {
     "title": "Panel",
@@ -67,5 +68,54 @@
   },
   "styleguide": {
     "title": "Guía de estilo"
+  },
+  "toolbar": {
+    "openMenu": "Abrir menú",
+    "search": "Buscar",
+    "language": "Cambiar idioma"
+  },
+  "search": {
+    "placeholder": "Buscar...",
+    "hint": "Presiona Enter para buscar",
+    "close": "Cerrar búsqueda"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "unread": "{{count}} sin leer",
+    "caughtUp": "Estás al día.",
+    "none": "No hay notificaciones",
+    "markAllRead": "Marcar todas como leídas"
+  },
+  "user": {
+    "guest": "Invitado",
+    "preferences": "Preferencias"
+  },
+  "sidenav": {
+    "collapse": "Contraer barra lateral",
+    "expand": "Expandir barra lateral"
+  },
+  "config": {
+    "open": "Abrir ajustes",
+    "title": "Configuración",
+    "themeBase": "Base del tema",
+    "darkMode": "Modo oscuro",
+    "themeColors": "Colores del tema",
+    "layouts": "Diseños",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "roundedCorners": "Esquinas redondeadas",
+    "radius": "Radio de borde",
+    "buttonStyle": "Estilo de botones",
+    "inherit": "Heredar",
+    "rounded": "Redondeado",
+    "layout": "Diseño",
+    "orientation": "Orientación",
+    "rtl": "RTL",
+    "toolbar": "Barra superior",
+    "position": "Posición",
+    "fixed": "Fija",
+    "static": "Estática",
+    "footer": "Pie de página",
+    "visible": "Visible"
   }
 }

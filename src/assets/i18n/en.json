@@ -20,7 +20,8 @@
   "nav": {
     "main": "Main",
     "dashboard": "Dashboard",
-    "customers": "Customers"
+    "customers": "Customers",
+    "home": "Home"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -67,5 +68,54 @@
   },
   "styleguide": {
     "title": "Style guide"
+  },
+  "toolbar": {
+    "openMenu": "Open menu",
+    "search": "Search",
+    "language": "Change language"
+  },
+  "search": {
+    "placeholder": "Search...",
+    "hint": "Hit enter to search",
+    "close": "Close search"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "unread": "{{count}} unread",
+    "caughtUp": "You are all caught up.",
+    "none": "No notifications",
+    "markAllRead": "Mark all as read"
+  },
+  "user": {
+    "guest": "Guest",
+    "preferences": "Preferences"
+  },
+  "sidenav": {
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar"
+  },
+  "config": {
+    "open": "Open settings",
+    "title": "Configuration",
+    "themeBase": "Theme base",
+    "darkMode": "Dark mode",
+    "themeColors": "Theme colors",
+    "layouts": "Layouts",
+    "light": "Light",
+    "dark": "Dark",
+    "roundedCorners": "Rounded corners",
+    "radius": "Border radius",
+    "buttonStyle": "Button style",
+    "inherit": "Inherit",
+    "rounded": "Rounded",
+    "layout": "Layout",
+    "orientation": "Orientation",
+    "rtl": "RTL",
+    "toolbar": "Toolbar",
+    "position": "Position",
+    "fixed": "Fixed",
+    "static": "Static",
+    "footer": "Footer",
+    "visible": "Visible"
   }
 }

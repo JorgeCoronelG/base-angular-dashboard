@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import { Component, ChangeDetectionStrategy, output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -7,7 +8,7 @@ import { MatButtonModule } from "@angular/material/button";
   templateUrl: "./config-panel-toggle.component.html",
   styleUrls: ["./config-panel-toggle.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [TranslocoPipe, MatButtonModule, MatIconModule],
 })
 export class ConfigPanelToggleComponent {
   readonly openConfig = output();

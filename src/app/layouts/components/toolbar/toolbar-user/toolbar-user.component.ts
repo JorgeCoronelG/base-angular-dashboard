@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +15,7 @@ import { MatRippleModule } from "@angular/material/core";
   selector: "app-toolbar-user",
   templateUrl: "./toolbar-user.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatRippleModule, MatIconModule],
+  imports: [TranslocoPipe, MatRippleModule, MatIconModule],
 })
 export class ToolbarUserComponent {
   private popover = inject(AppPopoverService);

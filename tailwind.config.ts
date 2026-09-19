@@ -130,7 +130,7 @@ export const themes: AppThemes = {
             "disabled-button": colors.gray["600"],
             "disabled-text": colors.gray["500"],
             elevation: colors.black,
-            "hint-text": colors.gray["500"],
+            "hint-text": colors.gray["400"],
             "secondary-text": colors.gray["400"],
             icon: colors.white,
             icons: colors.white,

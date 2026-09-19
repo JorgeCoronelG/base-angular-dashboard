@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import {
   Component,
   inject,
@@ -16,6 +17,10 @@ import { MatMenuModule } from "@angular/material/menu";
 import { RouterLink } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import {
+  LanguageCode,
+  LanguageService,
+} from "../../../core/i18n/language.service";
 import { routeDataSignal } from "@ui/utils/route-data-signal";
 
 @Component({
@@ -27,6 +32,7 @@ import { routeDataSignal } from "@ui/utils/route-data-signal";
     "[class.shadow-b]": "showShadow()",
   },
   imports: [
+    TranslocoPipe,
     MatButtonModule,
     MatIconModule,
     RouterLink,
@@ -65,10 +71,18 @@ export class ToolbarComponent {
   readonly userVisible = computed(() => this.config().toolbar.user.visible);
   readonly title = computed(() => this.config().sidenav.title);
 
+  private readonly languageService = inject(LanguageService);
+  readonly languages = this.languageService.languages;
+  readonly currentLanguage = this.languageService.current;
+
   readonly isDesktop = this.layoutService.isDesktop;
 
   openSidenav(): void {
     this.layoutService.openSidenav();
+  }
+
+  setLanguage(code: LanguageCode): void {
+    void this.languageService.use(code);
   }
 
   openSearch(): void {

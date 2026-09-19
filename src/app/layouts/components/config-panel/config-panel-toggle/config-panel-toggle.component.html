@@ -1,5 +1,6 @@
 <button
   (click)="openConfig.emit()"
+  [attr.aria-label]="'config.open' | transloco"
   class="config-panel-toggle"
   color="primary"
   mat-fab

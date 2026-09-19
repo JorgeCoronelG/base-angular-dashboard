@@ -1,6 +1,7 @@
 <button
   #originRef
   (click)="showPopover()"
+  [attr.aria-label]="'notifications.title' | transloco"
   [class.bg-hover]="dropdownOpen()"
   class="button"
   mat-icon-button

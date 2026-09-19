@@ -3,10 +3,10 @@
 <div class="config-panel">
   <h2 class="headline mb-4">
     <mat-icon class="mr-3" svgIcon="mat:settings" />
-    <span>Configuration</span>
+    <span>{{ "config.title" | transloco }}</span>
   </h2>
   <div class="section">
-    <h5 class="subheading">THEME BASE</h5>
+    <h5 class="subheading">{{ "config.themeBase" | transloco }}</h5>
     @let colorScheme = this.colorScheme();
     @if (colorScheme) {
       <button
@@ -23,12 +23,14 @@
             <mat-icon svgIcon="mat:close" />
           }
         </div>
-        <p class="ml-1 font-medium text-sm">DARK MODE</p>
+        <p class="ml-1 font-medium text-sm">
+          {{ "config.darkMode" | transloco }}
+        </p>
       </button>
     }
   </div>
   <div class="section">
-    <h5 class="subheading">THEME COLORS</h5>
+    <h5 class="subheading">{{ "config.themeColors" | transloco }}</h5>
     @for (theme of themes; track theme) {
       <button
         (click)="selectTheme(theme)"
@@ -48,7 +50,7 @@
     }
   </div>
   <div class="section">
-    <h5 class="subheading">PRE-BUILT LAYOUTS</h5>
+    <h5 class="subheading">{{ "config.layouts" | transloco }}</h5>
     @for (layout of configs; track layout; let first = $first) {
       <div [class.mt-4]="!first" class="flex items-center gap-2">
         <div class="flex-auto body-2 font-medium">{{ layout.name }}</div>
@@ -58,7 +60,7 @@
           mat-stroked-button
           type="button"
         >
-          LIGHT
+          {{ "config.light" | transloco }}
         </button>
         <button
           (click)="setConfig(layout.id, ColorSchemeName.DARK)"
@@ -66,19 +68,22 @@
           mat-stroked-button
           type="button"
         >
-          DARK
+          {{ "config.dark" | transloco }}
         </button>
       </div>
     }
   </div>
   <div class="section">
-    <h5 class="subheading">ROUNDED CORNERS</h5>
+    <h5 class="subheading">{{ "config.roundedCorners" | transloco }}</h5>
     <div class="grid grid-cols-4 gap-4">
       @for (borderRadius of roundedCornerValues; track borderRadius) {
         <button
           (click)="selectBorderRadius(borderRadius)"
           [attr.aria-label]="
-            'Border radius ' + borderRadius.value + borderRadius.unit
+            ('config.radius' | transloco) +
+            ' ' +
+            borderRadius.value +
+            borderRadius.unit
           "
           [attr.aria-pressed]="isSelectedBorderRadius(borderRadius, setting)"
           [class]="{
@@ -111,7 +116,7 @@
     </div>
   </div>
   <div class="section">
-    <h5 class="subheading">BUTTON STYLE</h5>
+    <h5 class="subheading">{{ "config.buttonStyle" | transloco }}</h5>
     <div class="flex justify-between gap-4">
       <button
         (click)="selectButtonStyle(undefined)"
@@ -125,7 +130,7 @@
         mat-flat-button
         type="button"
       >
-        INHERIT
+        {{ "config.inherit" | transloco }}
       </button>
       <button
         (click)="selectButtonStyle(roundedButtonValue)"
@@ -142,49 +147,57 @@
         mat-flat-button
         type="button"
       >
-        ROUNDED
+        {{ "config.rounded" | transloco }}
       </button>
     </div>
   </div>
   <div class="section">
-    <h5 class="subheading">Layout</h5>
+    <h5 class="subheading">{{ "config.layout" | transloco }}</h5>
     <div class="section-content">
-      <h5 class="subheading">Orientation</h5>
+      <h5 class="subheading">{{ "config.orientation" | transloco }}</h5>
       <mat-slide-toggle (change)="layoutRTLChange($event)" [checked]="isRTL()"
         >RTL
       </mat-slide-toggle>
     </div>
   </div>
   <div class="section">
-    <h5 class="subheading">Toolbar</h5>
+    <h5 class="subheading">{{ "config.toolbar" | transloco }}</h5>
     <div class="section-content">
-      <h5 class="subheading">Position</h5>
+      <h5 class="subheading">{{ "config.position" | transloco }}</h5>
       <mat-radio-group
         (change)="toolbarPositionChange($event)"
         [value]="setting.toolbar.fixed ? 'fixed' : 'static'"
         class="flex flex-col gap-3"
       >
-        <mat-radio-button value="fixed">Fixed</mat-radio-button>
-        <mat-radio-button value="static">Static</mat-radio-button>
+        <mat-radio-button value="fixed">{{
+          "config.fixed" | transloco
+        }}</mat-radio-button>
+        <mat-radio-button value="static">{{
+          "config.static" | transloco
+        }}</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>
   <div class="section">
-    <h5 class="subheading">Footer</h5>
+    <h5 class="subheading">{{ "config.footer" | transloco }}</h5>
     <div class="section-content">
       <mat-slide-toggle
         (change)="footerVisibleChange($event)"
         [checked]="setting.footer.visible"
-        >Visible
+        >{{ "config.visible" | transloco }}
       </mat-slide-toggle>
-      <h5 class="subheading">Position</h5>
+      <h5 class="subheading">{{ "config.position" | transloco }}</h5>
       <mat-radio-group
         (change)="footerPositionChange($event)"
         [value]="setting.footer.fixed ? 'fixed' : 'static'"
         class="flex flex-col gap-3"
       >
-        <mat-radio-button value="fixed">Fixed</mat-radio-button>
-        <mat-radio-button value="static">Static</mat-radio-button>
+        <mat-radio-button value="fixed">{{
+          "config.fixed" | transloco
+        }}</mat-radio-button>
+        <mat-radio-button value="static">{{
+          "config.static" | transloco
+        }}</mat-radio-button>
       </mat-radio-group>
     </div>
   </div>

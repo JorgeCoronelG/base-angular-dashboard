@@ -1,3 +1,4 @@
+import { TranslocoPipe } from "@jsverse/transloco";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatRippleModule } from "@angular/material/core";
@@ -13,7 +14,7 @@ import { CurrentUserService } from "../../../core/user/current-user.service";
   templateUrl: "./user-menu.component.html",
   styleUrls: ["./user-menu.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatIconModule, MatRippleModule],
+  imports: [TranslocoPipe, MatIconModule, MatRippleModule],
 })
 export class UserMenuComponent {
   private readonly popoverRef = inject(AppPopoverRef);
