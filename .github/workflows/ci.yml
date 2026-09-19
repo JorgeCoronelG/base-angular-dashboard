@@ -34,3 +34,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build --target prod -t base-angular-dashboard .
+      - name: Smoke test the image
+        run: |
+          docker run -d --name app -p 8080:8080 --read-only --tmpfs /tmp \
+            --cap-drop ALL --security-opt no-new-privileges base-angular-dashboard
+          for i in $(seq 1 20); do curl -fsS localhost:8080/healthz && break || sleep 1; done
+          curl -fsS localhost:8080/ | grep -q "<app-root>"
+          curl -fsSI localhost:8080/deep/link | grep -i "content-security-policy"
+          docker logs app

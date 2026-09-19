@@ -1,5 +1,5 @@
 services:
-  # Desarrollo: docker compose up dev  -> http://localhost:4200
+  # Development: docker compose --profile dev up --build  -> http://localhost:4200
   dev:
     build:
       context: .
@@ -11,11 +11,19 @@ services:
       - /app/node_modules
     profiles: ["dev"]
 
-  # Producción: docker compose up --build prod  -> http://localhost:8080
+  # Production: docker compose --profile prod up --build  -> http://localhost:8080
   prod:
     build:
       context: .
       target: prod
     ports:
-      - "8080:80"
+      - "8080:8080"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     profiles: ["prod"]
