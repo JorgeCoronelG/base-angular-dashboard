@@ -4,6 +4,9 @@
 #
 #   scripts/e2e-docker.sh                       run the suite
 #   scripts/e2e-docker.sh --update-snapshots    regenerate visual baselines
+# Own project name so `down -v` never touches the development containers
+name: base-angular-dashboard-e2e
+
 services:
   app:
     build:

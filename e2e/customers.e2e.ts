@@ -73,18 +73,6 @@ test.describe("dashboard and customers", () => {
   });
 
   test("a customer can be created, with validation", async ({ page }) => {
-    // Remove what this test creates so later (visual) tests see the same data
-    const created = page.waitForResponse(
-      (response) =>
-        response.request().method() === "POST" &&
-        response.url().endsWith("/customers"),
-      { timeout: 0 },
-    );
-    let createdId: number | undefined;
-    created.then(async (response) => {
-      createdId = (await response.json()).id;
-    });
-
     await gotoApp(page, "/customers");
     await page.getByRole("button", { name: "New customer" }).click();
 
@@ -98,13 +86,20 @@ test.describe("dashboard and customers", () => {
     await expect(dialog.getByText("Enter a valid email address")).toBeVisible();
 
     await dialog.getByLabel("Email").fill(`e2e.${Date.now()}@example.com`);
-    await dialog.getByRole("button", { name: "Save" }).click();
+    const [response] = await Promise.all([
+      page.waitForResponse(
+        (r) =>
+          r.request().method() === "POST" && r.url().endsWith("/customers"),
+      ),
+      dialog.getByRole("button", { name: "Save" }).click(),
+    ]);
+    const { id } = await response.json();
 
     await expect(dialog).toBeHidden();
     await expect(page.getByText("Customer created")).toBeVisible();
 
-    await expect.poll(() => createdId).toBeDefined();
-    await page.request.delete(`http://localhost:3000/customers/${createdId}`);
+    // Remove what this test created so later (visual) tests see the same data
+    await page.request.delete(`http://localhost:3000/customers/${id}`);
   });
 
   test("unknown routes show the 404 page", async ({ page }) => {
