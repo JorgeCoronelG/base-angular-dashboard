@@ -13,7 +13,6 @@ import {
   NavigationItem,
   NavigationLink,
 } from "../../../../core/navigation/navigation-item.interface";
-import { dropdownAnimation } from "@vex/animations/dropdown.animation";
 import {
   NavigationEnd,
   Router,
@@ -31,7 +30,6 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   selector: "vex-sidenav-item",
   templateUrl: "./sidenav-item.component.html",
   styleUrls: ["./sidenav-item.component.scss"],
-  animations: [dropdownAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     "[class]": "levelClass()",

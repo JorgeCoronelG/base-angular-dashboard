@@ -9,7 +9,6 @@ import { RouterOutlet } from "@angular/router";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import { VexSidebarComponent } from "@vex/components/vex-sidebar/vex-sidebar.component";
 
-import { NgTemplateOutlet } from "@angular/common";
 import { SidenavComponent } from "../components/sidenav/sidenav.component";
 import { ToolbarComponent } from "../components/toolbar/toolbar.component";
 import { FooterComponent } from "../components/footer/footer.component";
@@ -26,7 +25,7 @@ import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-pr
   selector: "vex-layout",
   templateUrl: "./layout.component.html",
   styleUrls: ["./layout.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     BaseLayoutComponent,
     SidenavComponent,
@@ -38,7 +37,6 @@ import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-pr
     ConfigPanelComponent,
     MatDialogModule,
     MatSidenavModule,
-    NgTemplateOutlet,
     RouterOutlet,
     SearchComponent,
     VexProgressBarComponent,
@@ -65,6 +63,12 @@ export class LayoutComponent {
 
   onSidenavClosed(): void {
     this.layoutService.closeSidenav();
+  }
+
+  onConfigPanelChange(opened: boolean): void {
+    opened
+      ? this.layoutService.openConfigpanel()
+      : this.layoutService.closeConfigpanel();
   }
 
   onQuickpanelClosed(): void {

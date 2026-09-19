@@ -71,10 +71,16 @@
       svgIcon="mat:keyboard_arrow_right"
     />
   </div>
-  <div [@dropdown]="isOpen()" class="vex-sidenav-item__dropdown">
-    @for (subItem of navItem.children; track subItem) {
-      <vex-sidenav-item [item]="subItem" [level]="level() + 1" />
-    }
+  <div
+    [class.vex-sidenav-item__dropdown--open]="isOpen()"
+    [attr.inert]="isOpen() ? null : ''"
+    class="vex-sidenav-item__dropdown"
+  >
+    <div class="vex-sidenav-item__dropdown-content">
+      @for (subItem of navItem.children; track subItem) {
+        <vex-sidenav-item [item]="subItem" [level]="level() + 1" />
+      }
+    </div>
   </div>
 }
 

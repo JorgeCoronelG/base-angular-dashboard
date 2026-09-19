@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { DateTime } from "luxon";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatRippleModule } from "@angular/material/core";
@@ -10,7 +10,7 @@ import { MatDividerModule } from "@angular/material/divider";
   selector: "vex-quickpanel",
   templateUrl: "./quickpanel.component.html",
   styleUrls: ["./quickpanel.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatDividerModule,
     MatListModule,
@@ -19,11 +19,7 @@ import { MatDividerModule } from "@angular/material/divider";
     MatProgressBarModule,
   ],
 })
-export class QuickpanelComponent implements OnInit {
+export class QuickpanelComponent {
   date = DateTime.local().toFormat("DD");
   dayName = DateTime.local().toFormat("EEEE");
-
-  constructor() {}
-
-  ngOnInit() {}
 }

@@ -13,10 +13,7 @@
   </div>
 
   <div class="dropdown-content">
-    @for (
-      notification of notifications;
-      track trackById($index, notification)
-    ) {
+    @for (notification of notifications; track notification.id) {
       <a
         [class.read]="notification.read"
         [routerLink]="[]"
@@ -24,7 +21,7 @@
         matRipple
       >
         <mat-icon
-          [ngClass]="notification.colorClass"
+          [class]="notification.colorClass"
           [svgIcon]="notification.icon"
           class="notification-icon flex-none"
         />

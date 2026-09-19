@@ -1,12 +1,10 @@
-import { Directive } from '@angular/core';
+import { Directive } from "@angular/core";
 
 @Directive({
-  selector: '[vexPageLayoutHeader],vex-page-layout-header',
+  selector: "[vexPageLayoutHeader],vex-page-layout-header",
   host: {
-    class: 'vex-page-layout-header'
+    class: "vex-page-layout-header",
   },
-  standalone: true
+  standalone: true,
 })
-export class VexPageLayoutHeaderDirective {
-  constructor() {}
-}
+export class VexPageLayoutHeaderDirective {}

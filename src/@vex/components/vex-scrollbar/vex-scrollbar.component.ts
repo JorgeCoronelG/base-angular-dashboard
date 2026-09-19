@@ -17,7 +17,7 @@ import SimpleBar from "simplebar";
   host: {
     class: "vex-scrollbar",
   },
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class VexScrollbarComponent implements AfterContentInit, OnDestroy {

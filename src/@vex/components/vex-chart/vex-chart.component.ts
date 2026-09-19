@@ -1,99 +1,78 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
-  Input,
   NgZone,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
-import { asapScheduler } from 'rxjs';
-// @ts-ignore
-import ApexCharts from 'apexcharts';
+  effect,
+  inject,
+  input,
+  untracked,
+  viewChild,
+} from "@angular/core";
+import ApexCharts, { ApexOptions } from "apexcharts";
 
-export interface ApexOptions {
-  annotations?: ApexAnnotations;
-  chart?: ApexChart;
-  colors?: any[];
-  dataLabels?: ApexDataLabels;
-  fill?: ApexFill;
-  grid?: ApexGrid;
-  labels?: string[] | number[];
-  legend?: ApexLegend;
-  markers?: ApexMarkers;
-  noData?: ApexNoData;
-  plotOptions?: ApexPlotOptions;
-  responsive?: ApexResponsive[];
-  series?: ApexAxisChartSeries | ApexNonAxisChartSeries;
-  states?: ApexStates;
-  stroke?: ApexStroke;
-  subtitle?: ApexTitleSubtitle;
-  theme?: ApexTheme;
-  title?: ApexTitleSubtitle;
-  tooltip?: ApexTooltip;
-  xaxis?: ApexXAxis;
-  yaxis?: ApexYAxis | ApexYAxis[];
-}
+export type { ApexOptions };
 
 @Component({
-  selector: 'vex-chart',
-  template: ` <div #chart></div> `,
+  selector: "vex-chart",
+  template: `<div #chart></div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
 })
-export class VexChartComponent implements OnInit, OnChanges {
-  @Input() options: ApexOptions = {};
-  @Input() series: ApexAxisChartSeries | ApexNonAxisChartSeries = [];
-  @Input() autoUpdateSeries = true;
-  public chart?: ApexCharts;
-  @ViewChild('chart', { static: true }) private chartElement?: ElementRef;
+export class VexChartComponent {
+  private readonly ngZone = inject(NgZone);
 
-  constructor(private ngZone: NgZone) {}
+  readonly options = input<ApexOptions>({});
+  readonly series = input<ApexOptions["series"]>([]);
+  readonly autoUpdateSeries = input(true);
 
-  ngOnInit() {
-    asapScheduler.schedule(() => {
-      this._createElement();
+  chart?: ApexCharts;
+  private readonly chartElement =
+    viewChild.required<ElementRef<HTMLElement>>("chart");
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.chart?.destroy());
+
+    /**
+     * (Re-)create the chart whenever the options change
+     */
+    effect(() => {
+      const options = this.options();
+      untracked(() => this._createChart(options, this.series()));
+    });
+
+    /**
+     * Update only the series when they change, or re-create the chart
+     * if `autoUpdateSeries` is disabled
+     */
+    effect(() => {
+      const series = this.series();
+      untracked(() => {
+        if (!this.chart) {
+          return;
+        }
+
+        if (this.autoUpdateSeries()) {
+          this.chart.updateSeries(series ?? [], true);
+        } else {
+          this._createChart(this.options(), series);
+        }
+      });
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    asapScheduler.schedule(() => {
-      if (
-        this.autoUpdateSeries &&
-        Object.keys(changes).filter((c) => c !== 'series').length === 0
-      ) {
-        this.chart?.updateSeries(this.series, true);
-        return;
-      }
-
-      this._createElement();
-    });
-  }
-
-  public render(): void {
+  render(): void {
     this.chart?.render();
   }
 
-  private _createElement() {
-    if (this.series) {
-      this.options.series = this.series;
-    }
-
-    if (this.chart) {
-      this.chart.destroy();
-    }
+  private _createChart(options: ApexOptions, series: ApexOptions["series"]) {
+    this.chart?.destroy();
 
     this.ngZone.runOutsideAngular(() => {
-      if (!this.chartElement) {
-        return;
-      }
-
-      this.chart = new ApexCharts(
-        this.chartElement.nativeElement,
-        this.options
-      );
+      this.chart = new ApexCharts(this.chartElement().nativeElement, {
+        ...options,
+        series: series ?? options.series,
+      });
 
       this.render();
     });

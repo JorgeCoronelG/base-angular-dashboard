@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -152,11 +152,7 @@ import { MatRippleModule } from "@angular/material/core";
       </div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [``],
 })
-export class SearchModalComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class SearchModalComponent {}

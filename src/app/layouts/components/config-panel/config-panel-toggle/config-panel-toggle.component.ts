@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  output,
-} from "@angular/core";
+import { Component, ChangeDetectionStrategy, output } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
@@ -11,13 +6,9 @@ import { MatButtonModule } from "@angular/material/button";
   selector: "vex-config-panel-toggle",
   templateUrl: "./config-panel-toggle.component.html",
   styleUrls: ["./config-panel-toggle.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, MatIconModule],
 })
-export class ConfigPanelToggleComponent implements OnInit {
+export class ConfigPanelToggleComponent {
   readonly openConfig = output();
-
-  constructor() {}
-
-  ngOnInit() {}
 }

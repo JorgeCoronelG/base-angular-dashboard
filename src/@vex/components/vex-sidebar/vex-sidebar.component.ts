@@ -1,11 +1,13 @@
 import {
   Component,
-  Input,
-  OnDestroy,
   DOCUMENT,
   ChangeDetectionStrategy,
+  DestroyRef,
+  computed,
+  effect,
   inject,
   input,
+  model,
 } from "@angular/core";
 
 @Component({
@@ -15,55 +17,39 @@ import {
   host: {
     class: "vex-sidebar",
   },
-  changeDetection: ChangeDetectionStrategy.Eager,
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VexSidebarComponent implements OnDestroy {
+export class VexSidebarComponent {
   private document = inject<Document>(DOCUMENT);
 
   readonly position = input<"left" | "right">("left");
   readonly invisibleBackdrop = input<boolean>(false);
+  readonly opened = model<boolean>(false);
 
-  private _opened: boolean = false;
+  readonly positionLeft = computed(() => this.position() === "left");
+  readonly positionRight = computed(() => this.position() === "right");
 
-  get opened() {
-    return this._opened;
-  }
+  constructor() {
+    effect(() =>
+      this.opened() ? this.enableScrollblock() : this.disableScrollblock(),
+    );
 
-  // TODO: Skipped for migration because:
-  //  Accessor inputs cannot be migrated as they are too complex.
-  @Input() set opened(opened: boolean) {
-    this._opened = opened;
-    opened ? this.enableScrollblock() : this.disableScrollblock();
-  }
-
-  get positionLeft() {
-    return this.position() === "left";
-  }
-
-  get positionRight() {
-    return this.position() === "right";
+    inject(DestroyRef).onDestroy(() => this.disableScrollblock());
   }
 
   enableScrollblock() {
-    if (!this.document.body.classList.contains("vex-scrollblock")) {
-      this.document.body.classList.add("vex-scrollblock");
-    }
+    this.document.body.classList.add("vex-scrollblock");
   }
 
   disableScrollblock() {
-    if (this.document.body.classList.contains("vex-scrollblock")) {
-      this.document.body.classList.remove("vex-scrollblock");
-    }
+    this.document.body.classList.remove("vex-scrollblock");
   }
 
   open() {
-    this.opened = true;
+    this.opened.set(true);
   }
 
   close() {
-    this.opened = false;
+    this.opened.set(false);
   }
-
-  ngOnDestroy(): void {}
 }

@@ -1,32 +1,22 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  HostBinding,
-  Input,
-  ViewEncapsulation
-} from '@angular/core';
+  ViewEncapsulation,
+  input,
+} from "@angular/core";
 
 @Component({
-  selector: 'vex-page-layout',
-  template: '<ng-content></ng-content>',
+  selector: "vex-page-layout",
+  template: "<ng-content />",
   host: {
-    class: 'vex-page-layout'
+    class: "vex-page-layout",
+    "[class.vex-page-layout-card]": "mode() === 'card'",
+    "[class.vex-page-layout-simple]": "mode() === 'simple'",
   },
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./vex-page-layout.component.scss'],
-  standalone: true
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ["./vex-page-layout.component.scss"],
 })
 export class VexPageLayoutComponent {
-  @Input() mode: 'card' | 'simple' = 'simple';
-
-  constructor() {}
-
-  @HostBinding('class.vex-page-layout-card')
-  get isCard() {
-    return this.mode === 'card';
-  }
-
-  @HostBinding('class.vex-page-layout-simple')
-  get isSimple() {
-    return this.mode === 'simple';
-  }
+  readonly mode = input<"card" | "simple">("simple");
 }

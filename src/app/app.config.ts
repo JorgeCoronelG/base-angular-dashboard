@@ -1,16 +1,15 @@
-import { ApplicationConfig, importProvidersFrom } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import {
+  ApplicationConfig,
+  provideZonelessChangeDetection,
+} from "@angular/core";
 import { appRoutes } from "./app.routes";
-import { provideAnimations } from "@angular/platform-browser/animations";
 import {
   provideHttpClient,
   withInterceptorsFromDi,
   withXhr,
 } from "@angular/common/http";
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
-import { MatNativeDateModule } from "@angular/material/core";
+import { provideNativeDateAdapter } from "@angular/material/core";
 import { provideIcons } from "./core/icons/icons.provider";
 import { provideLuxon } from "./core/luxon/luxon.provider";
 import { provideVex } from "@vex/vex.provider";
@@ -20,12 +19,8 @@ import { provideQuillConfig } from "ngx-quill";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(
-      BrowserModule,
-      MatDialogModule,
-      MatBottomSheetModule,
-      MatNativeDateModule,
-    ),
+    provideZonelessChangeDetection(),
+    provideNativeDateAdapter(),
     provideRouter(
       appRoutes,
       // TODO: Add preloading withPreloading(),
@@ -34,7 +29,6 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: "enabled",
       }),
     ),
-    provideAnimations(),
     provideHttpClient(withXhr(), withInterceptorsFromDi()),
 
     provideVex({

@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ChangeDetectionStrategy,
-} from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
@@ -11,13 +6,7 @@ import { MatButtonModule } from "@angular/material/button";
   selector: "vex-footer",
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, MatIconModule],
 })
-export class FooterComponent implements OnInit, OnDestroy {
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy(): void {}
-}
+export class FooterComponent {}

@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  inject,
-} from "@angular/core";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
 import { MatRippleModule } from "@angular/material/core";
 import { RouterLink } from "@angular/router";
@@ -13,13 +8,11 @@ import { MatIconModule } from "@angular/material/icon";
   selector: "vex-sidenav-user-menu",
   templateUrl: "./sidenav-user-menu.component.html",
   styleUrls: ["./sidenav-user-menu.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatRippleModule, RouterLink, MatIconModule],
 })
-export class SidenavUserMenuComponent implements OnInit {
+export class SidenavUserMenuComponent {
   private readonly popoverRef = inject(VexPopoverRef);
-
-  ngOnInit(): void {}
 
   close(): void {
     /** Wait for animation to complete and then close */

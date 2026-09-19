@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  inject,
-} from "@angular/core";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
@@ -24,10 +19,10 @@ export interface MegaMenuPage {
 @Component({
   selector: "vex-mega-menu",
   templateUrl: "./mega-menu.component.html",
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, RouterLink, MatIconModule],
 })
-export class MegaMenuComponent implements OnInit {
+export class MegaMenuComponent {
   private popoverRef = inject<VexPopoverRef<MegaMenuComponent>>(VexPopoverRef);
 
   features: MegaMenuFeature[] = [
@@ -105,8 +100,6 @@ export class MegaMenuComponent implements OnInit {
       route: "/apps/scrumboard",
     },
   ];
-
-  ngOnInit() {}
 
   close() {
     this.popoverRef.close();

@@ -1,47 +1,48 @@
-  <vex-base-layout>
-    <vex-progress-bar />
-    <vex-search />
-    <mat-sidenav-container class="vex-layout-sidenav-container">
-      <mat-sidenav
-        (closedStart)="onSidenavClosed()"
-        [disableClose]="sidenavDisableClose()"
-        [fixedInViewport]="sidenavFixedInViewport()"
-        [mode]="sidenavMode()"
-        [opened]="sidenavOpen()"
-      >
-        <vex-sidenav [collapsed]="sidenavCollapsed()" />
-      </mat-sidenav>
-      <mat-sidenav
-        (closedStart)="onQuickpanelClosed()"
-        [opened]="quickpanelOpen()"
-        class="vex-layout-quickpanel"
-        mode="over"
-        position="end"
-      >
-        <vex-quickpanel />
-      </mat-sidenav>
-      <mat-sidenav-content class="vex-layout-sidenav-content">
-        <vex-toolbar
-          [class.dark]="config().layout === 'vertical'"
-          class="vex-toolbar"
-        />
-        <main class="vex-layout-content">
-          <router-outlet />
-        </main>
-        @if (config().footer.visible) {
-          <vex-footer class="vex-footer" />
-        }
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-    <vex-config-panel-toggle (openConfig)="configpanel.open()" />
-    <!-- CONFIGPANEL -->
-    <vex-sidebar
-      #configpanel
-      [invisibleBackdrop]="true"
-      [opened]="configPanelOpen()"
-      position="right"
+<vex-base-layout>
+  <vex-progress-bar />
+  <vex-search />
+  <mat-sidenav-container class="vex-layout-sidenav-container">
+    <mat-sidenav
+      (closedStart)="onSidenavClosed()"
+      [disableClose]="sidenavDisableClose()"
+      [fixedInViewport]="sidenavFixedInViewport()"
+      [mode]="sidenavMode()"
+      [opened]="sidenavOpen()"
     >
-      <vex-config-panel />
-    </vex-sidebar>
-    <!-- END CONFIGPANEL -->
-  </vex-base-layout>
+      <vex-sidenav [collapsed]="sidenavCollapsed()" />
+    </mat-sidenav>
+    <mat-sidenav
+      (closedStart)="onQuickpanelClosed()"
+      [opened]="quickpanelOpen()"
+      class="vex-layout-quickpanel"
+      mode="over"
+      position="end"
+    >
+      <vex-quickpanel />
+    </mat-sidenav>
+    <mat-sidenav-content class="vex-layout-sidenav-content">
+      <vex-toolbar
+        [class.dark]="config().layout === 'vertical'"
+        class="vex-toolbar"
+      />
+      <main class="vex-layout-content">
+        <router-outlet />
+      </main>
+      @if (config().footer.visible) {
+        <vex-footer class="vex-footer" />
+      }
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <vex-config-panel-toggle (openConfig)="configpanel.open()" />
+  <!-- CONFIGPANEL -->
+  <vex-sidebar
+    #configpanel
+    [invisibleBackdrop]="true"
+    [opened]="configPanelOpen()"
+    (openedChange)="onConfigPanelChange($event)"
+    position="right"
+  >
+    <vex-config-panel />
+  </vex-sidebar>
+  <!-- END CONFIGPANEL -->
+</vex-base-layout>

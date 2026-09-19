@@ -1,11 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Notification } from "../interfaces/notification.interface";
 import { DateTime } from "luxon";
-import { trackById } from "@vex/utils/track-by";
 import { VexDateFormatRelativePipe } from "@vex/pipes/vex-date-format-relative/vex-date-format-relative.pipe";
 import { RouterLink } from "@angular/router";
 import { MatRippleModule } from "@angular/material/core";
-import { NgClass } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
@@ -14,18 +12,17 @@ import { MatButtonModule } from "@angular/material/button";
   selector: "vex-toolbar-notifications-dropdown",
   templateUrl: "./toolbar-notifications-dropdown.component.html",
   styleUrls: ["./toolbar-notifications-dropdown.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
     MatRippleModule,
     RouterLink,
-    NgClass,
     VexDateFormatRelativePipe,
   ],
 })
-export class ToolbarNotificationsDropdownComponent implements OnInit {
+export class ToolbarNotificationsDropdownComponent {
   notifications: Notification[] = [
     {
       id: "1",
@@ -85,10 +82,4 @@ export class ToolbarNotificationsDropdownComponent implements OnInit {
       datetime: DateTime.local().minus({ hour: 90 }),
     },
   ];
-
-  trackById = trackById;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

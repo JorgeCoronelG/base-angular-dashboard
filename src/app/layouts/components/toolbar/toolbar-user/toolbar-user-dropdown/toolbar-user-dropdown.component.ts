@@ -1,16 +1,13 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  OnInit,
   inject,
+  signal,
 } from "@angular/core";
 import { MenuItem } from "../interfaces/menu-item.interface";
-import { trackById } from "@vex/utils/track-by";
 import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
 import { RouterLink } from "@angular/router";
 import { MatRippleModule } from "@angular/material/core";
-import { NgClass } from "@angular/common";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatButtonModule } from "@angular/material/button";
@@ -35,11 +32,9 @@ export interface OnlineStatus {
     MatMenuModule,
     MatRippleModule,
     RouterLink,
-    NgClass,
   ],
 })
-export class ToolbarUserDropdownComponent implements OnInit {
-  private cd = inject(ChangeDetectorRef);
+export class ToolbarUserDropdownComponent {
   private popoverRef =
     inject<VexPopoverRef<ToolbarUserDropdownComponent>>(VexPopoverRef);
 
@@ -105,15 +100,10 @@ export class ToolbarUserDropdownComponent implements OnInit {
     },
   ];
 
-  activeStatus: OnlineStatus = this.statuses[0];
-
-  trackById = trackById;
-
-  ngOnInit() {}
+  readonly activeStatus = signal(this.statuses[0]);
 
   setStatus(status: OnlineStatus) {
-    this.activeStatus = status;
-    this.cd.markForCheck();
+    this.activeStatus.set(status);
   }
 
   close() {

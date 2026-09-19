@@ -15,18 +15,11 @@ import {
   MatSidenavContainer,
   MatSidenavModule,
 } from "@angular/material/sidenav";
-import {
-  Event,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-  Scroll,
-} from "@angular/router";
+import { Event, NavigationEnd, Router, Scroll } from "@angular/router";
 import { filter } from "rxjs/operators";
-import { NgTemplateOutlet } from "@angular/common";
+
 import { VexConfigService } from "@vex/config/vex-config.service";
-import { SearchComponent } from "../components/toolbar/search/search.component";
-import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-progress-bar.component";
+
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { routeDataSignal } from "@vex/utils/route-data-signal";
 
@@ -35,13 +28,7 @@ import { routeDataSignal } from "@vex/utils/route-data-signal";
   templateUrl: "./base-layout.component.html",
   styleUrls: ["./base-layout.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    VexProgressBarComponent,
-    SearchComponent,
-    MatSidenavModule,
-    NgTemplateOutlet,
-    RouterOutlet,
-  ],
+  imports: [MatSidenavModule],
 })
 export class BaseLayoutComponent implements AfterViewInit {
   private readonly layoutService = inject(VexLayoutService);

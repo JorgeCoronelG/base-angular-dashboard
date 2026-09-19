@@ -19,7 +19,7 @@
   </div>
 
   <div class="dropdown-content">
-    @for (item of items; track trackById($index, item)) {
+    @for (item of items; track item.id) {
       <a
         (click)="close()"
         [routerLink]="item.route"
@@ -27,7 +27,7 @@
         matRipple
       >
         <mat-icon
-          [ngClass]="item.colorClass"
+          [class]="item.colorClass"
           [svgIcon]="item.icon"
           class="notification-icon flex-none"
         />
@@ -50,10 +50,10 @@
       mat-button
       type="button"
     >
-      @for (status of statuses; track trackById($index, status)) {
-        @if (status === activeStatus) {
+      @for (status of statuses; track status.id) {
+        @if (status === activeStatus()) {
           <span>
-            <mat-icon [ngClass]="status.colorClass" [svgIcon]="status.icon" />
+            <mat-icon [class]="status.colorClass" [svgIcon]="status.icon" />
             <span>{{ status.label }}</span>
             <mat-icon
               class="dropdown-footer-select-caret"
@@ -70,9 +70,9 @@
 </div>
 
 <mat-menu #statusMenu="matMenu" xPosition="before" yPosition="below">
-  @for (status of statuses; track trackById($index, status)) {
+  @for (status of statuses; track status.id) {
     <button (click)="setStatus(status)" mat-menu-item>
-      <mat-icon [ngClass]="status.colorClass" [svgIcon]="status.icon" />
+      <mat-icon [class]="status.colorClass" [svgIcon]="status.icon" />
       <span>{{ status.label }}</span>
     </button>
   }

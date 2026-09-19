@@ -2,13 +2,11 @@ import { DOCUMENT, inject, Service } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 
 import { filter, take } from "rxjs/operators";
-import { animate, AnimationBuilder, style } from "@angular/animations";
 
 @Service()
 export class VexSplashScreenService {
   private router = inject(Router);
   private document = inject<Document>(DOCUMENT);
-  private animationBuilder = inject(AnimationBuilder);
 
   splashScreenElem?: HTMLElement;
 
@@ -27,21 +25,18 @@ export class VexSplashScreenService {
   }
 
   hide() {
-    const player = this.animationBuilder
-      .build([
-        style({
-          opacity: 1,
-        }),
-        animate(
-          "400ms cubic-bezier(0.25, 0.8, 0.25, 1)",
-          style({
-            opacity: 0,
-          }),
-        ),
-      ])
-      .create(this.splashScreenElem);
+    const elem = this.splashScreenElem;
 
-    player.onDone(() => this.splashScreenElem?.remove());
-    player.play();
+    if (!elem) {
+      return;
+    }
+
+    elem
+      .animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 400,
+        easing: "cubic-bezier(0.25, 0.8, 0.25, 1)",
+        fill: "forwards",
+      })
+      .finished.then(() => elem.remove());
   }
 }

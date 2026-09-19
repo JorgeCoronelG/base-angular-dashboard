@@ -10,7 +10,7 @@ import {
   MatSlideToggleModule,
 } from "@angular/material/slide-toggle";
 import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
-import { KeyValuePipe, UpperCasePipe } from "@angular/common";
+import { UpperCasePipe } from "@angular/common";
 import {
   VexColorScheme,
   VexConfig,
@@ -29,7 +29,7 @@ import { VEX_THEMES } from "@vex/config/config.token";
   selector: "vex-config-panel",
   templateUrl: "./config-panel.component.html",
   styleUrls: ["./config-panel.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatIconModule,
     MatRippleModule,
@@ -37,7 +37,6 @@ import { VEX_THEMES } from "@vex/config/config.token";
     MatSlideToggleModule,
     MatRadioModule,
     UpperCasePipe,
-    KeyValuePipe,
   ],
 })
 export class ConfigPanelComponent {
