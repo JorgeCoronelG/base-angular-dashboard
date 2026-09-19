@@ -1,9 +1,5 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { DateTime } from "luxon";
-import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatRippleModule } from "@angular/material/core";
-import { RouterLink } from "@angular/router";
-import { MatListModule } from "@angular/material/list";
 import { MatDividerModule } from "@angular/material/divider";
 
 @Component({
@@ -11,13 +7,7 @@ import { MatDividerModule } from "@angular/material/divider";
   templateUrl: "./quickpanel.component.html",
   styleUrls: ["./quickpanel.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    MatDividerModule,
-    MatListModule,
-    RouterLink,
-    MatRippleModule,
-    MatProgressBarModule,
-  ],
+  imports: [MatDividerModule],
 })
 export class QuickpanelComponent {
   date = DateTime.local().toFormat("DD");

@@ -10,7 +10,6 @@ import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
-import { MegaMenuComponent } from "./mega-menu/mega-menu.component";
 import { NavigationComponent } from "../navigation/navigation.component";
 import { ToolbarUserComponent } from "./toolbar-user/toolbar-user.component";
 import { ToolbarNotificationsComponent } from "./toolbar-notifications/toolbar-notifications.component";
@@ -69,7 +68,6 @@ export class ToolbarComponent {
   readonly title = computed(() => this.config().sidenav.title);
 
   readonly isDesktop = this.layoutService.isDesktop;
-  readonly megaMenuOpen = signal(false);
 
   openQuickpanel(): void {
     this.layoutService.openQuickpanel();
@@ -77,31 +75,6 @@ export class ToolbarComponent {
 
   openSidenav(): void {
     this.layoutService.openSidenav();
-  }
-
-  openMegaMenu(origin: ElementRef | HTMLElement): void {
-    const popoverRef = this.popoverService.open({
-      content: MegaMenuComponent,
-      origin,
-      offsetY: 12,
-      position: [
-        {
-          originX: "start",
-          originY: "bottom",
-          overlayX: "start",
-          overlayY: "top",
-        },
-        {
-          originX: "end",
-          originY: "bottom",
-          overlayX: "end",
-          overlayY: "top",
-        },
-      ],
-    });
-
-    this.megaMenuOpen.set(true);
-    popoverRef.afterClosed$.subscribe(() => this.megaMenuOpen.set(false));
   }
 
   openSearch(): void {

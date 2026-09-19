@@ -26,38 +26,6 @@
   @apply my-4 uppercase text-xs text-secondary font-medium;
 }
 
-.layout + .layout {
-  @apply mt-6;
-}
-
-.layout-image {
-  &:hover {
-    .layout-image-overlay {
-      background: rgba(0, 0, 0, 0.7);
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  .layout-image-overlay {
-    border-radius: var(--vex-border-radius);
-    bottom: 0;
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    visibility: hidden;
-    width: 100%;
-    @apply transition-all duration-400 ease-out-swift;
-
-    button {
-      padding: 0 8px;
-    }
-  }
-}
-
 .vex-color-picker {
   user-select: none;
   @apply transition-all duration-400 ease-out-swift;

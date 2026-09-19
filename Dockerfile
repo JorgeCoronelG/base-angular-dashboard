@@ -14,6 +14,6 @@ RUN npm run build
 # ---- Producción (nginx) ----
 FROM nginx:1.27-alpine AS prod
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/vex/browser /usr/share/nginx/html
+COPY --from=build /app/dist/base-angular-dashboard/browser /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

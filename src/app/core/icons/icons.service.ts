@@ -22,11 +22,6 @@ export class IconsService {
               `assets/img/icons/material-design-icons/two-tone/${name}.svg`,
             );
 
-          case "logo":
-            return this.domSanitizer.bypassSecurityTrustResourceUrl(
-              `assets/img/icons/logos/${name}.svg`,
-            );
-
           case "flag":
             return this.domSanitizer.bypassSecurityTrustResourceUrl(
               `assets/img/icons/flags/${name}.svg`,

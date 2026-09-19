@@ -12,8 +12,6 @@ import { VexConfigService } from "@vex/config/vex-config.service";
 import { NavigationItem } from "../../../core/navigation/navigation-item.interface";
 import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
 import { SidenavUserMenuComponent } from "./sidenav-user-menu/sidenav-user-menu.component";
-import { MatDialog } from "@angular/material/dialog";
-import { SearchModalComponent } from "./search-modal/search-modal.component";
 import { SidenavItemComponent } from "./sidenav-item/sidenav-item.component";
 import { VexScrollbarComponent } from "@vex/components/vex-scrollbar/vex-scrollbar.component";
 import { MatRippleModule } from "@angular/material/core";
@@ -38,7 +36,6 @@ export class SidenavComponent {
   private layoutService = inject(VexLayoutService);
   private configService = inject(VexConfigService);
   private readonly popoverService = inject(VexPopoverService);
-  private readonly dialog = inject(MatDialog);
 
   readonly collapsed = input<boolean>(false);
   readonly collapsedOpen = this.layoutService.sidenavCollapsedOpen;
@@ -51,9 +48,6 @@ export class SidenavComponent {
   );
   readonly userVisible = computed(
     () => this.configService.config().sidenav.user.visible,
-  );
-  readonly searchVisible = computed(
-    () => this.configService.config().sidenav.search.visible,
   );
 
   readonly userMenuOpen = signal(false);
@@ -102,11 +96,4 @@ export class SidenavComponent {
     popoverRef.afterClosed$.subscribe(() => this.userMenuOpen.set(false));
   }
 
-  openSearch(): void {
-    this.dialog.open(SearchModalComponent, {
-      panelClass: "vex-dialog-glossy",
-      width: "100%",
-      maxWidth: "600px",
-    });
-  }
 }

@@ -27,17 +27,13 @@ const baseConfig: VexConfig = {
     }
   },
   direction: 'ltr',
-  imgSrc: '//vex-landing.visurel.com/assets/img/layouts/apollo.png',
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'VEX',
+    title: 'Base Dashboard',
     imageUrl: 'assets/img/logo/logo.svg',
     showCollapsePin: true,
     user: {
-      visible: true
-    },
-    search: {
       visible: true
     },
     state: 'expanded'
@@ -63,14 +59,10 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.poseidon,
     name: 'Poseidon',
     bodyClass: 'vex-layout-poseidon',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/poseidon.png',
     sidenav: {
       user: {
         visible: true
       },
-      search: {
-        visible: true
-      }
     },
     toolbar: {
       user: {
@@ -82,16 +74,12 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.hermes,
     name: 'Hermes',
     bodyClass: 'vex-layout-hermes',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/hermes.png',
     layout: 'vertical',
     boxed: true,
     sidenav: {
       user: {
         visible: false
       },
-      search: {
-        visible: false
-      }
     },
     toolbar: {
       fixed: false
@@ -104,14 +92,10 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.ares,
     name: 'Ares',
     bodyClass: 'vex-layout-ares',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/ares.png',
     sidenav: {
       user: {
         visible: false
       },
-      search: {
-        visible: false
-      }
     },
     toolbar: {
       fixed: false
@@ -127,7 +111,6 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.zeus,
     name: 'Zeus',
     bodyClass: 'vex-layout-zeus',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/zeus.png',
     sidenav: {
       state: 'collapsed'
     }
@@ -136,16 +119,12 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.ikaros,
     name: 'Ikaros',
     bodyClass: 'vex-layout-ikaros',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/ikaros.png',
     layout: 'vertical',
     boxed: true,
     sidenav: {
       user: {
         visible: false
       },
-      search: {
-        visible: false
-      }
     },
     toolbar: {
       fixed: false

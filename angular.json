@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vex": {
+    "base-angular-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,17 +18,13 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/vex"
+              "base": "dist/base-angular-dashboard"
             },
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.svg",
               "src/assets",
-              "src/_redirects",
-              "src/README.md",
-              "src/CHANGELOG.md",
-              "src/.htaccess",
               {
                 "glob": "**/*.svg",
                 "input": "node_modules/@material-design-icons/svg",
@@ -37,24 +33,6 @@
             ],
             "styles": ["src/styles.scss", "src/@vex/styles/tailwind.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": [
-              "simplebar",
-              "highlight.js",
-              "faker",
-              "showdown",
-              "core-js",
-              "dom-set",
-              "dom-plane",
-              "@mattlewis92/dom-autoscroller",
-              "apexcharts",
-              "can-use-dom",
-              "lodash.debounce",
-              "lodash.memoize",
-              "lodash.throttle",
-              "luxon",
-              "quill",
-              "seedrandom"
-            ],
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
@@ -78,7 +56,7 @@
             },
             "testing": {
               "aot": false,
-              "assets": ["src/favicon.ico", "src/assets"],
+              "assets": ["src/favicon.svg", "src/assets"],
               "styles": ["src/styles.scss"]
             }
           }
@@ -86,18 +64,18 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "buildTarget": "vex:build"
+            "buildTarget": "base-angular-dashboard:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "vex:build:production"
+              "buildTarget": "base-angular-dashboard:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n",
           "options": {
-            "buildTarget": "vex:build"
+            "buildTarget": "base-angular-dashboard:build"
           }
         },
         "test": {

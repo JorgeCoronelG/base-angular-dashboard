@@ -23,7 +23,6 @@ export interface VexConfig {
   id: VexConfigName;
   name: string;
   bodyClass: string;
-  imgSrc: string;
   direction: 'ltr' | 'rtl';
   style: {
     themeClassName: string;
@@ -40,9 +39,6 @@ export interface VexConfig {
     imageUrl: string;
     showCollapsePin: boolean;
     user: {
-      visible: boolean;
-    };
-    search: {
       visible: boolean;
     };
     state: 'expanded' | 'collapsed';

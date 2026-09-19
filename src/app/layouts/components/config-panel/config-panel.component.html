@@ -48,33 +48,24 @@
     <div class="section">
       <h5 class="subheading">PRE-BUILT LAYOUTS</h5>
       @for (layout of configs; track layout; let first = $first) {
-        <div [class.mt-6]="!first" class="rounded">
-          <div
-            class="layout-image rounded overflow-hidden relative hover:bg-hover shadow-md"
+        <div [class.mt-4]="!first" class="flex items-center gap-2">
+          <div class="flex-auto body-2 font-medium">{{ layout.name }}</div>
+          <button
+            (click)="setConfig(layout.id, ColorSchemeName.LIGHT)"
+            class="flex-none"
+            mat-stroked-button
+            type="button"
           >
-            <img [src]="layout.imgSrc" class="w-full block" />
-            <div
-              class="layout-image-overlay flex items-center justify-center gap-1"
-            >
-              <button
-                (click)="setConfig(layout.id, ColorSchemeName.LIGHT)"
-                class="bg-white text-black flex-none !min-w-[70px]"
-                mat-raised-button
-                type="button"
-              >
-                LIGHT
-              </button>
-              <button
-                (click)="setConfig(layout.id, ColorSchemeName.DARK)"
-                class="!bg-black !text-white flex-none !min-w-[70px]"
-                mat-raised-button
-                type="button"
-              >
-                DARK
-              </button>
-            </div>
-          </div>
-          <div class="text-center body-2 mt-2">{{ layout.name }}</div>
+            LIGHT
+          </button>
+          <button
+            (click)="setConfig(layout.id, ColorSchemeName.DARK)"
+            class="flex-none"
+            mat-flat-button
+            type="button"
+          >
+            DARK
+          </button>
         </div>
       }
     </div>
