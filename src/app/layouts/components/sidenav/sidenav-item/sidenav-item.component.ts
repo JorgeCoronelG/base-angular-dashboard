@@ -9,6 +9,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  input,
 } from "@angular/core";
 import {
   NavigationDropdown,
@@ -49,8 +50,11 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   private cd = inject(ChangeDetectorRef);
   private navigationService = inject(NavigationService);
 
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input({ required: true }) item!: NavigationItem;
-  @Input({ required: true }) level!: number;
+  readonly level = input.required<number>();
   isOpen: boolean = false;
   isActive: boolean = false;
 
@@ -62,7 +66,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
 
   @HostBinding("class")
   get levelClass() {
-    return `item-level-${this.level}`;
+    return `item-level-${this.level()}`;
   }
 
   ngOnInit() {

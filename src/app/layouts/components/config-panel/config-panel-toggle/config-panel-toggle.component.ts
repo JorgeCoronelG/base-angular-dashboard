@@ -1,9 +1,8 @@
 import {
   Component,
-  EventEmitter,
   OnInit,
-  Output,
   ChangeDetectionStrategy,
+  output,
 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -16,7 +15,7 @@ import { MatButtonModule } from "@angular/material/button";
   imports: [MatButtonModule, MatIconModule],
 })
 export class ConfigPanelToggleComponent implements OnInit {
-  @Output() openConfig = new EventEmitter();
+  readonly openConfig = output();
 
   constructor() {}
 

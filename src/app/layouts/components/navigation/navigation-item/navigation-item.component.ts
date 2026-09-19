@@ -37,6 +37,9 @@ export class NavigationItemComponent implements OnInit {
   private navigationService = inject(NavigationService);
   private router = inject(Router);
 
+  // TODO: Skipped for migration because:
+  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
+  //  and migrating would break narrowing currently.
   @Input({ required: true }) item!: NavigationItem;
 
   isActive$ = this.router.events.pipe(

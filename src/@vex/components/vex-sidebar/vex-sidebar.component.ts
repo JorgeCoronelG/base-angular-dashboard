@@ -5,6 +5,7 @@ import {
   DOCUMENT,
   ChangeDetectionStrategy,
   inject,
+  input,
 } from "@angular/core";
 
 @Component({
@@ -20,8 +21,8 @@ import {
 export class VexSidebarComponent implements OnDestroy {
   private document = inject<Document>(DOCUMENT);
 
-  @Input() position: "left" | "right" = "left";
-  @Input() invisibleBackdrop: boolean = false;
+  readonly position = input<"left" | "right">("left");
+  readonly invisibleBackdrop = input<boolean>(false);
 
   private _opened: boolean = false;
 
@@ -29,17 +30,19 @@ export class VexSidebarComponent implements OnDestroy {
     return this._opened;
   }
 
+  // TODO: Skipped for migration because:
+  //  Accessor inputs cannot be migrated as they are too complex.
   @Input() set opened(opened: boolean) {
     this._opened = opened;
     opened ? this.enableScrollblock() : this.disableScrollblock();
   }
 
   get positionLeft() {
-    return this.position === "left";
+    return this.position() === "left";
   }
 
   get positionRight() {
-    return this.position === "right";
+    return this.position() === "right";
   }
 
   enableScrollblock() {

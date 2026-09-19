@@ -1,12 +1,11 @@
 import {
   Directive,
-  EventEmitter,
-  Input,
   NgZone,
   OnChanges,
-  Output,
   SimpleChanges,
   inject,
+  input,
+  output,
 } from "@angular/core";
 import { VexHighlightResult } from "./vex-highlight.model";
 import { VexHighlightService } from "./vex-highlight.service";
@@ -29,20 +28,20 @@ export class VexHighlightDirective implements OnChanges {
   /** An optional array of language names and aliases restricting detection to only those languages.
    * The subset can also be set with configure, but the local parameter overrides the option if set.
    */
-  @Input() languages: string[] = [];
+  readonly languages = input<string[]>([]);
 
   /** Highlight code input */
-  @Input("vexHighlight") code!: string;
+  readonly code = input.required<string>({ alias: "vexHighlight" });
 
   /** Stream that emits when code string is highlighted */
-  @Output() highlighted = new EventEmitter<VexHighlightResult>();
+  readonly highlighted = output<VexHighlightResult>();
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes["code"] &&
       changes["code"].currentValue !== changes["code"].previousValue
     ) {
-      this.highlightElement(this.code, this.languages);
+      this.highlightElement(this.code(), this.languages());
     }
   }
 

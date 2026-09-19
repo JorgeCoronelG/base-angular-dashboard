@@ -1,9 +1,9 @@
 import {
   Component,
-  Input,
   OnInit,
   ChangeDetectionStrategy,
   inject,
+  input,
 } from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
@@ -43,7 +43,7 @@ export class SidenavComponent implements OnInit {
   private readonly popoverService = inject(VexPopoverService);
   private readonly dialog = inject(MatDialog);
 
-  @Input() collapsed: boolean = false;
+  readonly collapsed = input<boolean>(false);
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(
     map((config) => config.sidenav.title),
@@ -76,7 +76,7 @@ export class SidenavComponent implements OnInit {
   }
 
   toggleCollapse() {
-    this.collapsed
+    this.collapsed()
       ? this.layoutService.expandSidenav()
       : this.layoutService.collapseSidenav();
   }

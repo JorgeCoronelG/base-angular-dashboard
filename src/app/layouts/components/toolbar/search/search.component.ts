@@ -5,8 +5,8 @@ import {
   inject,
   OnDestroy,
   OnInit,
-  ViewChild,
   ChangeDetectionStrategy,
+  viewChild,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { filter } from "rxjs/operators";
@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   show$ = this.layoutService.searchOpen$;
   searchCtrl = new UntypedFormControl();
 
-  @ViewChild("searchInput", { static: true }) input?: ElementRef;
+  readonly input = viewChild<ElementRef>("searchInput");
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         filter((show) => show),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe(() => this.input?.nativeElement.focus());
+      .subscribe(() => this.input()?.nativeElement.focus());
   }
 
   close() {

@@ -1,8 +1,8 @@
 <div
   (mouseenter)="collapseOpenSidenav()"
   (mouseleave)="collapseCloseSidenav()"
-  [class.collapsed]="collapsed"
-  [class.open]="collapsed && (collapsedOpen$ | async)"
+  [class.collapsed]="collapsed()"
+  [class.open]="collapsed() && (collapsedOpen$ | async)"
   class="vex-sidenav flex flex-col"
 >
   <div class="vex-sidenav-toolbar__container">
@@ -22,13 +22,13 @@
           mat-icon-button
           type="button"
         >
-          @if (!collapsed) {
+          @if (!collapsed()) {
             <mat-icon
               class="icon-xs"
               svgIcon="mat:radio_button_checked"
             ></mat-icon>
           }
-          @if (collapsed) {
+          @if (collapsed()) {
             <mat-icon
               class="icon-xs"
               svgIcon="mat:radio_button_unchecked"

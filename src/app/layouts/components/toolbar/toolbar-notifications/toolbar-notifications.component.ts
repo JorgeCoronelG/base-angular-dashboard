@@ -4,8 +4,8 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
   inject,
+  viewChild,
 } from "@angular/core";
 import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
 import { ToolbarNotificationsDropdownComponent } from "./toolbar-notifications-dropdown/toolbar-notifications-dropdown.component";
@@ -23,8 +23,7 @@ export class ToolbarNotificationsComponent implements OnInit {
   private popover = inject(VexPopoverService);
   private cd = inject(ChangeDetectorRef);
 
-  @ViewChild("originRef", { static: true, read: ElementRef })
-  originRef?: ElementRef;
+  readonly originRef = viewChild("originRef", { read: ElementRef });
 
   dropdownOpen: boolean = false;
 
@@ -34,13 +33,14 @@ export class ToolbarNotificationsComponent implements OnInit {
     this.dropdownOpen = true;
     this.cd.markForCheck();
 
-    if (!this.originRef) {
+    const originRef = this.originRef();
+    if (!originRef) {
       throw new Error("originRef undefined!");
     }
 
     const popoverRef = this.popover.open({
       content: ToolbarNotificationsDropdownComponent,
-      origin: this.originRef,
+      origin: originRef,
       offsetY: 12,
       position: [
         {

@@ -1,12 +1,12 @@
 import {
   AfterViewInit,
   Component,
-  ContentChild,
   DestroyRef,
   inject,
   OnInit,
   DOCUMENT,
   ChangeDetectionStrategy,
+  contentChild,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import {
@@ -99,8 +99,7 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
 
   searchOpen$ = this.layoutService.searchOpen$;
 
-  @ContentChild(MatSidenavContainer, { static: true })
-  sidenavContainer!: MatSidenavContainer;
+  readonly sidenavContainer = contentChild.required(MatSidenavContainer);
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -148,7 +147,7 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
       .subscribe((e) => {
         if (e.position) {
           // backward navigation
-          this.sidenavContainer.scrollable.scrollTo({
+          this.sidenavContainer().scrollable.scrollTo({
             start: e.position[0],
             top: e.position[1],
           });
@@ -156,7 +155,7 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
           // anchor navigation
 
           const scroll = (anchor: HTMLElement) =>
-            this.sidenavContainer.scrollable.scrollTo({
+            this.sidenavContainer().scrollable.scrollTo({
               behavior: "smooth",
               top: anchor.offsetTop,
               left: anchor.offsetLeft,
@@ -183,7 +182,7 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
           }
         } else {
           // forward navigation
-          this.sidenavContainer.scrollable.scrollTo({
+          this.sidenavContainer().scrollable.scrollTo({
             top: 0,
             start: 0,
           });
