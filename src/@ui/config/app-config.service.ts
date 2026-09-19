@@ -12,6 +12,12 @@ import {
 } from "./app-config.interface";
 import { CSSValue } from "../interfaces/css-value.type";
 import { APP_CONFIG, APP_THEMES } from "@ui/config/config.token";
+import {
+  applyPreferences,
+  readPreferences,
+  toPreferences,
+  writePreferences,
+} from "./app-config-storage";
 
 @Service()
 export class AppConfigService {
@@ -22,11 +28,32 @@ export class AppConfigService {
 
   readonly configMap: AppConfigs = appConfigs;
   readonly configs: AppConfig[] = Object.values(this.configMap);
-  private readonly _config = signal<AppConfig>(this.initialConfig);
+  private readonly _config = signal<AppConfig>(this.restoreConfig());
   readonly config = this._config.asReadonly();
 
   constructor() {
-    effect(() => this._updateConfig(this._config()));
+    effect(() => {
+      const config = this._config();
+
+      this._updateConfig(config);
+      writePreferences(toPreferences(config));
+    });
+  }
+
+  /**
+   * Restores the preferences the user saved from the config panel, on top of
+   * the layout they were using.
+   */
+  private restoreConfig(): AppConfig {
+    const preferences = readPreferences(this.themes.map((t) => t.className));
+
+    if (!preferences) {
+      return this.initialConfig;
+    }
+
+    const base = this.configMap[preferences.id] ?? this.initialConfig;
+
+    return applyPreferences(base, preferences);
   }
 
   setConfig(configName: AppConfigName) {
