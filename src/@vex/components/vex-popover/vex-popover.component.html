@@ -4,12 +4,10 @@
       <div [innerHTML]="content"></div>
     }
     @case ("template") {
-      <ng-container
-        *ngTemplateOutlet="content; context: context"
-      ></ng-container>
+      <ng-container *ngTemplateOutlet="content; context: context" />
     }
     @case ("component") {
-      <ng-container *ngComponentOutlet="content"></ng-container>
+      <ng-container *ngComponentOutlet="content" />
     }
   }
 </div>

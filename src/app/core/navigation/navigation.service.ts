@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { inject, Service } from "@angular/core";
 import {
   NavigationDropdown,
   NavigationItem,
@@ -8,9 +8,7 @@ import {
 import { Observable, Subject } from "rxjs";
 import { NavigationLoaderService } from "./navigation-loader.service";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class NavigationService {
   private readonly navigationLoaderService = inject(NavigationLoaderService);
 

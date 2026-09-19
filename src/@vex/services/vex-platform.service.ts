@@ -1,9 +1,7 @@
-import { Injectable, RendererFactory2, DOCUMENT, inject } from "@angular/core";
+import { RendererFactory2, DOCUMENT, inject, Service } from "@angular/core";
 import { Platform } from "@angular/cdk/platform";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class VexPlatformService {
   private document = inject<Document>(DOCUMENT);
   private readonly rendererFactory2 = inject(RendererFactory2);

@@ -1,12 +1,10 @@
-import { Injectable, DOCUMENT, inject } from "@angular/core";
+import { DOCUMENT, inject, Service } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 
 import { filter, take } from "rxjs/operators";
 import { animate, AnimationBuilder, style } from "@angular/animations";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class VexSplashScreenService {
   private router = inject(Router);
   private document = inject<Document>(DOCUMENT);

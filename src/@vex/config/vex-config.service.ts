@@ -1,4 +1,4 @@
-import { Injectable, DOCUMENT, inject } from "@angular/core";
+import { DOCUMENT, inject, Service } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 
 import { DeepPartial } from "../interfaces/deep-partial.type";
@@ -16,9 +16,7 @@ import { CSSValue } from "../interfaces/css-value.type";
 import { map } from "rxjs/operators";
 import { VEX_CONFIG, VEX_THEMES } from "@vex/config/config.token";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class VexConfigService {
   private readonly config = inject<VexConfig>(VEX_CONFIG);
   private readonly themes = inject(VEX_THEMES);

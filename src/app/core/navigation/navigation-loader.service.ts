@@ -1,11 +1,9 @@
-import { Injectable, inject } from "@angular/core";
+import { inject, Service } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { NavigationItem } from "./navigation-item.interface";
 import { BehaviorSubject, Observable } from "rxjs";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class NavigationLoaderService {
   private readonly layoutService = inject(VexLayoutService);
 

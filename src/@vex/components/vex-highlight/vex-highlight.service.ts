@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { inject, Service } from "@angular/core";
 import {
   VEX_HIGHLIGHT_OPTIONS,
   VexHighlightConfig,
@@ -8,7 +8,7 @@ import {
 } from "./vex-highlight.model";
 import hljs from "highlight.js/lib/core";
 
-@Injectable()
+@Service({ autoProvided: false })
 export class VexHighlightService {
   constructor() {
     const options = inject<VexHighlightOptions>(VEX_HIGHLIGHT_OPTIONS);

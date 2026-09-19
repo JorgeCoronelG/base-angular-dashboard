@@ -20,7 +20,7 @@ import { ToolbarNotificationsComponent } from "./toolbar-notifications/toolbar-n
 import { NavigationItemComponent } from "../navigation/navigation-item/navigation-item.component";
 import { MatMenuModule } from "@angular/material/menu";
 import { NavigationEnd, Router, RouterLink } from "@angular/router";
-import { AsyncPipe, NgClass } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { NavigationItem } from "../../../core/navigation/navigation-item.interface";
@@ -37,7 +37,6 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     MatIconModule,
     RouterLink,
     MatMenuModule,
-    NgClass,
     NavigationItemComponent,
     ToolbarNotificationsComponent,
     ToolbarUserComponent,

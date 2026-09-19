@@ -1,9 +1,7 @@
-import { Injectable, LOCALE_ID, inject } from "@angular/core";
+import { LOCALE_ID, inject, Service } from "@angular/core";
 import { Settings } from "luxon";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class LuxonService {
   private localeId = inject(LOCALE_ID);
 

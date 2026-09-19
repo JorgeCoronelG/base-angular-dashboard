@@ -1,4 +1,4 @@
-import { ElementRef, Injectable, Injector, inject } from "@angular/core";
+import { ElementRef, Injector, inject, Service } from "@angular/core";
 import {
   ConnectedPosition,
   ConnectionPositionPair,
@@ -22,9 +22,7 @@ export interface VexPopoverParams<T> {
   offsetX?: number;
 }
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class VexPopoverService {
   private overlay = inject(Overlay);
   private injector = inject(Injector);

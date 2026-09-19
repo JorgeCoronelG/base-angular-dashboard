@@ -10,10 +10,7 @@ import { MatRippleModule } from "@angular/material/core";
   template: `
     <div>
       <div class="flex items-center gap-4 px-6 py-3 border-b border-divider">
-        <mat-icon
-          svgIcon="mat:search"
-          class="text-secondary flex-none"
-        ></mat-icon>
+        <mat-icon svgIcon="mat:search" class="text-secondary flex-none" />
         <input
           type="text"
           placeholder="Search..."
@@ -24,7 +21,7 @@ import { MatRippleModule } from "@angular/material/core";
           type="button"
           mat-icon-button
         >
-          <mat-icon svgIcon="mat:settings"></mat-icon>
+          <mat-icon svgIcon="mat:settings" />
         </button>
       </div>
 
@@ -47,15 +44,9 @@ import { MatRippleModule } from "@angular/material/core";
               class="flex-none text-xs text-secondary font-medium flex items-center gap-2"
             >
               <div>found in Contacts</div>
-              <mat-icon
-                svgIcon="mat:contacts"
-                class="icon-xs flex-none"
-              ></mat-icon>
+              <mat-icon svgIcon="mat:contacts" class="icon-xs flex-none" />
             </div>
-            <mat-icon
-              svgIcon="mat:chevron_right"
-              class="icon-sm flex-none"
-            ></mat-icon>
+            <mat-icon svgIcon="mat:chevron_right" class="icon-sm flex-none" />
           </div>
 
           <div
@@ -71,15 +62,9 @@ import { MatRippleModule } from "@angular/material/core";
               class="flex-none text-xs text-secondary font-medium flex items-center gap-2"
             >
               <div>found in Contacts</div>
-              <mat-icon
-                svgIcon="mat:contacts"
-                class="icon-xs flex-none"
-              ></mat-icon>
+              <mat-icon svgIcon="mat:contacts" class="icon-xs flex-none" />
             </div>
-            <mat-icon
-              svgIcon="mat:chevron_right"
-              class="icon-sm flex-none"
-            ></mat-icon>
+            <mat-icon svgIcon="mat:chevron_right" class="icon-sm flex-none" />
           </div>
         </div>
       </div>
@@ -95,16 +80,13 @@ import { MatRippleModule } from "@angular/material/core";
             <div
               class="flex items-center justify-center w-8 h-8 rounded-full bg-foreground/20"
             >
-              <mat-icon svgIcon="mat:web" class="icon-sm flex-none"></mat-icon>
+              <mat-icon svgIcon="mat:web" class="icon-sm flex-none" />
             </div>
             <div class="flex-auto text-base font-medium">
               <div>Scrumboard</div>
               <div class="text-secondary text-xs">/apps/scrumboard</div>
             </div>
-            <mat-icon
-              svgIcon="mat:chevron_right"
-              class="icon-sm flex-none"
-            ></mat-icon>
+            <mat-icon svgIcon="mat:chevron_right" class="icon-sm flex-none" />
           </div>
 
           <div
@@ -114,16 +96,13 @@ import { MatRippleModule } from "@angular/material/core";
             <div
               class="flex items-center justify-center w-8 h-8 rounded-full bg-foreground/20"
             >
-              <mat-icon svgIcon="mat:web" class="icon-sm flex-none"></mat-icon>
+              <mat-icon svgIcon="mat:web" class="icon-sm flex-none" />
             </div>
             <div class="flex-auto text-base font-medium">
               <div>Mailbox</div>
               <div class="text-secondary text-xs">/apps/mailbox</div>
             </div>
-            <mat-icon
-              svgIcon="mat:chevron_right"
-              class="icon-sm flex-none"
-            ></mat-icon>
+            <mat-icon svgIcon="mat:chevron_right" class="icon-sm flex-none" />
           </div>
         </div>
       </div>
@@ -143,15 +122,12 @@ import { MatRippleModule } from "@angular/material/core";
                 svgIcon="mat:check"
                 class="icon-sm flex-none"
                 color="primary"
-              ></mat-icon>
+              />
             </div>
             <div class="flex-auto text-base font-medium">
               Configure OrderController as defined in RVT-11
             </div>
-            <mat-icon
-              svgIcon="mat:chevron_right"
-              class="icon-sm flex-none"
-            ></mat-icon>
+            <mat-icon svgIcon="mat:chevron_right" class="icon-sm flex-none" />
           </div>
 
           <div
@@ -165,15 +141,12 @@ import { MatRippleModule } from "@angular/material/core";
                 svgIcon="mat:check"
                 class="icon-sm flex-none"
                 color="primary"
-              ></mat-icon>
+              />
             </div>
             <div class="flex-auto text-base font-medium">
               Add more data-models to product-controller
             </div>
-            <mat-icon
-              svgIcon="mat:chevron_right"
-              class="icon-sm flex-none"
-            ></mat-icon>
+            <mat-icon svgIcon="mat:chevron_right" class="icon-sm flex-none" />
           </div>
         </div>
       </div>

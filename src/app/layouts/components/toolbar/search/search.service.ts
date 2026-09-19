@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Service } from "@angular/core";
+import { BehaviorSubject, Subject } from "rxjs";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class SearchService {
-  valueChangesSubject = new BehaviorSubject<string>('');
+  valueChangesSubject = new BehaviorSubject<string>("");
   valueChanges$ = this.valueChangesSubject.asObservable();
 
   submitSubject = new Subject<string>();

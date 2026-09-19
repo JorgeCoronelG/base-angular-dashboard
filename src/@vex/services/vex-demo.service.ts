@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { inject, Service } from "@angular/core";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
 import { NavigationEnd, Router } from "@angular/router";
 import { VexConfigService } from "@vex/config/vex-config.service";
@@ -10,9 +10,7 @@ import {
   VexTheme,
 } from "@vex/config/vex-config.interface";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class VexDemoService {
   private readonly router = inject(Router);
   private readonly configService = inject(VexConfigService);

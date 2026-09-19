@@ -1,7 +1,7 @@
 <div class="border-b">
   <div class="navigation flex items-center container">
     @for (item of items$ | async; track item) {
-      <vex-navigation-item [item]="item"></vex-navigation-item>
+      <vex-navigation-item [item]="item" />
     }
   </div>
 </div>

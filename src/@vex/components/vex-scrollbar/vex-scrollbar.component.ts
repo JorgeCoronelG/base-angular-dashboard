@@ -12,7 +12,7 @@ import SimpleBar from "simplebar";
 
 @Component({
   selector: "vex-scrollbar",
-  template: ` <ng-content></ng-content>`,
+  template: ` <ng-content />`,
   styleUrls: ["./vex-scrollbar.component.scss"],
   host: {
     class: "vex-scrollbar",

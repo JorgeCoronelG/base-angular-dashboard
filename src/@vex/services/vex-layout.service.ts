@@ -1,12 +1,10 @@
-import { DestroyRef, inject, Injectable } from "@angular/core";
+import { DestroyRef, inject, Service } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { filter, map } from "rxjs/operators";
 import { BreakpointObserver } from "@angular/cdk/layout";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class VexLayoutService {
   private readonly breakpointObserver = inject(BreakpointObserver);
 

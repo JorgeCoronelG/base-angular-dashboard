@@ -1,13 +1,11 @@
-import { Injectable, inject } from "@angular/core";
+import { inject, Service } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import {
   MatIconRegistry,
   SafeResourceUrlWithIconOptions,
 } from "@angular/material/icon";
 
-@Injectable({
-  providedIn: "root",
-})
+@Service()
 export class IconsService {
   private readonly domSanitizer = inject(DomSanitizer);
   private readonly iconRegistry = inject(MatIconRegistry);

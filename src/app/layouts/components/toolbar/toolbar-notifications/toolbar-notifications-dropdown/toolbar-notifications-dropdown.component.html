@@ -8,10 +8,7 @@
     </div>
 
     <button [matMenuTriggerFor]="settingsMenu" mat-icon-button type="button">
-      <mat-icon
-        class="notifications-header-icon"
-        svgIcon="mat:settings"
-      ></mat-icon>
+      <mat-icon class="notifications-header-icon" svgIcon="mat:settings" />
     </button>
   </div>
 
@@ -30,7 +27,7 @@
           [ngClass]="notification.colorClass"
           [svgIcon]="notification.icon"
           class="notification-icon flex-none"
-        ></mat-icon>
+        />
         <div class="flex-auto">
           <div class="notification-label">{{ notification.label }}</div>
           <div class="notification-description">
@@ -40,7 +37,7 @@
         <mat-icon
           class="notification-chevron flex-none"
           svgIcon="mat:chevron_right"
-        ></mat-icon>
+        />
       </a>
     }
   </div>
@@ -52,12 +49,12 @@
 
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
-    <mat-icon svgIcon="mat:clear_all"></mat-icon>
+    <mat-icon svgIcon="mat:clear_all" />
     <span>Mark all as read</span>
   </button>
 
   <button mat-menu-item>
-    <mat-icon svgIcon="mat:notifications_off"></mat-icon>
+    <mat-icon svgIcon="mat:notifications_off" />
     <span>Disable Notifications</span>
   </button>
 </mat-menu>

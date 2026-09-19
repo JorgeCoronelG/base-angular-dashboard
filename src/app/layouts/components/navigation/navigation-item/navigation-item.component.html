@@ -47,17 +47,15 @@
     @for (child of item.children; track child) {
       @if (isLink(child) && !isFunction(child.route)) {
         <a
-          [ngClass]="{
-            'text-primary-600': $safeNavigationMigration(
-              (isActive$ | async)?.(child)
-            )
-          }"
+          [class.text-primary-600]="
+            $safeNavigationMigration((isActive$ | async)?.(child))
+          "
           [routerLink]="child.route"
           class="navigation-menu-item"
           mat-menu-item
         >
           @if (child.icon) {
-            <mat-icon [svgIcon]="child.icon" class="text-current"></mat-icon>
+            <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
           <span>{{ child.label }}</span>
         </a>
@@ -65,7 +63,7 @@
       @if (isLink(child) && isFunction(child.route)) {
         <div (click)="child.route()" class="navigation-menu-item" mat-menu-item>
           @if (child.icon) {
-            <mat-icon [svgIcon]="child.icon" class="text-current"></mat-icon>
+            <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
           <span>{{ child.label }}</span>
         </div>
@@ -73,16 +71,14 @@
       @if (isDropdown(child)) {
         <button
           [matMenuTriggerFor]="level1"
-          [ngClass]="{
-            'text-primary-600': $safeNavigationMigration(
-              (isActive$ | async)?.(child)
-            )
-          }"
+          [class.text-primary-600]="
+            $safeNavigationMigration((isActive$ | async)?.(child))
+          "
           class="navigation-menu-item"
           mat-menu-item
         >
           @if (child.icon) {
-            <mat-icon [svgIcon]="child.icon" class="text-current"></mat-icon>
+            <mat-icon [svgIcon]="child.icon" class="text-current" />
           }
           <span>{{ child.label }}</span>
         </button>
@@ -91,15 +87,13 @@
             <ng-container
               [ngTemplateOutletContext]="{ item: item }"
               [ngTemplateOutlet]="linkTemplate"
-            ></ng-container>
+            />
             @if (isDropdown(item)) {
               <button
                 [matMenuTriggerFor]="level2"
-                [ngClass]="{
-                  'text-primary-600': $safeNavigationMigration(
-                    (isActive$ | async)?.(item)
-                  )
-                }"
+                [class.text-primary-600]="
+                  $safeNavigationMigration((isActive$ | async)?.(item))
+                "
                 class="navigation-menu-item"
                 mat-menu-item
               >
@@ -110,15 +104,13 @@
                   <ng-container
                     [ngTemplateOutletContext]="{ item: child }"
                     [ngTemplateOutlet]="linkTemplate"
-                  ></ng-container>
+                  />
                   @if (isDropdown(child)) {
                     <button
                       [matMenuTriggerFor]="level3"
-                      [ngClass]="{
-                        'text-primary-600': $safeNavigationMigration(
-                          (isActive$ | async)?.(child)
-                        )
-                      }"
+                      [class.text-primary-600]="
+                        $safeNavigationMigration((isActive$ | async)?.(child))
+                      "
                       class="navigation-menu-item"
                       mat-menu-item
                     >
@@ -129,15 +121,15 @@
                         <ng-container
                           [ngTemplateOutletContext]="{ item: item }"
                           [ngTemplateOutlet]="linkTemplate"
-                        ></ng-container>
+                        />
                         @if (isDropdown(item)) {
                           <button
                             [matMenuTriggerFor]="level4"
-                            [ngClass]="{
-                              'text-primary-600': $safeNavigationMigration(
+                            [class.text-primary-600]="
+                              $safeNavigationMigration(
                                 (isActive$ | async)?.(item)
                               )
-                            }"
+                            "
                             class="navigation-menu-item"
                             mat-menu-item
                           >
@@ -148,16 +140,15 @@
                               <ng-container
                                 [ngTemplateOutletContext]="{ item: child }"
                                 [ngTemplateOutlet]="linkTemplate"
-                              ></ng-container>
+                              />
                               @if (isDropdown(child)) {
                                 <button
                                   [matMenuTriggerFor]="level5"
-                                  [ngClass]="{
-                                    'text-primary-600':
-                                      $safeNavigationMigration(
-                                        (isActive$ | async)?.(child)
-                                      )
-                                  }"
+                                  [class.text-primary-600]="
+                                    $safeNavigationMigration(
+                                      (isActive$ | async)?.(child)
+                                    )
+                                  "
                                   class="navigation-menu-item"
                                   mat-menu-item
                                 >
@@ -168,7 +159,7 @@
                                     <ng-container
                                       [ngTemplateOutletContext]="{ item: item }"
                                       [ngTemplateOutlet]="linkTemplate"
-                                    ></ng-container>
+                                    />
                                   }
                                 </mat-menu>
                               }
@@ -189,11 +180,9 @@
   <ng-template #linkTemplate let-item="item">
     @if (isLink(item) && !isFunction(item.route)) {
       <a
-        [ngClass]="{
-          'text-primary-600': $safeNavigationMigration(
-            (isActive$ | async)?.(item)
-          )
-        }"
+        [class.text-primary-600]="
+          $safeNavigationMigration((isActive$ | async)?.(item))
+        "
         [routerLink]="item.route"
         class="navigation-menu-item"
         mat-menu-item
@@ -203,11 +192,9 @@
     @if (isLink(item) && isFunction(item.route)) {
       <div
         (click)="item.route()"
-        [ngClass]="{
-          'text-primary-600': $safeNavigationMigration(
-            (isActive$ | async)?.(item)
-          )
-        }"
+        [class.text-primary-600]="
+          $safeNavigationMigration((isActive$ | async)?.(item))
+        "
         class="navigation-menu-item"
         mat-menu-item
       >

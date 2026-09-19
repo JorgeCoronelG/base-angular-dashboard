@@ -27,11 +27,7 @@
           [routerLink]="feature.route"
           class="text-dark p-3 text-center hover:bg-primary-600/10 hover:text-primary-600 transition duration-400 ease-out-swift rounded block no-underline"
         >
-          <mat-icon
-            [svgIcon]="feature.icon"
-            class="icon-xl"
-            color="primary"
-          ></mat-icon>
+          <mat-icon [svgIcon]="feature.icon" class="icon-xl" color="primary" />
           <div class="body-2 mt-2">{{ feature.label }}</div>
         </a>
       }

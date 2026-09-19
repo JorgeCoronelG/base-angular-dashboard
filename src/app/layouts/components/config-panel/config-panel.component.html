@@ -1,7 +1,7 @@
 @if (config$ | async; as setting) {
   <div class="config-panel">
     <h2 class="headline mb-4">
-      <mat-icon class="mr-3" svgIcon="mat:settings"></mat-icon>
+      <mat-icon class="mr-3" svgIcon="mat:settings" />
       <span>Configuration</span>
     </h2>
     <div class="section">
@@ -14,10 +14,10 @@
         >
           <div class="m-2 h-6 w-6 rounded-full">
             @if (isDark(colorScheme)) {
-              <mat-icon svgIcon="mat:check"></mat-icon>
+              <mat-icon svgIcon="mat:check" />
             }
             @if (!isDark(colorScheme)) {
-              <mat-icon svgIcon="mat:close"></mat-icon>
+              <mat-icon svgIcon="mat:close" />
             }
           </div>
           <p class="ml-1 font-medium text-sm">DARK MODE</p>
@@ -45,7 +45,7 @@
             class="m-2 h-6 w-6 rounded-full text-on-primary-600 bg-primary-600"
           >
             @if ((isSelectedTheme$ | async)?.(theme.className)) {
-              <mat-icon svgIcon="mat:check"></mat-icon>
+              <mat-icon svgIcon="mat:check" />
             }
           </div>
           <p class="ml-1 font-medium text-sm">{{ theme.name | uppercase }}</p>
@@ -92,7 +92,7 @@
           <div
             (click)="selectBorderRadius(borderRadius)"
             [class.border-gray-300]=""
-            [ngClass]="{
+            [class]="{
               'border-gray-300': isSelectedBorderRadius(borderRadius, setting),
               'border-transparent': !isSelectedBorderRadius(
                 borderRadius,
