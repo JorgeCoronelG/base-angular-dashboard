@@ -31,7 +31,11 @@
                 "output": "assets/img/icons/material-design-icons/"
               }
             ],
-            "styles": ["src/styles.scss", "src/@ui/styles/tailwind.scss"],
+            "styles": [
+              "node_modules/simplebar/dist/simplebar.css",
+              "src/styles.scss",
+              "src/@ui/styles/tailwind.scss"
+            ],
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,

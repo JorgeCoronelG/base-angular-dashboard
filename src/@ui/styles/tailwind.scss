@@ -1,4 +1,6 @@
-@import "tailwindcss/base";
-@import "partials/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@use "sass:meta";
+
+@tailwind base;
+@include meta.load-css("partials/base");
+@tailwind components;
+@tailwind utilities;
