@@ -3,7 +3,6 @@ import { DateTime } from "luxon";
 
 @Pipe({
   name: "appDateFormatRelative",
-  standalone: true,
 })
 export class AppDateFormatRelativePipe implements PipeTransform {
   transform(

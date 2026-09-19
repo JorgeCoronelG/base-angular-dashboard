@@ -20,7 +20,6 @@ type SimpleBarOptions = ConstructorParameters<typeof SimpleBar>[1];
     class: "app-scrollbar",
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class AppScrollbarComponent implements AfterContentInit, OnDestroy {
   private _element = inject(ElementRef);

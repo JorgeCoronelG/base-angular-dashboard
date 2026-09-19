@@ -5,6 +5,5 @@ import { Directive } from "@angular/core";
   host: {
     class: "app-page-layout-content",
   },
-  standalone: true,
 })
 export class AppPageLayoutContentDirective {}

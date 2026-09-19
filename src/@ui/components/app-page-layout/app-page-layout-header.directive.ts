@@ -5,6 +5,5 @@ import { Directive } from "@angular/core";
   host: {
     class: "app-page-layout-header",
   },
-  standalone: true,
 })
 export class AppPageLayoutHeaderDirective {}
