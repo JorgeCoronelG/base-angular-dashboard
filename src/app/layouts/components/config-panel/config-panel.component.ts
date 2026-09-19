@@ -1,4 +1,4 @@
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, ChangeDetectionStrategy } from "@angular/core";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import {
   MatSlideToggleChange,
@@ -31,6 +31,7 @@ import { VEX_THEMES } from "@vex/config/config.token";
   selector: "vex-config-panel",
   templateUrl: "./config-panel.component.html",
   styleUrls: ["./config-panel.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatIconModule,
     MatRippleModule,

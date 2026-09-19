@@ -5,6 +5,7 @@ import {
   HostBinding,
   inject,
   OnInit,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { VexConfigService } from "@vex/config/vex-config.service";
@@ -30,6 +31,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   selector: "vex-toolbar",
   templateUrl: "./toolbar.component.html",
   styleUrls: ["./toolbar.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatButtonModule,
     MatIconModule,

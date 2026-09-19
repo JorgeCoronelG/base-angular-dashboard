@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { filter } from "rxjs/operators";
@@ -20,6 +21,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   selector: "vex-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatButtonModule, MatIconModule, ReactiveFormsModule, AsyncPipe],
 })
 export class SearchComponent implements OnInit, OnDestroy {

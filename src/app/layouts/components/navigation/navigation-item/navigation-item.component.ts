@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import {
   NavigationItem,
   NavigationLink,
@@ -16,6 +21,7 @@ import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
   selector: "vex-navigation-item",
   templateUrl: "./navigation-item.component.html",
   styleUrls: ["./navigation-item.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatRippleModule,
     NgClass,

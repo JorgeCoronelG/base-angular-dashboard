@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterLink } from "@angular/router";
@@ -19,6 +19,7 @@ export interface MegaMenuPage {
 @Component({
   selector: "vex-mega-menu",
   templateUrl: "./mega-menu.component.html",
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatButtonModule, RouterLink, MatIconModule],
 })
 export class MegaMenuComponent implements OnInit {

@@ -7,6 +7,7 @@ import {
   Inject,
   OnInit,
   DOCUMENT,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import {
@@ -35,6 +36,7 @@ import { VexConfig } from "@vex/config/vex-config.interface";
   selector: "vex-base-layout",
   templateUrl: "./base-layout.component.html",
   styleUrls: ["./base-layout.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     VexProgressBarComponent,
     SearchComponent,

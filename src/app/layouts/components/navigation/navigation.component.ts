@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { NavigationItemComponent } from "./navigation-item/navigation-item.component";
 import { AsyncPipe } from "@angular/common";
@@ -9,6 +9,7 @@ import { NavigationItem } from "../../../core/navigation/navigation-item.interfa
   selector: "vex-navigation",
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NavigationItemComponent, AsyncPipe],
 })
 export class NavigationComponent {

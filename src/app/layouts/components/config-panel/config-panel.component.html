@@ -32,8 +32,8 @@
           [ngClass]="{
             'bg-primary-600/10 dark:bg-primary-500/20 text-primary-600 dark:text-primary-500':
               !(isSelectedTheme$ | async)?.(theme.className),
-            'bg-primary-600 text-on-primary-600': (isSelectedTheme$ | async)?.(
-              theme.className
+            'bg-primary-600 text-on-primary-600': $safeNavigationMigration(
+              (isSelectedTheme$ | async)?.(theme.className)
             )
           }"
           class="{{

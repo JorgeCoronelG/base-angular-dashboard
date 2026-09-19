@@ -1,4 +1,9 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import { VexPopoverContent, VexPopoverRef } from "./vex-popover-ref";
 import { popoverAnimation } from "../../animations/popover.animation";
 import { NgComponentOutlet, NgTemplateOutlet } from "@angular/common";
@@ -8,6 +13,7 @@ import { NgComponentOutlet, NgTemplateOutlet } from "@angular/common";
   templateUrl: "./vex-popover.component.html",
   styleUrls: ["./vex-popover.component.scss"],
   animations: [popoverAnimation],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgTemplateOutlet, NgComponentOutlet],
 })
 export class VexPopoverComponent implements OnInit {

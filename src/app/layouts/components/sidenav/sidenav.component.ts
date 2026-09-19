@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { VexConfigService } from "@vex/config/vex-config.service";
@@ -20,6 +25,7 @@ import { AsyncPipe } from "@angular/common";
   selector: "vex-sidenav",
   templateUrl: "./sidenav.component.html",
   styleUrls: ["./sidenav.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatButtonModule,
     MatIconModule,

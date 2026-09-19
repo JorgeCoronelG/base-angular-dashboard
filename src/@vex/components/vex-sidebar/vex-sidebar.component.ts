@@ -1,17 +1,24 @@
-import { Component, Inject, Input, OnDestroy, DOCUMENT } from '@angular/core';
-
+import {
+  Component,
+  Inject,
+  Input,
+  OnDestroy,
+  DOCUMENT,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 
 @Component({
-  selector: 'vex-sidebar',
-  templateUrl: './vex-sidebar.component.html',
-  styleUrls: ['./vex-sidebar.component.scss'],
+  selector: "vex-sidebar",
+  templateUrl: "./vex-sidebar.component.html",
+  styleUrls: ["./vex-sidebar.component.scss"],
   host: {
-    class: 'vex-sidebar'
+    class: "vex-sidebar",
   },
-  standalone: true
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: true,
 })
 export class VexSidebarComponent implements OnDestroy {
-  @Input() position: 'left' | 'right' = 'left';
+  @Input() position: "left" | "right" = "left";
   @Input() invisibleBackdrop: boolean = false;
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
@@ -28,22 +35,22 @@ export class VexSidebarComponent implements OnDestroy {
   }
 
   get positionLeft() {
-    return this.position === 'left';
+    return this.position === "left";
   }
 
   get positionRight() {
-    return this.position === 'right';
+    return this.position === "right";
   }
 
   enableScrollblock() {
-    if (!this.document.body.classList.contains('vex-scrollblock')) {
-      this.document.body.classList.add('vex-scrollblock');
+    if (!this.document.body.classList.contains("vex-scrollblock")) {
+      this.document.body.classList.add("vex-scrollblock");
     }
   }
 
   disableScrollblock() {
-    if (this.document.body.classList.contains('vex-scrollblock')) {
-      this.document.body.classList.remove('vex-scrollblock');
+    if (this.document.body.classList.contains("vex-scrollblock")) {
+      this.document.body.classList.remove("vex-scrollblock");
     }
   }
 

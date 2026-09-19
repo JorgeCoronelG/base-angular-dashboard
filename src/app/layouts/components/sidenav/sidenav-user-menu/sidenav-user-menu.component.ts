@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
-import { MatRippleModule } from '@angular/material/core';
-import { RouterLink } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
+import { MatRippleModule } from "@angular/material/core";
+import { RouterLink } from "@angular/router";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
-    selector: 'vex-sidenav-user-menu',
-    templateUrl: './sidenav-user-menu.component.html',
-    styleUrls: ['./sidenav-user-menu.component.scss'],
-    imports: [MatRippleModule, RouterLink, MatIconModule]
+  selector: "vex-sidenav-user-menu",
+  templateUrl: "./sidenav-user-menu.component.html",
+  styleUrls: ["./sidenav-user-menu.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [MatRippleModule, RouterLink, MatIconModule],
 })
 export class SidenavUserMenuComponent implements OnInit {
   constructor(private readonly popoverRef: VexPopoverRef) {}

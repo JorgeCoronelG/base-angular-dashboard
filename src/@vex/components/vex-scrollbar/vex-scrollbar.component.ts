@@ -4,18 +4,20 @@ import {
   ElementRef,
   Input,
   NgZone,
-  OnDestroy
-} from '@angular/core';
-import SimpleBar from 'simplebar';
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import SimpleBar from "simplebar";
 
 @Component({
-  selector: 'vex-scrollbar',
+  selector: "vex-scrollbar",
   template: ` <ng-content></ng-content>`,
-  styleUrls: ['./vex-scrollbar.component.scss'],
+  styleUrls: ["./vex-scrollbar.component.scss"],
   host: {
-    class: 'vex-scrollbar'
+    class: "vex-scrollbar",
   },
-  standalone: true
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: true,
 })
 export class VexScrollbarComponent implements AfterContentInit, OnDestroy {
   @Input() options?: Partial<any>;
@@ -24,14 +26,14 @@ export class VexScrollbarComponent implements AfterContentInit, OnDestroy {
 
   constructor(
     private _element: ElementRef,
-    private zone: NgZone
+    private zone: NgZone,
   ) {}
 
   ngAfterContentInit() {
     this.zone.runOutsideAngular(() => {
       this.scrollbarRef = new SimpleBar(
         this._element.nativeElement,
-        this.options
+        this.options,
       );
     });
   }

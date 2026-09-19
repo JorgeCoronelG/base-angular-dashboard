@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { combineLatest, Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -24,6 +24,7 @@ import { VexConfig } from "@vex/config/vex-config.interface";
   selector: "vex-layout",
   templateUrl: "./layout.component.html",
   styleUrls: ["./layout.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     BaseLayoutComponent,
     AsyncPipe,
