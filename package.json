@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "postbuild": "node scripts/prune-icons.mjs"
   },
   "dependencies": {
     "@angular/cdk": "^22.1.7",
