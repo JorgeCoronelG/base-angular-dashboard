@@ -34,14 +34,6 @@
 .notification {
   @apply text-default relative select-none transition-all duration-400 ease-out-swift py-4 px-6 no-underline;
 
-  &:hover {
-    @apply bg-hover;
-
-    .notification-label {
-      @apply text-primary-600;
-    }
-  }
-
   &.read {
     @apply opacity-50;
   }
@@ -57,13 +49,6 @@
 
 .notification-description {
   @apply text-secondary text-xs;
-}
-
-.notification-chevron {
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
-  @apply text-gray-400;
 }
 
 .notification + .notification {

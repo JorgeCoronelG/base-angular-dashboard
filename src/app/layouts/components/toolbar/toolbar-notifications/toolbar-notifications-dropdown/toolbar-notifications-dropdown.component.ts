@@ -1,12 +1,9 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { Notification } from "../interfaces/notification.interface";
-import { DateTime } from "luxon";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { AppDateFormatRelativePipe } from "@ui/pipes/app-date-format-relative/app-date-format-relative.pipe";
-import { RouterLink } from "@angular/router";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
-import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
+import { NotificationsService } from "../../../../../core/notifications/notifications.service";
 
 @Component({
   selector: "app-toolbar-notifications-dropdown",
@@ -15,71 +12,18 @@ import { MatButtonModule } from "@angular/material/button";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatButtonModule,
-    MatMenuModule,
     MatIconModule,
     MatRippleModule,
-    RouterLink,
     AppDateFormatRelativePipe,
   ],
 })
 export class ToolbarNotificationsDropdownComponent {
-  notifications: Notification[] = [
-    {
-      id: "1",
-      label: "New Order Received",
-      icon: "mat:shopping_basket",
-      colorClass: "text-primary-600",
-      datetime: DateTime.local().minus({ hour: 1 }),
-    },
-    {
-      id: "2",
-      label: "New customer has registered",
-      icon: "mat:account_circle",
-      colorClass: "text-orange-600",
-      datetime: DateTime.local().minus({ hour: 2 }),
-    },
-    {
-      id: "3",
-      label: "Campaign statistics are available",
-      icon: "mat:insert_chart",
-      colorClass: "text-purple-600",
-      datetime: DateTime.local().minus({ hour: 5 }),
-    },
-    {
-      id: "4",
-      label: "Project has been approved",
-      icon: "mat:check_circle",
-      colorClass: "text-green-600",
-      datetime: DateTime.local().minus({ hour: 9 }),
-    },
-    {
-      id: "5",
-      label: "Client reports are available",
-      icon: "mat:description",
-      colorClass: "text-primary-600",
-      datetime: DateTime.local().minus({ hour: 30 }),
-    },
-    {
-      id: "6",
-      label: "New review received",
-      icon: "mat:feedback",
-      colorClass: "text-orange-600",
-      datetime: DateTime.local().minus({ hour: 40 }),
-      read: true,
-    },
-    {
-      id: "7",
-      label: "22 verified registrations",
-      icon: "mat:verified_user",
-      colorClass: "text-green-600",
-      datetime: DateTime.local().minus({ hour: 60 }),
-    },
-    {
-      id: "8",
-      label: "New files available",
-      icon: "mat:file_copy",
-      colorClass: "text-amber-600",
-      datetime: DateTime.local().minus({ hour: 90 }),
-    },
-  ];
+  private readonly service = inject(NotificationsService);
+
+  readonly notifications = this.service.notifications;
+  readonly unreadCount = this.service.unreadCount;
+
+  markAllAsRead(): void {
+    this.service.markAllAsRead();
+  }
 }

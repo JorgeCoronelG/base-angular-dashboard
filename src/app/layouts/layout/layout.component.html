@@ -11,15 +11,6 @@
     >
       <app-sidenav [collapsed]="sidenavCollapsed()" />
     </mat-sidenav>
-    <mat-sidenav
-      (closedStart)="onQuickpanelClosed()"
-      [opened]="quickpanelOpen()"
-      class="app-layout-quickpanel"
-      mode="over"
-      position="end"
-    >
-      <app-quickpanel />
-    </mat-sidenav>
     <mat-sidenav-content class="app-layout-sidenav-content">
       <app-toolbar
         [class.dark]="config().layout === 'vertical'"

@@ -11,7 +11,8 @@ import { AppLayoutService } from "@ui/services/app-layout.service";
 import { AppConfigService } from "@ui/config/app-config.service";
 import { NavigationItem } from "../../../core/navigation/navigation-item.interface";
 import { AppPopoverService } from "@ui/components/app-popover/app-popover.service";
-import { SidenavUserMenuComponent } from "./sidenav-user-menu/sidenav-user-menu.component";
+import { UserMenuComponent } from "../user-menu/user-menu.component";
+import { CurrentUserService } from "../../../core/user/current-user.service";
 import { SidenavItemComponent } from "./sidenav-item/sidenav-item.component";
 import { AppScrollbarComponent } from "@ui/components/app-scrollbar/app-scrollbar.component";
 import { MatRippleModule } from "@angular/material/core";
@@ -50,6 +51,7 @@ export class SidenavComponent {
     () => this.configService.config().sidenav.user.visible,
   );
 
+  readonly user = inject(CurrentUserService).user;
   readonly userMenuOpen = signal(false);
 
   readonly items = this.navigationService.items;
@@ -80,7 +82,7 @@ export class SidenavComponent {
 
   openProfileMenu(origin: HTMLElement): void {
     const popoverRef = this.popoverService.open({
-      content: SidenavUserMenuComponent,
+      content: UserMenuComponent,
       origin,
       offsetY: -8,
       width: origin.clientWidth,

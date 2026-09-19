@@ -7,22 +7,25 @@ import {
   viewChild,
 } from "@angular/core";
 import { AppPopoverService } from "@ui/components/app-popover/app-popover.service";
+import { NotificationsService } from "../../../../core/notifications/notifications.service";
 import { ToolbarNotificationsDropdownComponent } from "./toolbar-notifications-dropdown/toolbar-notifications-dropdown.component";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { MatBadgeModule } from "@angular/material/badge";
 
 @Component({
   selector: "app-toolbar-notifications",
   templateUrl: "./toolbar-notifications.component.html",
   styleUrls: ["./toolbar-notifications.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, MatBadgeModule],
 })
 export class ToolbarNotificationsComponent {
   private popover = inject(AppPopoverService);
 
   readonly originRef = viewChild("originRef", { read: ElementRef });
 
+  readonly unreadCount = inject(NotificationsService).unreadCount;
   readonly dropdownOpen = signal(false);
 
   showPopover() {

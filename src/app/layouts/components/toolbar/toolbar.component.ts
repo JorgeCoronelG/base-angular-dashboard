@@ -67,10 +67,6 @@ export class ToolbarComponent {
 
   readonly isDesktop = this.layoutService.isDesktop;
 
-  openQuickpanel(): void {
-    this.layoutService.openQuickpanel();
-  }
-
   openSidenav(): void {
     this.layoutService.openSidenav();
   }

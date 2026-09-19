@@ -1,5 +1,5 @@
 .app-user-menu {
-  @apply bg-foreground shadow-lg border border-divider rounded py-2;
+  @apply flex flex-col bg-foreground shadow-lg border border-divider rounded py-2 min-w-[240px];
 }
 
 .app-user-menu-item {
@@ -16,13 +16,6 @@
   @apply flex-auto font-medium transition duration-100 ease-out;
 }
 
-.app-user-menu-item__badge {
-  @apply px-2 py-1 rounded bg-primary-600/10 text-primary-600 text-2xs font-semibold flex-none;
-}
-
 .app-user-menu-item__icon {
   @apply flex-none transition duration-100 ease-out;
-}
-
-.app-user-menu-item__dropdown-icon {
 }

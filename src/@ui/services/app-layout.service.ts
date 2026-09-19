@@ -7,9 +7,6 @@ import { map } from "rxjs/operators";
 export class AppLayoutService {
   private readonly breakpointObserver = inject(BreakpointObserver);
 
-  private readonly _quickpanelOpen = signal(false);
-  readonly quickpanelOpen = this._quickpanelOpen.asReadonly();
-
   private readonly _sidenavOpen = signal(false);
   readonly sidenavOpen = this._sidenavOpen.asReadonly();
 
@@ -50,14 +47,6 @@ export class AppLayoutService {
         .pipe(map((state) => state.matches)),
       { initialValue: this.breakpointObserver.isMatched(query) },
     );
-  }
-
-  openQuickpanel() {
-    this._quickpanelOpen.set(true);
-  }
-
-  closeQuickpanel() {
-    this._quickpanelOpen.set(false);
   }
 
   openSidenav() {

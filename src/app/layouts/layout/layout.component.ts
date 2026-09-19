@@ -12,7 +12,6 @@ import { AppSidebarComponent } from "@ui/components/app-sidebar/app-sidebar.comp
 import { SidenavComponent } from "../components/sidenav/sidenav.component";
 import { ToolbarComponent } from "../components/toolbar/toolbar.component";
 import { FooterComponent } from "../components/footer/footer.component";
-import { QuickpanelComponent } from "../components/quickpanel/quickpanel.component";
 import { ConfigPanelToggleComponent } from "../components/config-panel/config-panel-toggle/config-panel-toggle.component";
 import { ConfigPanelComponent } from "../components/config-panel/config-panel.component";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -31,7 +30,6 @@ import { AppProgressBarComponent } from "@ui/components/app-progress-bar/app-pro
     SidenavComponent,
     ToolbarComponent,
     FooterComponent,
-    QuickpanelComponent,
     ConfigPanelToggleComponent,
     AppSidebarComponent,
     ConfigPanelComponent,
@@ -59,7 +57,6 @@ export class LayoutComponent {
   );
   readonly sidenavOpen = this.layoutService.sidenavOpen;
   readonly configPanelOpen = this.layoutService.configPanelOpen;
-  readonly quickpanelOpen = this.layoutService.quickpanelOpen;
 
   onSidenavClosed(): void {
     this.layoutService.closeSidenav();
@@ -71,9 +68,5 @@ export class LayoutComponent {
     } else {
       this.layoutService.closeConfigpanel();
     }
-  }
-
-  onQuickpanelClosed(): void {
-    this.layoutService.closeQuickpanel();
   }
 }

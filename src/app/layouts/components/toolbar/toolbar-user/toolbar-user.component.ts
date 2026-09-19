@@ -5,7 +5,8 @@ import {
   signal,
 } from "@angular/core";
 import { AppPopoverService } from "@ui/components/app-popover/app-popover.service";
-import { ToolbarUserDropdownComponent } from "./toolbar-user-dropdown/toolbar-user-dropdown.component";
+import { UserMenuComponent } from "../../user-menu/user-menu.component";
+import { CurrentUserService } from "../../../../core/user/current-user.service";
 import { MatIconModule } from "@angular/material/icon";
 import { MatRippleModule } from "@angular/material/core";
 
@@ -18,13 +19,14 @@ import { MatRippleModule } from "@angular/material/core";
 export class ToolbarUserComponent {
   private popover = inject(AppPopoverService);
 
+  readonly user = inject(CurrentUserService).user;
   readonly dropdownOpen = signal(false);
 
   showPopover(originRef: HTMLElement) {
     this.dropdownOpen.set(true);
 
     const popoverRef = this.popover.open({
-      content: ToolbarUserDropdownComponent,
+      content: UserMenuComponent,
       origin: originRef,
       offsetY: 12,
       position: [
