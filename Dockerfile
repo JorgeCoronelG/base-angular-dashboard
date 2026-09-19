@@ -1,8 +1,8 @@
 # ---- Desarrollo (ng serve con hot reload) ----
-FROM node:20-alpine AS dev
+FROM node:24-alpine AS dev
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 COPY . .
 EXPOSE 4200
 CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]
@@ -14,6 +14,6 @@ RUN npm run build
 # ---- Producción (nginx) ----
 FROM nginx:1.27-alpine AS prod
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/vex /usr/share/nginx/html
+COPY --from=build /app/dist/vex/browser /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

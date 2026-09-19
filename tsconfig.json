@@ -4,11 +4,11 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
     "strict": true,
     "noPropertyAccessFromIndexSignature": true,
     "sourceMap": true,
     "declaration": false,
-    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
