@@ -60,12 +60,24 @@
                   "maximumWarning": "1.5mb",
                   "maximumError": "2mb"
                 }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.production.ts"
+                }
               ]
             },
             "testing": {
               "aot": false,
               "assets": ["src/favicon.svg", "src/assets"],
-              "styles": ["src/styles.scss"]
+              "styles": ["src/styles.scss"],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.testing.ts"
+                }
+              ]
             }
           }
         },

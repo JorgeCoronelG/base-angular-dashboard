@@ -1,17 +1,20 @@
 import {
   ApplicationConfig,
+  ErrorHandler,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from "@angular/core";
 import { appRoutes } from "./app.routes";
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-  withXhr,
-} from "@angular/common/http";
+import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { provideRouter, withInMemoryScrolling } from "@angular/router";
 import { provideNativeDateAdapter } from "@angular/material/core";
 import { provideIcons } from "./core/icons/icons.provider";
-import { provideLuxon } from "./core/luxon/luxon.provider";
+import { provideI18n } from "./core/i18n/i18n.provider";
+import { AppErrorHandler } from "./core/http/app-error-handler";
+import { errorInterceptor } from "./core/http/error.interceptor";
+import { SettingsService } from "./core/settings/settings.service";
 import { provideApp } from "@ui/app.provider";
 import { provideNavigation } from "./core/navigation/navigation.provider";
 import { appConfigs } from "@ui/config/app-configs";
@@ -19,6 +22,9 @@ import { appConfigs } from "@ui/config/app-configs";
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
+    provideBrowserGlobalErrorListeners(),
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    provideAppInitializer(() => inject(SettingsService).load()),
     provideNativeDateAdapter(),
     provideRouter(
       appRoutes,
@@ -28,7 +34,8 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: "enabled",
       }),
     ),
-    provideHttpClient(withXhr(), withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([errorInterceptor])),
+    provideI18n(),
 
     provideApp({
       /**
@@ -69,6 +76,5 @@ export const appConfig: ApplicationConfig = {
     }),
     provideNavigation(),
     provideIcons(),
-    provideLuxon(),
   ],
 };

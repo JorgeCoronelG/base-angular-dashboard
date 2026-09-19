@@ -22,6 +22,7 @@
     "@angular/material": "^22.1.7",
     "@angular/platform-browser": "^22.1.7",
     "@angular/router": "^22.1.7",
+    "@jsverse/transloco": "^8.4.0",
     "@material-design-icons/svg": "^0.14.13",
     "@ngx-loading-bar/core": "^7.0.1",
     "@ngx-loading-bar/router": "^7.0.1",

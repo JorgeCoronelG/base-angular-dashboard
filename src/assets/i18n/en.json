@@ -1,0 +1,12 @@
+{
+  "common": {
+    "ok": "OK"
+  },
+  "errors": {
+    "network": "Cannot reach the server. Check your connection.",
+    "forbidden": "You are not allowed to do that.",
+    "notFound": "The requested resource was not found.",
+    "server": "The server had a problem. Try again later.",
+    "generic": "Something went wrong."
+  }
+}
