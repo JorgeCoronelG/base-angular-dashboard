@@ -3,7 +3,7 @@ import { NavigationService } from "../../../core/navigation/navigation.service";
 import { NavigationItemComponent } from "./navigation-item/navigation-item.component";
 
 @Component({
-  selector: "vex-navigation",
+  selector: "app-navigation",
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

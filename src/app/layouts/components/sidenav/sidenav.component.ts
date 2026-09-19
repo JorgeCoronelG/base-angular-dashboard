@@ -7,19 +7,19 @@ import {
   signal,
 } from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
-import { VexLayoutService } from "@vex/services/vex-layout.service";
-import { VexConfigService } from "@vex/config/vex-config.service";
+import { AppLayoutService } from "@ui/services/app-layout.service";
+import { AppConfigService } from "@ui/config/app-config.service";
 import { NavigationItem } from "../../../core/navigation/navigation-item.interface";
-import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
+import { AppPopoverService } from "@ui/components/app-popover/app-popover.service";
 import { SidenavUserMenuComponent } from "./sidenav-user-menu/sidenav-user-menu.component";
 import { SidenavItemComponent } from "./sidenav-item/sidenav-item.component";
-import { VexScrollbarComponent } from "@vex/components/vex-scrollbar/vex-scrollbar.component";
+import { AppScrollbarComponent } from "@ui/components/app-scrollbar/app-scrollbar.component";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-  selector: "vex-sidenav",
+  selector: "app-sidenav",
   templateUrl: "./sidenav.component.html",
   styleUrls: ["./sidenav.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,15 +27,15 @@ import { MatButtonModule } from "@angular/material/button";
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
-    VexScrollbarComponent,
+    AppScrollbarComponent,
     SidenavItemComponent,
   ],
 })
 export class SidenavComponent {
   private navigationService = inject(NavigationService);
-  private layoutService = inject(VexLayoutService);
-  private configService = inject(VexConfigService);
-  private readonly popoverService = inject(VexPopoverService);
+  private layoutService = inject(AppLayoutService);
+  private configService = inject(AppConfigService);
+  private readonly popoverService = inject(AppPopoverService);
 
   readonly collapsed = input<boolean>(false);
   readonly collapsedOpen = this.layoutService.sidenavCollapsedOpen;

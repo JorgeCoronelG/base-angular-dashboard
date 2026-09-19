@@ -27,7 +27,7 @@ import { MatRippleModule } from "@angular/material/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: "vex-sidenav-item",
+  selector: "app-sidenav-item",
   templateUrl: "./sidenav-item.component.html",
   styleUrls: ["./sidenav-item.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -40,6 +40,6 @@ docker compose --profile prod up --build   # http://localhost:8080
 
 ```
 src/
-├── @vex/   # Kit de UI y layout (componentes, servicios, estilos, tema Tailwind)
+├── @ui/   # Kit de UI y layout (componentes, servicios, estilos, tema Tailwind)
 └── app/    # Aplicación: rutas, navegación, layouts y componentes propios
 ```

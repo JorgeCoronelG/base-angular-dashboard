@@ -3,4 +3,4 @@ dist
 node_modules
 coverage
 package-lock.json
-src/@vex/styles/_generated-themes.scss
+src/@ui/styles/_generated-themes.scss

@@ -1,7 +1,7 @@
-<vex-base-layout>
-  <vex-progress-bar />
-  <vex-search />
-  <mat-sidenav-container class="vex-layout-sidenav-container">
+<app-base-layout>
+  <app-progress-bar />
+  <app-search />
+  <mat-sidenav-container class="app-layout-sidenav-container">
     <mat-sidenav
       (closedStart)="onSidenavClosed()"
       [disableClose]="sidenavDisableClose()"
@@ -9,40 +9,40 @@
       [mode]="sidenavMode()"
       [opened]="sidenavOpen()"
     >
-      <vex-sidenav [collapsed]="sidenavCollapsed()" />
+      <app-sidenav [collapsed]="sidenavCollapsed()" />
     </mat-sidenav>
     <mat-sidenav
       (closedStart)="onQuickpanelClosed()"
       [opened]="quickpanelOpen()"
-      class="vex-layout-quickpanel"
+      class="app-layout-quickpanel"
       mode="over"
       position="end"
     >
-      <vex-quickpanel />
+      <app-quickpanel />
     </mat-sidenav>
-    <mat-sidenav-content class="vex-layout-sidenav-content">
-      <vex-toolbar
+    <mat-sidenav-content class="app-layout-sidenav-content">
+      <app-toolbar
         [class.dark]="config().layout === 'vertical'"
-        class="vex-toolbar"
+        class="app-toolbar"
       />
-      <main class="vex-layout-content">
+      <main class="app-layout-content">
         <router-outlet />
       </main>
       @if (config().footer.visible) {
-        <vex-footer class="vex-footer" />
+        <app-footer class="app-footer" />
       }
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <vex-config-panel-toggle (openConfig)="configpanel.open()" />
+  <app-config-panel-toggle (openConfig)="configpanel.open()" />
   <!-- CONFIGPANEL -->
-  <vex-sidebar
+  <app-sidebar
     #configpanel
     [invisibleBackdrop]="true"
     [opened]="configPanelOpen()"
     (openedChange)="onConfigPanelChange($event)"
     position="right"
   >
-    <vex-config-panel />
-  </vex-sidebar>
+    <app-config-panel />
+  </app-sidebar>
   <!-- END CONFIGPANEL -->
-</vex-base-layout>
+</app-base-layout>

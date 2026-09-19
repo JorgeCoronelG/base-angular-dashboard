@@ -4,7 +4,7 @@ import {
   computed,
   inject,
 } from "@angular/core";
-import { VexConfigService } from "@vex/config/vex-config.service";
+import { AppConfigService } from "@ui/config/app-config.service";
 import {
   MatSlideToggleChange,
   MatSlideToggleModule,
@@ -12,21 +12,21 @@ import {
 import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
 import { UpperCasePipe } from "@angular/common";
 import {
-  VexColorScheme,
-  VexConfig,
-  VexConfigName,
-  VexThemeProvider,
-} from "@vex/config/vex-config.interface";
-import { CSSValue } from "@vex/interfaces/css-value.type";
-import { isNil } from "@vex/utils/is-nil";
-import { defaultRoundedButtonBorderRadius } from "@vex/config/constants";
+  AppColorScheme,
+  AppConfig,
+  AppConfigName,
+  AppThemeProvider,
+} from "@ui/config/app-config.interface";
+import { CSSValue } from "@ui/interfaces/css-value.type";
+import { isNil } from "@ui/utils/is-nil";
+import { defaultRoundedButtonBorderRadius } from "@ui/config/constants";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
-import { VEX_THEMES } from "@vex/config/config.token";
+import { APP_THEMES } from "@ui/config/config.token";
 
 @Component({
-  selector: "vex-config-panel",
+  selector: "app-config-panel",
   templateUrl: "./config-panel.component.html",
   styleUrls: ["./config-panel.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,18 +40,18 @@ import { VEX_THEMES } from "@vex/config/config.token";
   ],
 })
 export class ConfigPanelComponent {
-  private readonly configService = inject(VexConfigService);
-  readonly themes = inject(VEX_THEMES);
+  private readonly configService = inject(AppConfigService);
+  readonly themes = inject(APP_THEMES);
 
-  configs: VexConfig[] = this.configService.configs;
+  configs: AppConfig[] = this.configService.configs;
   readonly config = this.configService.config;
 
   readonly isRTL = computed(() => this.config().direction === "rtl");
   readonly colorScheme = computed(() => this.config().style.colorScheme);
   readonly selectedTheme = computed(() => this.config().style.themeClassName);
 
-  ConfigName = VexConfigName;
-  ColorSchemeName = VexColorScheme;
+  ConfigName = AppConfigName;
+  ColorSchemeName = AppColorScheme;
 
   roundedCornerValues: CSSValue[] = [
     {
@@ -90,16 +90,16 @@ export class ConfigPanelComponent {
 
   roundedButtonValue: CSSValue = defaultRoundedButtonBorderRadius;
 
-  themeClass(theme: VexThemeProvider): string {
+  themeClass(theme: AppThemeProvider): string {
     const state =
       this.selectedTheme() === theme.className
         ? "bg-primary-600 text-on-primary-600"
         : "bg-primary-600/10 dark:bg-primary-500/20 text-primary-600 dark:text-primary-500";
 
-    return `${theme.className} vex-color-picker rounded-full mt-2 flex items-center cursor-pointer relative hover:bg-primary-600 hover:text-on-primary-600 dark:hover:bg-primary-600 dark:hover:text-on-primary-600 ${state}`;
+    return `${theme.className} app-color-picker rounded-full mt-2 flex items-center cursor-pointer relative hover:bg-primary-600 hover:text-on-primary-600 dark:hover:bg-primary-600 dark:hover:text-on-primary-600 ${state}`;
   }
 
-  setConfig(layout: VexConfigName, colorScheme: VexColorScheme): void {
+  setConfig(layout: AppConfigName, colorScheme: AppColorScheme): void {
     this.configService.setConfig(layout);
     this.configService.updateConfig({
       style: {
@@ -108,7 +108,7 @@ export class ConfigPanelComponent {
     });
   }
 
-  selectTheme(theme: VexThemeProvider): void {
+  selectTheme(theme: AppThemeProvider): void {
     this.configService.updateConfig({
       style: {
         themeClassName: theme.className,
@@ -119,7 +119,7 @@ export class ConfigPanelComponent {
   enableDarkMode(): void {
     this.configService.updateConfig({
       style: {
-        colorScheme: VexColorScheme.DARK,
+        colorScheme: AppColorScheme.DARK,
       },
     });
   }
@@ -127,7 +127,7 @@ export class ConfigPanelComponent {
   disableDarkMode(): void {
     this.configService.updateConfig({
       style: {
-        colorScheme: VexColorScheme.LIGHT,
+        colorScheme: AppColorScheme.LIGHT,
       },
     });
   }
@@ -162,7 +162,7 @@ export class ConfigPanelComponent {
     });
   }
 
-  isSelectedBorderRadius(borderRadius: CSSValue, config: VexConfig): boolean {
+  isSelectedBorderRadius(borderRadius: CSSValue, config: AppConfig): boolean {
     return (
       borderRadius.value === config.style.borderRadius.value &&
       borderRadius.unit === config.style.borderRadius.unit
@@ -179,7 +179,7 @@ export class ConfigPanelComponent {
 
   isSelectedButtonStyle(
     buttonStyle: CSSValue | undefined,
-    config: VexConfig,
+    config: AppConfig,
   ): boolean {
     if (isNil(config.style.button.borderRadius) && isNil(buttonStyle)) {
       return true;
@@ -198,7 +198,7 @@ export class ConfigPanelComponent {
     });
   }
 
-  isDark(colorScheme: VexColorScheme): boolean {
-    return colorScheme === VexColorScheme.DARK;
+  isDark(colorScheme: AppColorScheme): boolean {
+    return colorScheme === AppColorScheme.DARK;
   }
 }

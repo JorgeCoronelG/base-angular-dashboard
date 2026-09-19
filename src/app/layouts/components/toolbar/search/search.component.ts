@@ -8,21 +8,21 @@ import {
   signal,
   viewChild,
 } from "@angular/core";
-import { VexLayoutService } from "@vex/services/vex-layout.service";
+import { AppLayoutService } from "@ui/services/app-layout.service";
 import { form, FormField } from "@angular/forms/signals";
 import { SearchService } from "./search.service";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-  selector: "vex-search",
+  selector: "app-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, MatIconModule, FormField],
 })
 export class SearchComponent implements OnDestroy {
-  private layoutService = inject(VexLayoutService);
+  private layoutService = inject(AppLayoutService);
   private searchService = inject(SearchService);
 
   readonly show = this.layoutService.searchOpen;

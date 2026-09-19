@@ -5,7 +5,7 @@ import {
   signal,
 } from "@angular/core";
 import { MenuItem } from "../interfaces/menu-item.interface";
-import { VexPopoverRef } from "@vex/components/vex-popover/vex-popover-ref";
+import { AppPopoverRef } from "@ui/components/app-popover/app-popover-ref";
 import { RouterLink } from "@angular/router";
 import { MatRippleModule } from "@angular/material/core";
 import { MatMenuModule } from "@angular/material/menu";
@@ -21,7 +21,7 @@ export interface OnlineStatus {
 }
 
 @Component({
-  selector: "vex-toolbar-user-dropdown",
+  selector: "app-toolbar-user-dropdown",
   templateUrl: "./toolbar-user-dropdown.component.html",
   styleUrls: ["./toolbar-user-dropdown.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,7 +36,7 @@ export interface OnlineStatus {
 })
 export class ToolbarUserDropdownComponent {
   private popoverRef =
-    inject<VexPopoverRef<ToolbarUserDropdownComponent>>(VexPopoverRef);
+    inject<AppPopoverRef<ToolbarUserDropdownComponent>>(AppPopoverRef);
 
   items: MenuItem[] = [
     {

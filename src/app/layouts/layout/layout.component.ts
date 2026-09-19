@@ -4,10 +4,10 @@ import {
   computed,
   inject,
 } from "@angular/core";
-import { VexLayoutService } from "@vex/services/vex-layout.service";
+import { AppLayoutService } from "@ui/services/app-layout.service";
 import { RouterOutlet } from "@angular/router";
-import { VexConfigService } from "@vex/config/vex-config.service";
-import { VexSidebarComponent } from "@vex/components/vex-sidebar/vex-sidebar.component";
+import { AppConfigService } from "@ui/config/app-config.service";
+import { AppSidebarComponent } from "@ui/components/app-sidebar/app-sidebar.component";
 
 import { SidenavComponent } from "../components/sidenav/sidenav.component";
 import { ToolbarComponent } from "../components/toolbar/toolbar.component";
@@ -19,10 +19,10 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { BaseLayoutComponent } from "../base-layout/base-layout.component";
 import { MatDrawerMode, MatSidenavModule } from "@angular/material/sidenav";
 import { SearchComponent } from "../components/toolbar/search/search.component";
-import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-progress-bar.component";
+import { AppProgressBarComponent } from "@ui/components/app-progress-bar/app-progress-bar.component";
 
 @Component({
-  selector: "vex-layout",
+  selector: "app-layout",
   templateUrl: "./layout.component.html",
   styleUrls: ["./layout.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,18 +33,18 @@ import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-pr
     FooterComponent,
     QuickpanelComponent,
     ConfigPanelToggleComponent,
-    VexSidebarComponent,
+    AppSidebarComponent,
     ConfigPanelComponent,
     MatDialogModule,
     MatSidenavModule,
     RouterOutlet,
     SearchComponent,
-    VexProgressBarComponent,
+    AppProgressBarComponent,
   ],
 })
 export class LayoutComponent {
-  private readonly layoutService = inject(VexLayoutService);
-  private readonly configService = inject(VexConfigService);
+  private readonly layoutService = inject(AppLayoutService);
+  private readonly configService = inject(AppConfigService);
 
   readonly config = this.configService.config;
   readonly sidenavCollapsed = this.layoutService.sidenavCollapsed;

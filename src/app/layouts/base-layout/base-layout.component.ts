@@ -10,7 +10,7 @@ import {
   effect,
   untracked,
 } from "@angular/core";
-import { VexLayoutService } from "@vex/services/vex-layout.service";
+import { AppLayoutService } from "@ui/services/app-layout.service";
 import {
   MatSidenavContainer,
   MatSidenavModule,
@@ -18,21 +18,21 @@ import {
 import { Event, NavigationEnd, Router, Scroll } from "@angular/router";
 import { filter } from "rxjs/operators";
 
-import { VexConfigService } from "@vex/config/vex-config.service";
+import { AppConfigService } from "@ui/config/app-config.service";
 
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { routeDataSignal } from "@vex/utils/route-data-signal";
+import { routeDataSignal } from "@ui/utils/route-data-signal";
 
 @Component({
-  selector: "vex-base-layout",
+  selector: "app-base-layout",
   templateUrl: "./base-layout.component.html",
   styleUrls: ["./base-layout.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatSidenavModule],
 })
 export class BaseLayoutComponent implements AfterViewInit {
-  private readonly layoutService = inject(VexLayoutService);
-  private readonly configService = inject(VexConfigService);
+  private readonly layoutService = inject(AppLayoutService);
+  private readonly configService = inject(AppConfigService);
   private readonly router = inject(Router);
   private readonly document = inject<Document>(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);

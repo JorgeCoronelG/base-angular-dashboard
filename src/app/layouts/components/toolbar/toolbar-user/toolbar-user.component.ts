@@ -4,19 +4,19 @@ import {
   inject,
   signal,
 } from "@angular/core";
-import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
+import { AppPopoverService } from "@ui/components/app-popover/app-popover.service";
 import { ToolbarUserDropdownComponent } from "./toolbar-user-dropdown/toolbar-user-dropdown.component";
 import { MatIconModule } from "@angular/material/icon";
 import { MatRippleModule } from "@angular/material/core";
 
 @Component({
-  selector: "vex-toolbar-user",
+  selector: "app-toolbar-user",
   templateUrl: "./toolbar-user.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatRippleModule, MatIconModule],
 })
 export class ToolbarUserComponent {
-  private popover = inject(VexPopoverService);
+  private popover = inject(AppPopoverService);
 
   readonly dropdownOpen = signal(false);
 

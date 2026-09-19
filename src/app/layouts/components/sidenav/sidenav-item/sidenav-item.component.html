@@ -7,19 +7,19 @@
       navItem.routerLinkActiveOptions || { exact: false }
     "
     [routerLink]="navItem.route"
-    class="vex-sidenav-item"
+    class="app-sidenav-item"
     matRipple
-    matRippleColor="var(--vex-sidenav-item-ripple-color)"
-    routerLinkActive="vex-sidenav-item--active"
+    matRippleColor="var(--app-sidenav-item-ripple-color)"
+    routerLinkActive="app-sidenav-item--active"
   >
     @if (level() === 0 && navItem.icon) {
-      <mat-icon [svgIcon]="navItem.icon" class="vex-sidenav-item__icon" />
+      <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
     }
-    <span class="vex-sidenav-item__label">{{ navItem.label }}</span>
+    <span class="app-sidenav-item__label">{{ navItem.label }}</span>
     @if (navItem.badge) {
       <span
         [class]="navItem.badge.bgClass + ' ' + navItem.badge.textClass"
-        class="vex-sidenav-item__badge"
+        class="app-sidenav-item__badge"
         >{{ navItem.badge.value }}</span
       >
     }
@@ -29,19 +29,19 @@
 @if (isLink(navItem) && isFunction(navItem.route)) {
   <div
     (click)="navItem.route()"
-    class="vex-sidenav-item"
+    class="app-sidenav-item"
     matRipple
-    matRippleColor="var(--vex-sidenav-item-ripple-color)"
-    routerLinkActive="vex-sidenav-item--active"
+    matRippleColor="var(--app-sidenav-item-ripple-color)"
+    routerLinkActive="app-sidenav-item--active"
   >
     @if (level() === 0 && navItem.icon) {
-      <mat-icon [svgIcon]="navItem.icon" class="vex-sidenav-item__icon" />
+      <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
     }
-    <span class="vex-sidenav-item__label">{{ navItem.label }}</span>
+    <span class="app-sidenav-item__label">{{ navItem.label }}</span>
     @if (navItem.badge) {
       <span
         [class]="navItem.badge.bgClass + ' ' + navItem.badge.textClass"
-        class="vex-sidenav-item__badge"
+        class="app-sidenav-item__badge"
         >{{ navItem.badge.value }}</span
       >
     }
@@ -51,44 +51,44 @@
 @if (isDropdown(navItem)) {
   <div
     (click)="toggleOpen()"
-    [class.vex-sidenav-item--active]="isOpen() || isActive()"
-    [class.vex-sidenav-item--open]="isOpen()"
-    class="vex-sidenav-item"
+    [class.app-sidenav-item--active]="isOpen() || isActive()"
+    [class.app-sidenav-item--open]="isOpen()"
+    class="app-sidenav-item"
     matRipple
-    matRippleColor="var(--vex-sidenav-item-ripple-color)"
+    matRippleColor="var(--app-sidenav-item-ripple-color)"
   >
     @if (level() === 0 && navItem.icon) {
-      <mat-icon [svgIcon]="navItem.icon" class="vex-sidenav-item__icon" />
+      <mat-icon [svgIcon]="navItem.icon" class="app-sidenav-item__icon" />
     }
-    <span class="vex-sidenav-item__label">{{ navItem.label }}</span>
+    <span class="app-sidenav-item__label">{{ navItem.label }}</span>
     @if (navItem.badge) {
       <span
         [class]="navItem.badge.bgClass + ' ' + navItem.badge.textClass"
-        class="vex-sidenav-item__badge"
+        class="app-sidenav-item__badge"
         >{{ navItem.badge.value }}</span
       >
     }
     <mat-icon
-      class="vex-sidenav-item__dropdown-icon"
+      class="app-sidenav-item__dropdown-icon"
       svgIcon="mat:keyboard_arrow_right"
     />
   </div>
   <div
-    [class.vex-sidenav-item__dropdown--open]="isOpen()"
+    [class.app-sidenav-item__dropdown--open]="isOpen()"
     [attr.inert]="isOpen() ? null : ''"
-    class="vex-sidenav-item__dropdown"
+    class="app-sidenav-item__dropdown"
   >
-    <div class="vex-sidenav-item__dropdown-content">
+    <div class="app-sidenav-item__dropdown-content">
       @for (subItem of navItem.children; track subItem) {
-        <vex-sidenav-item [item]="subItem" [level]="level() + 1" />
+        <app-sidenav-item [item]="subItem" [level]="level() + 1" />
       }
     </div>
   </div>
 }
 
 @if (isSubheading(navItem)) {
-  <div class="vex-sidenav-subheading">{{ navItem.label }}</div>
+  <div class="app-sidenav-subheading">{{ navItem.label }}</div>
   @for (subItem of navItem.children; track subItem) {
-    <vex-sidenav-item [item]="subItem" [level]="0" />
+    <app-sidenav-item [item]="subItem" [level]="0" />
   }
 }

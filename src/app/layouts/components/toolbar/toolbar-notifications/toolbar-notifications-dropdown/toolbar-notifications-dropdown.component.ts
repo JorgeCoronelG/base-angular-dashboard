@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { Notification } from "../interfaces/notification.interface";
 import { DateTime } from "luxon";
-import { VexDateFormatRelativePipe } from "@vex/pipes/vex-date-format-relative/vex-date-format-relative.pipe";
+import { AppDateFormatRelativePipe } from "@ui/pipes/app-date-format-relative/app-date-format-relative.pipe";
 import { RouterLink } from "@angular/router";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -9,7 +9,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-  selector: "vex-toolbar-notifications-dropdown",
+  selector: "app-toolbar-notifications-dropdown",
   templateUrl: "./toolbar-notifications-dropdown.component.html",
   styleUrls: ["./toolbar-notifications-dropdown.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +19,7 @@ import { MatButtonModule } from "@angular/material/button";
     MatIconModule,
     MatRippleModule,
     RouterLink,
-    VexDateFormatRelativePipe,
+    AppDateFormatRelativePipe,
   ],
 })
 export class ToolbarNotificationsDropdownComponent {

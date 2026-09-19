@@ -4,10 +4,10 @@ import {
   ChangeDetectionStrategy,
   computed,
 } from "@angular/core";
-import { VexLayoutService } from "@vex/services/vex-layout.service";
-import { VexConfigService } from "@vex/config/vex-config.service";
+import { AppLayoutService } from "@ui/services/app-layout.service";
+import { AppConfigService } from "@ui/config/app-config.service";
 import { NavigationService } from "../../../core/navigation/navigation.service";
-import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
+import { AppPopoverService } from "@ui/components/app-popover/app-popover.service";
 import { NavigationComponent } from "../navigation/navigation.component";
 import { ToolbarUserComponent } from "./toolbar-user/toolbar-user.component";
 import { ToolbarNotificationsComponent } from "./toolbar-notifications/toolbar-notifications.component";
@@ -16,10 +16,10 @@ import { MatMenuModule } from "@angular/material/menu";
 import { RouterLink } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { routeDataSignal } from "@vex/utils/route-data-signal";
+import { routeDataSignal } from "@ui/utils/route-data-signal";
 
 @Component({
-  selector: "vex-toolbar",
+  selector: "app-toolbar",
   templateUrl: "./toolbar.component.html",
   styleUrls: ["./toolbar.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,10 +38,10 @@ import { routeDataSignal } from "@vex/utils/route-data-signal";
   ],
 })
 export class ToolbarComponent {
-  private readonly layoutService = inject(VexLayoutService);
-  private readonly configService = inject(VexConfigService);
+  private readonly layoutService = inject(AppLayoutService);
+  private readonly configService = inject(AppConfigService);
   private readonly navigationService = inject(NavigationService);
-  private readonly popoverService = inject(VexPopoverService);
+  private readonly popoverService = inject(AppPopoverService);
 
   readonly showShadow = routeDataSignal(
     (data) => data.toolbarShadowEnabled ?? false,

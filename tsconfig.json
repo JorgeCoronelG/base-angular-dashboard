@@ -16,7 +16,7 @@
     "module": "es2020",
     "useDefineForClassFields": false,
     "paths": {
-      "@vex/*": ["./src/@vex/*"]
+      "@ui/*": ["./src/@ui/*"]
     }
   },
   "angularCompilerOptions": {

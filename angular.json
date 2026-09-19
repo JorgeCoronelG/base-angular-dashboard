@@ -12,7 +12,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "vex",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -31,7 +31,7 @@
                 "output": "assets/img/icons/material-design-icons/"
               }
             ],
-            "styles": ["src/styles.scss", "src/@vex/styles/tailwind.scss"],
+            "styles": ["src/styles.scss", "src/@ui/styles/tailwind.scss"],
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,

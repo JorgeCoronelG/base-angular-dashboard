@@ -18,7 +18,7 @@ import { MatRippleModule } from "@angular/material/core";
 import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
-  selector: "vex-navigation-item",
+  selector: "app-navigation-item",
   templateUrl: "./navigation-item.component.html",
   styleUrls: ["./navigation-item.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,

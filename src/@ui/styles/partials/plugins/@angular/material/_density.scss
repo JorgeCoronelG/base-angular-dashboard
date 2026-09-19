@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+.app-mat-dense-default {
+  $density: -2;
+  @include mat.form-field-density($density);
+  @include mat.autocomplete-density($density);
+  @include mat.select-density($density);
+  @include mat.input-density($density);
+}
+
+.app-mat-dense-md {
+  @include mat.all-component-densities(-1);
+}
+
+.app-mat-dense-sm {
+  @include mat.all-component-densities(-2);
+}
+
+.app-mat-dense-xs {
+  @include mat.all-component-densities(-3);
+}

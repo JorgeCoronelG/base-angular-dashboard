@@ -26,7 +26,7 @@
   @if (isVerticalLayout() && isNavbarInToolbar()) {
     <div [class.hidden]="!isDesktop()" class="px-6 flex-none flex items-center">
       @for (item of navigationItems(); track item) {
-        <vex-navigation-item [item]="item" />
+        <app-navigation-item [item]="item" />
       }
     </div>
   }
@@ -41,7 +41,7 @@
     </div>
 
     <div class="px-1">
-      <vex-toolbar-notifications />
+      <app-toolbar-notifications />
     </div>
 
     <div class="px-1">
@@ -58,7 +58,7 @@
 
     @if (userVisible()) {
       <div class="px-1">
-        <vex-toolbar-user />
+        <app-toolbar-user />
       </div>
     }
 
@@ -82,5 +82,5 @@
 </div>
 
 @if (isVerticalLayout() && isNavbarBelowToolbar()) {
-  <vex-navigation [class.hidden]="!isDesktop()" />
+  <app-navigation [class.hidden]="!isDesktop()" />
 }
