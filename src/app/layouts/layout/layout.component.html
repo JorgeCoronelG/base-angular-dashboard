@@ -1,20 +1,19 @@
-@if (config$ | async; as config) {
   <vex-base-layout>
     <vex-progress-bar />
     <vex-search />
     <mat-sidenav-container class="vex-layout-sidenav-container">
       <mat-sidenav
         (closedStart)="onSidenavClosed()"
-        [disableClose]="!!(sidenavDisableClose$ | async)"
-        [fixedInViewport]="!!(sidenavFixedInViewport$ | async)"
-        [mode]="(sidenavMode$ | async) ?? 'side'"
-        [opened]="!!(sidenavOpen$ | async)"
+        [disableClose]="sidenavDisableClose()"
+        [fixedInViewport]="sidenavFixedInViewport()"
+        [mode]="sidenavMode()"
+        [opened]="sidenavOpen()"
       >
-        <vex-sidenav [collapsed]="!!(sidenavCollapsed$ | async)" />
+        <vex-sidenav [collapsed]="sidenavCollapsed()" />
       </mat-sidenav>
       <mat-sidenav
         (closedStart)="onQuickpanelClosed()"
-        [opened]="!!(quickpanelOpen$ | async)"
+        [opened]="quickpanelOpen()"
         class="vex-layout-quickpanel"
         mode="over"
         position="end"
@@ -23,13 +22,13 @@
       </mat-sidenav>
       <mat-sidenav-content class="vex-layout-sidenav-content">
         <vex-toolbar
-          [class.dark]="config.layout === 'vertical'"
+          [class.dark]="config().layout === 'vertical'"
           class="vex-toolbar"
         />
         <main class="vex-layout-content">
           <router-outlet />
         </main>
-        @if (config.footer.visible) {
+        @if (config().footer.visible) {
           <vex-footer class="vex-footer" />
         }
       </mat-sidenav-content>
@@ -39,11 +38,10 @@
     <vex-sidebar
       #configpanel
       [invisibleBackdrop]="true"
-      [opened]="!!(configPanelOpen$ | async)"
+      [opened]="configPanelOpen()"
       position="right"
     >
       <vex-config-panel />
     </vex-sidebar>
     <!-- END CONFIGPANEL -->
   </vex-base-layout>
-}

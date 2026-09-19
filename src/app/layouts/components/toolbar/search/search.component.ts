@@ -1,68 +1,65 @@
 import {
   Component,
-  DestroyRef,
   ElementRef,
   inject,
-  OnDestroy,
-  OnInit,
   ChangeDetectionStrategy,
+  OnDestroy,
+  effect,
+  signal,
   viewChild,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
-import { filter } from "rxjs/operators";
-import { ReactiveFormsModule, UntypedFormControl } from "@angular/forms";
+import { form, FormField } from "@angular/forms/signals";
 import { SearchService } from "./search.service";
-import { AsyncPipe } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "vex-search",
   templateUrl: "./search.component.html",
   styleUrls: ["./search.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [MatButtonModule, MatIconModule, ReactiveFormsModule, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatButtonModule, MatIconModule, FormField],
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnDestroy {
   private layoutService = inject(VexLayoutService);
   private searchService = inject(SearchService);
 
-  show$ = this.layoutService.searchOpen$;
-  searchCtrl = new UntypedFormControl();
+  readonly show = this.layoutService.searchOpen;
 
-  readonly input = viewChild<ElementRef>("searchInput");
+  private readonly model = signal({ query: "" });
+  readonly searchForm = form(this.model);
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  readonly input = viewChild.required<ElementRef<HTMLInputElement>>("searchInput");
 
-  ngOnInit() {
-    this.searchService.isOpenSubject.next(true);
-    this.searchCtrl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => this.searchService.valueChangesSubject.next(value));
+  constructor() {
+    this.searchService.isOpen.set(true);
 
-    this.show$
-      .pipe(
-        filter((show) => show),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe(() => this.input()?.nativeElement.focus());
+    effect(() => this.searchService.value.set(this.searchForm.query().value()));
+
+    effect(() => {
+      if (this.show()) {
+        this.input().nativeElement.focus();
+      }
+    });
   }
 
   close() {
+    this.reset();
     this.layoutService.closeSearch();
-    this.searchCtrl.setValue(undefined);
-    this.searchService.isOpenSubject.next(false);
   }
 
   search() {
-    this.searchService.submitSubject.next(this.searchCtrl.value);
+    this.searchService.submitSubject.next(this.searchForm.query().value());
     this.close();
   }
 
   ngOnDestroy(): void {
-    this.layoutService.closeSearch();
-    this.searchCtrl.setValue(undefined);
-    this.searchService.isOpenSubject.next(false);
+    this.close();
+  }
+
+  private reset() {
+    this.model.set({ query: "" });
+    this.searchService.isOpen.set(false);
   }
 }

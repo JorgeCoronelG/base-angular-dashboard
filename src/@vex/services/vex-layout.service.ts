@@ -1,112 +1,100 @@
-import { DestroyRef, inject, Service } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { filter, map } from "rxjs/operators";
+import { effect, inject, Service, signal } from "@angular/core";
 import { BreakpointObserver } from "@angular/cdk/layout";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { toSignal } from "@angular/core/rxjs-interop";
+import { map } from "rxjs/operators";
 
 @Service()
 export class VexLayoutService {
   private readonly breakpointObserver = inject(BreakpointObserver);
 
-  private _quickpanelOpenSubject = new BehaviorSubject<boolean>(false);
-  quickpanelOpen$ = this._quickpanelOpenSubject.asObservable();
+  private readonly _quickpanelOpen = signal(false);
+  readonly quickpanelOpen = this._quickpanelOpen.asReadonly();
 
-  private _sidenavOpenSubject = new BehaviorSubject<boolean>(false);
-  sidenavOpen$ = this._sidenavOpenSubject.asObservable();
+  private readonly _sidenavOpen = signal(false);
+  readonly sidenavOpen = this._sidenavOpen.asReadonly();
 
-  private _sidenavCollapsedSubject = new BehaviorSubject<boolean>(false);
-  sidenavCollapsed$ = this._sidenavCollapsedSubject.asObservable();
+  private readonly _sidenavCollapsed = signal(false);
+  readonly sidenavCollapsed = this._sidenavCollapsed.asReadonly();
 
-  private _sidenavCollapsedOpenSubject = new BehaviorSubject<boolean>(false);
-  sidenavCollapsedOpen$ = this._sidenavCollapsedOpenSubject.asObservable();
+  private readonly _sidenavCollapsedOpen = signal(false);
+  readonly sidenavCollapsedOpen = this._sidenavCollapsedOpen.asReadonly();
 
-  protected destroyRef: DestroyRef = inject(DestroyRef);
-  private _configPanelOpenSubject = new BehaviorSubject<boolean>(false);
+  private readonly _configPanelOpen = signal(false);
+  readonly configPanelOpen = this._configPanelOpen.asReadonly();
 
-  private _searchOpen = new BehaviorSubject<boolean>(false);
-  searchOpen$ = this._searchOpen.asObservable();
+  private readonly _searchOpen = signal(false);
+  readonly searchOpen = this._searchOpen.asReadonly();
 
-  isDesktop$ = this.breakpointObserver
-    .observe(`(min-width: 1280px)`)
-    .pipe(map((state) => state.matches));
-  ltLg$ = this.breakpointObserver
-    .observe(`(max-width: 1279px)`)
-    .pipe(map((state) => state.matches));
-  gtMd$ = this.breakpointObserver
-    .observe(`(min-width: 960px)`)
-    .pipe(map((state) => state.matches));
-  ltMd$ = this.breakpointObserver
-    .observe(`(max-width: 959px)`)
-    .pipe(map((state) => state.matches));
-  gtSm$ = this.breakpointObserver
-    .observe(`(min-width: 600px)`)
-    .pipe(map((state) => state.matches));
-  isMobile$ = this.breakpointObserver
-    .observe(`(max-width: 599px)`)
-    .pipe(map((state) => state.matches));
-
-  isLtLg = () => this.breakpointObserver.isMatched(`(max-width: 1279px)`);
-
-  isMobile = () => this.breakpointObserver.isMatched(`(max-width: 599px)`);
-  configPanelOpen$ = this._configPanelOpenSubject.asObservable();
+  readonly isDesktop = this.observeQuery("(min-width: 1280px)");
+  readonly ltLg = this.observeQuery("(max-width: 1279px)");
+  readonly gtMd = this.observeQuery("(min-width: 960px)");
+  readonly ltMd = this.observeQuery("(max-width: 959px)");
+  readonly gtSm = this.observeQuery("(min-width: 600px)");
+  readonly isMobile = this.observeQuery("(max-width: 599px)");
 
   constructor() {
     /**
-     * Expand Sidenav when we switch from mobile to desktop view
+     * Expand Sidenav when we switch from desktop to mobile view
      */
-    this.isDesktop$
-      .pipe(
-        filter((matches) => !matches),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe(() => this.expandSidenav());
+    effect(() => {
+      if (!this.isDesktop()) {
+        this.expandSidenav();
+      }
+    });
+  }
+
+  private observeQuery(query: string) {
+    return toSignal(
+      this.breakpointObserver.observe(query).pipe(map((state) => state.matches)),
+      { initialValue: this.breakpointObserver.isMatched(query) },
+    );
   }
 
   openQuickpanel() {
-    this._quickpanelOpenSubject.next(true);
+    this._quickpanelOpen.set(true);
   }
 
   closeQuickpanel() {
-    this._quickpanelOpenSubject.next(false);
+    this._quickpanelOpen.set(false);
   }
 
   openSidenav() {
-    this._sidenavOpenSubject.next(true);
+    this._sidenavOpen.set(true);
   }
 
   closeSidenav() {
-    this._sidenavOpenSubject.next(false);
+    this._sidenavOpen.set(false);
   }
 
   collapseSidenav() {
-    this._sidenavCollapsedSubject.next(true);
+    this._sidenavCollapsed.set(true);
   }
 
   expandSidenav() {
-    this._sidenavCollapsedSubject.next(false);
+    this._sidenavCollapsed.set(false);
   }
 
   collapseOpenSidenav() {
-    this._sidenavCollapsedOpenSubject.next(true);
+    this._sidenavCollapsedOpen.set(true);
   }
 
   collapseCloseSidenav() {
-    this._sidenavCollapsedOpenSubject.next(false);
+    this._sidenavCollapsedOpen.set(false);
   }
 
   openConfigpanel() {
-    this._configPanelOpenSubject.next(true);
+    this._configPanelOpen.set(true);
   }
 
   closeConfigpanel() {
-    this._configPanelOpenSubject.next(false);
+    this._configPanelOpen.set(false);
   }
 
   openSearch() {
-    this._searchOpen.next(true);
+    this._searchOpen.set(true);
   }
 
   closeSearch() {
-    this._searchOpen.next(false);
+    this._searchOpen.set(false);
   }
 }

@@ -1,54 +1,52 @@
-@if (isLink(item) && !isFunction(item.route)) {
+@let navItem = item();
+
+@if (isLink(navItem) && !isFunction(navItem.route)) {
   <a
-    [class.hover:bg-hover]="!(isActive$ | async)?.(item)"
-    [ngClass]="{
-      'bg-primary-600 text-on-primary-600': $safeNavigationMigration(
-        (isActive$ | async)?.(item)
-      ),
-      'navigation-color': !(isActive$ | async)?.(item)
+    [class.hover:bg-hover]="!isActive(navItem)"
+    [class]="{
+      'bg-primary-600 text-on-primary-600': isActive(navItem),
+      'navigation-color': !isActive(navItem)
     }"
-    [routerLink]="item.route"
+    [routerLink]="navItem.route"
     class="navigation-item"
     matRipple
   >
-    {{ item.label }}
+    {{ navItem.label }}
   </a>
 }
 
-@if (isLink(item) && isFunction(item.route)) {
+@if (isLink(navItem) && isFunction(navItem.route)) {
   <div
-    (click)="item.route()"
-    [class.hover:bg-hover]="!(isActive$ | async)?.(item)"
+    (click)="navItem.route()"
+    [class.hover:bg-hover]="!isActive(navItem)"
     class="navigation-item navigation-color"
     matRipple
   >
-    {{ item.label }}
+    {{ navItem.label }}
   </div>
 }
 
 @if (
-  (isSubheading(item) && (item.children?.length ?? 0) > 0) || isDropdown(item)
+  (isSubheading(navItem) && (navItem.children?.length ?? 0) > 0) || isDropdown(navItem)
 ) {
   <div
-    [class.hover:bg-hover]="!(isActive$ | async)?.(item)"
+    [class.hover:bg-hover]="!isActive(navItem)"
     [matMenuTriggerFor]="menu"
-    [ngClass]="{
-      'bg-primary-600 text-on-primary-600': $safeNavigationMigration(
-        (isActive$ | async)?.(item)
-      ),
-      'navigation-color': !(isActive$ | async)?.(item)
+    [class]="{
+      'bg-primary-600 text-on-primary-600': isActive(navItem),
+      'navigation-color': !isActive(navItem)
     }"
     class="navigation-item"
     matRipple
   >
-    {{ item.label }}
+    {{ navItem.label }}
   </div>
   <mat-menu #menu="matMenu" yPosition="below">
-    @for (child of item.children; track child) {
+    @for (child of navItem.children; track child) {
       @if (isLink(child) && !isFunction(child.route)) {
         <a
           [class.text-primary-600]="
-            $safeNavigationMigration((isActive$ | async)?.(child))
+            isActive(child)
           "
           [routerLink]="child.route"
           class="navigation-menu-item"
@@ -72,7 +70,7 @@
         <button
           [matMenuTriggerFor]="level1"
           [class.text-primary-600]="
-            $safeNavigationMigration((isActive$ | async)?.(child))
+            isActive(child)
           "
           class="navigation-menu-item"
           mat-menu-item
@@ -92,7 +90,7 @@
               <button
                 [matMenuTriggerFor]="level2"
                 [class.text-primary-600]="
-                  $safeNavigationMigration((isActive$ | async)?.(item))
+                  isActive(item)
                 "
                 class="navigation-menu-item"
                 mat-menu-item
@@ -109,7 +107,7 @@
                     <button
                       [matMenuTriggerFor]="level3"
                       [class.text-primary-600]="
-                        $safeNavigationMigration((isActive$ | async)?.(child))
+                        isActive(child)
                       "
                       class="navigation-menu-item"
                       mat-menu-item
@@ -126,9 +124,7 @@
                           <button
                             [matMenuTriggerFor]="level4"
                             [class.text-primary-600]="
-                              $safeNavigationMigration(
-                                (isActive$ | async)?.(item)
-                              )
+                              isActive(item)
                             "
                             class="navigation-menu-item"
                             mat-menu-item
@@ -145,9 +141,7 @@
                                 <button
                                   [matMenuTriggerFor]="level5"
                                   [class.text-primary-600]="
-                                    $safeNavigationMigration(
-                                      (isActive$ | async)?.(child)
-                                    )
+                                    isActive(child)
                                   "
                                   class="navigation-menu-item"
                                   mat-menu-item
@@ -181,7 +175,7 @@
     @if (isLink(item) && !isFunction(item.route)) {
       <a
         [class.text-primary-600]="
-          $safeNavigationMigration((isActive$ | async)?.(item))
+          isActive(item)
         "
         [routerLink]="item.route"
         class="navigation-menu-item"
@@ -193,7 +187,7 @@
       <div
         (click)="item.route()"
         [class.text-primary-600]="
-          $safeNavigationMigration((isActive$ | async)?.(item))
+          isActive(item)
         "
         class="navigation-menu-item"
         mat-menu-item

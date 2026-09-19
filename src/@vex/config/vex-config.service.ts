@@ -1,5 +1,4 @@
-import { DOCUMENT, inject, Service } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { DOCUMENT, effect, inject, Service, signal } from "@angular/core";
 
 import { DeepPartial } from "../interfaces/deep-partial.type";
 import { mergeDeep } from "../utils/merge-deep";
@@ -13,30 +12,22 @@ import {
   VexThemeProvider,
 } from "./vex-config.interface";
 import { CSSValue } from "../interfaces/css-value.type";
-import { map } from "rxjs/operators";
 import { VEX_CONFIG, VEX_THEMES } from "@vex/config/config.token";
 
 @Service()
 export class VexConfigService {
-  private readonly config = inject<VexConfig>(VEX_CONFIG);
+  private readonly initialConfig = inject<VexConfig>(VEX_CONFIG);
   private readonly themes = inject(VEX_THEMES);
   private readonly document = inject<Document>(DOCUMENT);
   private readonly layoutService = inject(VexLayoutService);
 
   readonly configMap: VexConfigs = vexConfigs;
   readonly configs: VexConfig[] = Object.values(this.configMap);
-  private _configSubject = new BehaviorSubject<VexConfig>(this.config);
+  private readonly _config = signal<VexConfig>(this.initialConfig);
+  readonly config = this._config.asReadonly();
 
   constructor() {
-    this.config$.subscribe((config) => this._updateConfig(config));
-  }
-
-  get config$(): Observable<VexConfig> {
-    return this._configSubject.asObservable();
-  }
-
-  select<R>(selector: (config: VexConfig) => R): Observable<R> {
-    return this.config$.pipe(map(selector));
+    effect(() => this._updateConfig(this._config()));
   }
 
   setConfig(configName: VexConfigName) {
@@ -46,13 +37,11 @@ export class VexConfigService {
       throw new Error(`Config with name '${configName}' does not exist!`);
     }
 
-    this._configSubject.next(settings);
+    this._config.set(settings);
   }
 
   updateConfig(config: DeepPartial<VexConfig>) {
-    this._configSubject.next(
-      mergeDeep({ ...this._configSubject.getValue() }, config),
-    );
+    this._config.update((current) => mergeDeep({ ...current }, config));
   }
 
   private _updateConfig(config: VexConfig): void {

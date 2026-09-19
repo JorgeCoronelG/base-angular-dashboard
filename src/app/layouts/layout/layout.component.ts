@@ -1,12 +1,15 @@
-import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
+import {
+  Component,
+  ChangeDetectionStrategy,
+  computed,
+  inject,
+} from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
-import { combineLatest, Observable } from "rxjs";
-import { map } from "rxjs/operators";
 import { RouterOutlet } from "@angular/router";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import { VexSidebarComponent } from "@vex/components/vex-sidebar/vex-sidebar.component";
 
-import { AsyncPipe, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 import { SidenavComponent } from "../components/sidenav/sidenav.component";
 import { ToolbarComponent } from "../components/toolbar/toolbar.component";
 import { FooterComponent } from "../components/footer/footer.component";
@@ -18,7 +21,6 @@ import { BaseLayoutComponent } from "../base-layout/base-layout.component";
 import { MatDrawerMode, MatSidenavModule } from "@angular/material/sidenav";
 import { SearchComponent } from "../components/toolbar/search/search.component";
 import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-progress-bar.component";
-import { VexConfig } from "@vex/config/vex-config.interface";
 
 @Component({
   selector: "vex-layout",
@@ -27,7 +29,6 @@ import { VexConfig } from "@vex/config/vex-config.interface";
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     BaseLayoutComponent,
-    AsyncPipe,
     SidenavComponent,
     ToolbarComponent,
     FooterComponent,
@@ -47,22 +48,20 @@ export class LayoutComponent {
   private readonly layoutService = inject(VexLayoutService);
   private readonly configService = inject(VexConfigService);
 
-  config$: Observable<VexConfig> = this.configService.config$;
-  sidenavCollapsed$: Observable<boolean> = this.layoutService.sidenavCollapsed$;
-  sidenavDisableClose$: Observable<boolean> = this.layoutService.isDesktop$;
-  sidenavFixedInViewport$: Observable<boolean> =
-    this.layoutService.isDesktop$.pipe(map((isDesktop) => !isDesktop));
-  sidenavMode$: Observable<MatDrawerMode> = combineLatest([
-    this.layoutService.isDesktop$,
-    this.configService.select((config) => config.layout),
-  ]).pipe(
-    map(([isDesktop, layout]) =>
-      !isDesktop || layout === "vertical" ? "over" : "side",
-    ),
+  readonly config = this.configService.config;
+  readonly sidenavCollapsed = this.layoutService.sidenavCollapsed;
+  readonly sidenavDisableClose = this.layoutService.isDesktop;
+  readonly sidenavFixedInViewport = computed(
+    () => !this.layoutService.isDesktop(),
   );
-  sidenavOpen$: Observable<boolean> = this.layoutService.sidenavOpen$;
-  configPanelOpen$: Observable<boolean> = this.layoutService.configPanelOpen$;
-  quickpanelOpen$: Observable<boolean> = this.layoutService.quickpanelOpen$;
+  readonly sidenavMode = computed<MatDrawerMode>(() =>
+    !this.layoutService.isDesktop() || this.config().layout === "vertical"
+      ? "over"
+      : "side",
+  );
+  readonly sidenavOpen = this.layoutService.sidenavOpen;
+  readonly configPanelOpen = this.layoutService.configPanelOpen;
+  readonly quickpanelOpen = this.layoutService.quickpanelOpen;
 
   onSidenavClosed(): void {
     this.layoutService.closeSidenav();

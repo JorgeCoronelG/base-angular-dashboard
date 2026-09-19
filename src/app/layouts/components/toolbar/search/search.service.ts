@@ -1,16 +1,11 @@
-import { Service } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { Service, signal } from "@angular/core";
+import { Subject } from "rxjs";
 
 @Service()
 export class SearchService {
-  valueChangesSubject = new BehaviorSubject<string>("");
-  valueChanges$ = this.valueChangesSubject.asObservable();
+  readonly value = signal("");
+  readonly isOpen = signal(false);
 
-  submitSubject = new Subject<string>();
-  submit$ = this.submitSubject.asObservable();
-
-  isOpenSubject = new BehaviorSubject<boolean>(false);
-  isOpen$ = this.isOpenSubject.asObservable();
-
-  constructor() {}
+  readonly submitSubject = new Subject<string>();
+  readonly submit$ = this.submitSubject.asObservable();
 }

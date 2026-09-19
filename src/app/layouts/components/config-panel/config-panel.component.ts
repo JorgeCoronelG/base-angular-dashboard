@@ -1,18 +1,16 @@
-import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
+import {
+  Component,
+  ChangeDetectionStrategy,
+  computed,
+  inject,
+} from "@angular/core";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import {
   MatSlideToggleChange,
   MatSlideToggleModule,
 } from "@angular/material/slide-toggle";
-import { map } from "rxjs/operators";
 import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
-import {
-  AsyncPipe,
-  KeyValuePipe,
-  NgClass,
-  UpperCasePipe,
-} from "@angular/common";
-import { Observable } from "rxjs";
+import { KeyValuePipe, UpperCasePipe } from "@angular/common";
 import {
   VexColorScheme,
   VexConfig,
@@ -36,10 +34,8 @@ import { VEX_THEMES } from "@vex/config/config.token";
     MatIconModule,
     MatRippleModule,
     MatButtonModule,
-    NgClass,
     MatSlideToggleModule,
     MatRadioModule,
-    AsyncPipe,
     UpperCasePipe,
     KeyValuePipe,
   ],
@@ -49,28 +45,14 @@ export class ConfigPanelComponent {
   readonly themes = inject(VEX_THEMES);
 
   configs: VexConfig[] = this.configService.configs;
-  config$: Observable<VexConfig> = this.configService.config$;
+  readonly config = this.configService.config;
 
-  isRTL$: Observable<boolean> = this.config$.pipe(
-    map((config) => config.direction === "rtl"),
-  );
-
-  colorScheme$: Observable<VexColorScheme> = this.config$.pipe(
-    map((config) => config.style.colorScheme),
-  );
-
-  borderRadius$: Observable<number> = this.config$.pipe(
-    map((config) => config.style.borderRadius.value),
-  );
+  readonly isRTL = computed(() => this.config().direction === "rtl");
+  readonly colorScheme = computed(() => this.config().style.colorScheme);
+  readonly selectedTheme = computed(() => this.config().style.themeClassName);
 
   ConfigName = VexConfigName;
   ColorSchemeName = VexColorScheme;
-  selectedTheme$: Observable<string> = this.configService.select(
-    (config) => config.style.themeClassName,
-  );
-  isSelectedTheme$: Observable<(theme: string) => boolean> = this.configService
-    .select((config) => config.style.themeClassName)
-    .pipe(map((themeClassName) => (theme: string) => themeClassName === theme));
 
   roundedCornerValues: CSSValue[] = [
     {
@@ -108,6 +90,15 @@ export class ConfigPanelComponent {
   ];
 
   roundedButtonValue: CSSValue = defaultRoundedButtonBorderRadius;
+
+  themeClass(theme: VexThemeProvider): string {
+    const state =
+      this.selectedTheme() === theme.className
+        ? "bg-primary-600 text-on-primary-600"
+        : "bg-primary-600/10 dark:bg-primary-500/20 text-primary-600 dark:text-primary-500";
+
+    return `${theme.className} vex-color-picker rounded-full mt-2 flex items-center cursor-pointer relative hover:bg-primary-600 hover:text-on-primary-600 dark:hover:bg-primary-600 dark:hover:text-on-primary-600 ${state}`;
+  }
 
   setConfig(layout: VexConfigName, colorScheme: VexColorScheme): void {
     this.configService.setConfig(layout);

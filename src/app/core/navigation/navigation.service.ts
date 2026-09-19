@@ -5,14 +5,14 @@ import {
   NavigationLink,
   NavigationSubheading,
 } from "./navigation-item.interface";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { NavigationLoaderService } from "./navigation-loader.service";
 
 @Service()
 export class NavigationService {
   private readonly navigationLoaderService = inject(NavigationLoaderService);
 
-  items$: Observable<NavigationItem[]> = this.navigationLoaderService.items$;
+  readonly items = this.navigationLoaderService.items;
 
   private _openChangeSubject = new Subject<NavigationDropdown>();
   openChange$ = this._openChangeSubject.asObservable();

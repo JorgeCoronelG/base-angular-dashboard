@@ -1,15 +1,12 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   DestroyRef,
-  HostBinding,
+  effect,
   inject,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
   input,
+  signal,
+  untracked,
 } from "@angular/core";
 import {
   NavigationDropdown,
@@ -28,7 +25,6 @@ import { NavigationService } from "../../../../core/navigation/navigation.servic
 
 import { MatIconModule } from "@angular/material/icon";
 import { MatRippleModule } from "@angular/material/core";
-import { NgClass } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
@@ -37,98 +33,79 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   styleUrls: ["./sidenav-item.component.scss"],
   animations: [dropdownAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    MatRippleModule,
-    RouterLinkActive,
-    RouterLink,
-    MatIconModule,
-    NgClass,
-  ],
+  host: {
+    "[class]": "levelClass()",
+  },
+  imports: [MatRippleModule, RouterLinkActive, RouterLink, MatIconModule],
 })
-export class SidenavItemComponent implements OnInit, OnChanges {
+export class SidenavItemComponent {
   private router = inject(Router);
-  private cd = inject(ChangeDetectorRef);
   private navigationService = inject(NavigationService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input({ required: true }) item!: NavigationItem;
+  readonly item = input.required<NavigationItem>();
   readonly level = input.required<number>();
-  isOpen: boolean = false;
-  isActive: boolean = false;
+  readonly isOpen = signal(false);
+  readonly isActive = signal(false);
 
   isLink = this.navigationService.isLink;
   isDropdown = this.navigationService.isDropdown;
   isSubheading = this.navigationService.isSubheading;
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  readonly levelClass = () => `item-level-${this.level()}`;
 
-  @HostBinding("class")
-  get levelClass() {
-    return `item-level-${this.level()}`;
-  }
-
-  ngOnInit() {
+  constructor() {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        filter(() => this.isDropdown(this.item)),
+        filter(() => this.isDropdown(this.item())),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => this.onRouteChange());
 
     this.navigationService.openChange$
       .pipe(
-        filter(() => this.isDropdown(this.item)),
+        filter(() => this.isDropdown(this.item())),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((item) => this.onOpenChange(item));
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes &&
-      changes.hasOwnProperty("item") &&
-      this.isDropdown(this.item)
-    ) {
-      this.onRouteChange();
-    }
+    effect(() => {
+      if (this.isDropdown(this.item())) {
+        untracked(() => this.onRouteChange());
+      }
+    });
   }
 
   toggleOpen() {
-    this.isOpen = !this.isOpen;
-    this.navigationService.triggerOpenChange(this.item as NavigationDropdown);
-    this.cd.markForCheck();
+    this.isOpen.update((isOpen) => !isOpen);
+    this.navigationService.triggerOpenChange(this.item() as NavigationDropdown);
   }
 
   onOpenChange(item: NavigationDropdown) {
-    if (this.isChildrenOf(this.item as NavigationDropdown, item)) {
+    const current = this.item() as NavigationDropdown;
+
+    if (this.isChildrenOf(current, item)) {
       return;
     }
 
-    if (this.hasActiveChilds(this.item as NavigationDropdown)) {
+    if (this.hasActiveChilds(current)) {
       return;
     }
 
-    if (this.item !== item) {
-      this.isOpen = false;
-      this.cd.markForCheck();
+    if (current !== item) {
+      this.isOpen.set(false);
     }
   }
 
   onRouteChange() {
-    if (this.hasActiveChilds(this.item as NavigationDropdown)) {
-      this.isActive = true;
-      this.isOpen = true;
-      this.navigationService.triggerOpenChange(this.item as NavigationDropdown);
-      this.cd.markForCheck();
-    } else {
-      this.isActive = false;
-      this.isOpen = false;
-      this.navigationService.triggerOpenChange(this.item as NavigationDropdown);
-      this.cd.markForCheck();
-    }
+    const hasActiveChilds = this.hasActiveChilds(
+      this.item() as NavigationDropdown,
+    );
+
+    this.isActive.set(hasActiveChilds);
+    this.isOpen.set(hasActiveChilds);
+    this.navigationService.triggerOpenChange(this.item() as NavigationDropdown);
   }
 
   isChildrenOf(parent: NavigationDropdown, item: NavigationDropdown): boolean {

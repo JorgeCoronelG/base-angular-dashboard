@@ -1,59 +1,57 @@
 import {
   Component,
-  Input,
-  OnInit,
   ChangeDetectionStrategy,
   inject,
+  input,
 } from "@angular/core";
+import { toSignal } from "@angular/core/rxjs-interop";
 import {
   NavigationItem,
   NavigationLink,
 } from "../../../../core/navigation/navigation-item.interface";
-import { filter, map, startWith } from "rxjs/operators";
+import { filter } from "rxjs/operators";
 import { NavigationEnd, Router, RouterLink } from "@angular/router";
 import { NavigationService } from "../../../../core/navigation/navigation.service";
-import { trackByRoute } from "@vex/utils/track-by";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatRippleModule } from "@angular/material/core";
-import { AsyncPipe, NgClass, NgTemplateOutlet } from "@angular/common";
+import { NgTemplateOutlet } from "@angular/common";
 
 @Component({
   selector: "vex-navigation-item",
   templateUrl: "./navigation-item.component.html",
   styleUrls: ["./navigation-item.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatRippleModule,
-    NgClass,
     RouterLink,
     MatMenuModule,
     MatIconModule,
     NgTemplateOutlet,
-    AsyncPipe,
   ],
 })
-export class NavigationItemComponent implements OnInit {
+export class NavigationItemComponent {
   private navigationService = inject(NavigationService);
   private router = inject(Router);
 
-  // TODO: Skipped for migration because:
-  //  This input is used in a control flow expression (e.g. `@if` or `*ngIf`)
-  //  and migrating would break narrowing currently.
-  @Input({ required: true }) item!: NavigationItem;
+  readonly item = input.required<NavigationItem>();
 
-  isActive$ = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    startWith(null),
-    map(() => (item: NavigationItem) => this.hasActiveChilds(item)),
+  /**
+   * Emits after every navigation so `isActive` is re-evaluated in the template
+   */
+  private readonly navigationEnd = toSignal(
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)),
+    { initialValue: null },
   );
 
   isLink = this.navigationService.isLink;
   isDropdown = this.navigationService.isDropdown;
   isSubheading = this.navigationService.isSubheading;
-  trackByRoute = trackByRoute;
 
-  ngOnInit() {}
+  isActive(item: NavigationItem): boolean {
+    this.navigationEnd();
+    return this.hasActiveChilds(item);
+  }
 
   hasActiveChilds(parent: NavigationItem): boolean {
     if (this.isLink(parent)) {

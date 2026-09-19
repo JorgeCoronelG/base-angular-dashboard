@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  OnInit,
   inject,
+  signal,
   viewChild,
 } from "@angular/core";
 import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
@@ -19,19 +18,15 @@ import { MatButtonModule } from "@angular/material/button";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, MatIconModule],
 })
-export class ToolbarNotificationsComponent implements OnInit {
+export class ToolbarNotificationsComponent {
   private popover = inject(VexPopoverService);
-  private cd = inject(ChangeDetectorRef);
 
   readonly originRef = viewChild("originRef", { read: ElementRef });
 
-  dropdownOpen: boolean = false;
-
-  ngOnInit() {}
+  readonly dropdownOpen = signal(false);
 
   showPopover() {
-    this.dropdownOpen = true;
-    this.cd.markForCheck();
+    this.dropdownOpen.set(true);
 
     const originRef = this.originRef();
     if (!originRef) {
@@ -59,8 +54,7 @@ export class ToolbarNotificationsComponent implements OnInit {
     });
 
     popoverRef.afterClosed$.subscribe(() => {
-      this.dropdownOpen = false;
-      this.cd.markForCheck();
+      this.dropdownOpen.set(false);
     });
   }
 }

@@ -1,17 +1,16 @@
 import {
   Component,
-  OnInit,
   ChangeDetectionStrategy,
+  computed,
   inject,
   input,
+  signal,
 } from "@angular/core";
 import { NavigationService } from "../../../core/navigation/navigation.service";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import { VexConfigService } from "@vex/config/vex-config.service";
-import { map, startWith, switchMap } from "rxjs/operators";
 import { NavigationItem } from "../../../core/navigation/navigation-item.interface";
 import { VexPopoverService } from "@vex/components/vex-popover/vex-popover.service";
-import { Observable, of } from "rxjs";
 import { SidenavUserMenuComponent } from "./sidenav-user-menu/sidenav-user-menu.component";
 import { MatDialog } from "@angular/material/dialog";
 import { SearchModalComponent } from "./search-modal/search-modal.component";
@@ -20,7 +19,6 @@ import { VexScrollbarComponent } from "@vex/components/vex-scrollbar/vex-scrollb
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: "vex-sidenav",
@@ -33,10 +31,9 @@ import { AsyncPipe } from "@angular/common";
     MatRippleModule,
     VexScrollbarComponent,
     SidenavItemComponent,
-    AsyncPipe,
   ],
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
   private navigationService = inject(NavigationService);
   private layoutService = inject(VexLayoutService);
   private configService = inject(VexConfigService);
@@ -44,28 +41,24 @@ export class SidenavComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
 
   readonly collapsed = input<boolean>(false);
-  collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
-  title$ = this.configService.config$.pipe(
-    map((config) => config.sidenav.title),
+  readonly collapsedOpen = this.layoutService.sidenavCollapsedOpen;
+  readonly title = computed(() => this.configService.config().sidenav.title);
+  readonly imageUrl = computed(
+    () => this.configService.config().sidenav.imageUrl,
   );
-  imageUrl$ = this.configService.config$.pipe(
-    map((config) => config.sidenav.imageUrl),
+  readonly showCollapsePin = computed(
+    () => this.configService.config().sidenav.showCollapsePin,
   );
-  showCollapsePin$ = this.configService.config$.pipe(
-    map((config) => config.sidenav.showCollapsePin),
+  readonly userVisible = computed(
+    () => this.configService.config().sidenav.user.visible,
   );
-  userVisible$ = this.configService.config$.pipe(
-    map((config) => config.sidenav.user.visible),
-  );
-  searchVisible$ = this.configService.config$.pipe(
-    map((config) => config.sidenav.search.visible),
+  readonly searchVisible = computed(
+    () => this.configService.config().sidenav.search.visible,
   );
 
-  userMenuOpen$: Observable<boolean> = of(false);
+  readonly userMenuOpen = signal(false);
 
-  items$: Observable<NavigationItem[]> = this.navigationService.items$;
-
-  ngOnInit() {}
+  readonly items = this.navigationService.items;
 
   collapseOpenSidenav() {
     this.layoutService.collapseOpenSidenav();
@@ -81,34 +74,32 @@ export class SidenavComponent implements OnInit {
       : this.layoutService.collapseSidenav();
   }
 
-  trackByRoute(index: number, item: NavigationItem): string {
+  trackByRoute(item: NavigationItem): string {
     if (item.type === "link") {
-      return item.route;
+      return typeof item.route === "string" ? item.route : item.label;
     }
 
     return item.label;
   }
 
   openProfileMenu(origin: HTMLDivElement): void {
-    this.userMenuOpen$ = of(
-      this.popoverService.open({
-        content: SidenavUserMenuComponent,
-        origin,
-        offsetY: -8,
-        width: origin.clientWidth,
-        position: [
-          {
-            originX: "center",
-            originY: "top",
-            overlayX: "center",
-            overlayY: "bottom",
-          },
-        ],
-      }),
-    ).pipe(
-      switchMap((popoverRef) => popoverRef.afterClosed$.pipe(map(() => false))),
-      startWith(true),
-    );
+    const popoverRef = this.popoverService.open({
+      content: SidenavUserMenuComponent,
+      origin,
+      offsetY: -8,
+      width: origin.clientWidth,
+      position: [
+        {
+          originX: "center",
+          originY: "top",
+          overlayX: "center",
+          overlayY: "bottom",
+        },
+      ],
+    });
+
+    this.userMenuOpen.set(true);
+    popoverRef.afterClosed$.subscribe(() => this.userMenuOpen.set(false));
   }
 
   openSearch(): void {

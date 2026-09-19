@@ -1,6 +1,6 @@
 <div class="border-b">
   <div class="navigation flex items-center container">
-    @for (item of items$ | async; track item) {
+    @for (item of items(); track item) {
       <vex-navigation-item [item]="item" />
     }
   </div>

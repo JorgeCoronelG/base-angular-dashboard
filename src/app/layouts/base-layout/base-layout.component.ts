@@ -3,10 +3,12 @@ import {
   Component,
   DestroyRef,
   inject,
-  OnInit,
   DOCUMENT,
   ChangeDetectionStrategy,
+  computed,
   contentChild,
+  effect,
+  untracked,
 } from "@angular/core";
 import { VexLayoutService } from "@vex/services/vex-layout.service";
 import {
@@ -20,106 +22,70 @@ import {
   RouterOutlet,
   Scroll,
 } from "@angular/router";
-import { filter, map, startWith, withLatestFrom } from "rxjs/operators";
-import { combineLatest, Observable } from "rxjs";
-import { checkRouterChildsData } from "@vex/utils/check-router-childs-data";
-import { AsyncPipe, NgTemplateOutlet } from "@angular/common";
+import { filter } from "rxjs/operators";
+import { NgTemplateOutlet } from "@angular/common";
 import { VexConfigService } from "@vex/config/vex-config.service";
 import { SearchComponent } from "../components/toolbar/search/search.component";
 import { VexProgressBarComponent } from "@vex/components/vex-progress-bar/vex-progress-bar.component";
-import { isNil } from "@vex/utils/is-nil";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { VexConfig } from "@vex/config/vex-config.interface";
+import { routeDataSignal } from "@vex/utils/route-data-signal";
 
 @Component({
   selector: "vex-base-layout",
   templateUrl: "./base-layout.component.html",
   styleUrls: ["./base-layout.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     VexProgressBarComponent,
     SearchComponent,
     MatSidenavModule,
     NgTemplateOutlet,
     RouterOutlet,
-    AsyncPipe,
   ],
 })
-export class BaseLayoutComponent implements OnInit, AfterViewInit {
+export class BaseLayoutComponent implements AfterViewInit {
   private readonly layoutService = inject(VexLayoutService);
   private readonly configService = inject(VexConfigService);
   private readonly router = inject(Router);
   private readonly document = inject<Document>(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
 
-  config$: Observable<VexConfig> = this.configService.config$;
+  readonly config = this.configService.config;
 
   /**
-   * Check if footer should be visible
+   * Footer is visible when it is enabled in the config and on the current route
    */
-  isFooterVisible$ = combineLatest([
-    /**
-     * Check if footer is enabled in the config
-     */
-    this.configService.config$.pipe(map((config) => config.footer.visible)),
-    /**
-     * Check if footer is enabled on the current route
-     */
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      startWith(null),
-      map(() =>
-        checkRouterChildsData(
-          this.router.routerState.root.snapshot,
-          (data) => data.footerVisible ?? true,
-        ),
-      ),
-    ),
-  ]).pipe(
-    map(([configEnabled, routeEnabled]) => {
-      if (isNil(routeEnabled)) {
-        return configEnabled;
-      }
-
-      return configEnabled && routeEnabled;
-    }),
+  private readonly routeFooterVisible = routeDataSignal(
+    (data) => data.footerVisible ?? true,
   );
-  sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
-  isDesktop$ = this.layoutService.isDesktop$;
-
-  scrollDisabled$ = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-    startWith(null),
-    map(() =>
-      checkRouterChildsData(
-        this.router.routerState.root.snapshot,
-        (data) => data.scrollDisabled ?? false,
-      ),
-    ),
+  readonly isFooterVisible = computed(
+    () => this.config().footer.visible && this.routeFooterVisible(),
   );
 
-  searchOpen$ = this.layoutService.searchOpen$;
+  readonly sidenavCollapsed = this.layoutService.sidenavCollapsed;
+  readonly isDesktop = this.layoutService.isDesktop;
+  readonly scrollDisabled = routeDataSignal(
+    (data) => data.scrollDisabled ?? false,
+  );
+  readonly searchOpen = this.layoutService.searchOpen;
 
   readonly sidenavContainer = contentChild.required(MatSidenavContainer);
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  ngOnInit() {
+  constructor() {
     /**
      * Open sidenav on desktop when layout is not vertical
      * Close sidenav on mobile or when layout is vertical
      */
-    combineLatest([
-      this.isDesktop$,
-      this.configService.select((config) => config.layout === "vertical"),
-    ])
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(([isDesktop, isVerticalLayout]) => {
-        if (isDesktop && !isVerticalLayout) {
-          this.layoutService.openSidenav();
-        } else {
-          this.layoutService.closeSidenav();
-        }
-      });
+    effect(() => {
+      const isDesktop = this.isDesktop();
+      const isVerticalLayout = this.config().layout === "vertical";
+
+      untracked(() =>
+        isDesktop && !isVerticalLayout
+          ? this.layoutService.openSidenav()
+          : this.layoutService.closeSidenav(),
+      );
+    });
 
     /**
      * Mobile only:
@@ -128,9 +94,8 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
-        withLatestFrom(this.isDesktop$),
-        filter(([event, matches]) => !matches),
-        takeUntilDestroyed(this.destroyRef),
+        filter(() => !this.isDesktop()),
+        takeUntilDestroyed(),
       )
       .subscribe(() => this.layoutService.closeSidenav());
   }
